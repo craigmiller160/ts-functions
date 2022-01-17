@@ -1,7 +1,8 @@
 import fs from 'fs';
 import * as Try from './Try';
+import * as Either from 'fp-ts/Either';
 import * as Option from 'fp-ts/Option';
-import { flow } from 'fp-ts/function';
+import { flow, identity } from 'fp-ts/function';
 
 export const readFileSync = (
 	filePath: string,
@@ -17,7 +18,7 @@ export const existsSync =
 		return Option.none;
 	};
 
-type RmIfExists = (filePath: string) => Option.Option<void>;
+type RmIfExists = (filePath: string) => Try.Try<unknown>;
 export const rmIfExists: RmIfExists = flow(
 	existsSync((path) =>
 		Try.tryCatch(() =>
@@ -27,8 +28,10 @@ export const rmIfExists: RmIfExists = flow(
 			})
 		)
 	),
-	Option.map(Option.fromEither),
-	Option.flatten
+	Option.fold<Try.Try<void>, Try.Try<unknown>>(
+		() => Either.right(null),
+		identity
+	)
 );
 
 // TODO mkdir
