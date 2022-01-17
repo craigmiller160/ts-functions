@@ -26,7 +26,6 @@
     "@craigmiller160/jest-config-ts": "^1.0.0-beta.2",
     "@craigmiller160/prettier-config": "^1.0.0-beta.1",
     "@relmify/jest-fp-ts": "^1.1.1",
-    "eslint": "^8.7.0",
     "fp-ts": "^2.11.7",
     "husky": "^7.0.4",
     "io-ts": "^2.2.16",
