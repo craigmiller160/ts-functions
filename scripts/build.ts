@@ -32,14 +32,13 @@ const runCommand = (command: string): Try.Try<string> => {
 		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
 }
 
-const buildProject = () => {
+const buildProject = (): Try.Try<string> =>
 	pipe(
 		LIB_PATH,
 		File.rmIfExistsSync,
 		Either.chain(() => runCommand('tsc')),
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
-};
 
 // TODO delete below here
 process.exit(0);
