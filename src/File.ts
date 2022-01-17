@@ -55,4 +55,5 @@ export const mkdirSync = (filePath: string): Try.Try<string> =>
 		)
 	);
 
-// TODO listFiles
+export const listFilesSync = (filePath: string): Try.Try<string[]> =>
+	Try.tryCatch(() => fs.readdirSync(filePath));
