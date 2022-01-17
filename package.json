@@ -1,6 +1,15 @@
 {
   "name": "@craigmiller160/ts-functions",
   "version": "1.0.0-beta",
-  "main": "index.js",
-  "license": "MIT"
+  "peerDependencies": {
+    "fp-ts": ">=2.11.7",
+    "ts-pattern": ">=3.3.4"
+  },
+  "devDependencies": {
+    "@relmify/jest-fp-ts": "^1.1.1",
+    "fp-ts": "^2.11.7",
+    "io-ts": "^2.2.16",
+    "ts-pattern": "^3.3.4",
+    "typescript": "^4.5.4"
+  }
 }
