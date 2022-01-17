@@ -1,5 +1,7 @@
-import { addMinutes } from 'date-fns';
+import { addMinutes, format, parse } from 'date-fns';
 import * as Time from '../src/Time';
+
+const DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';
 
 describe('DateFns', () => {
 	it('addMinutes', () => {
@@ -10,14 +12,26 @@ describe('DateFns', () => {
 	});
 
 	it('format', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = format(date, DATE_FORMAT);
+		const actual = Time.format(DATE_FORMAT)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('parse', () => {
-		throw new Error();
+		const dateString = '2022-01-01 01:01:01';
+		const expected = parse(dateString, DATE_FORMAT, new Date());
+		const actual = Time.parse(DATE_FORMAT)(dateString);
+		expect(actual).toEqual(expected);
 	});
 
-	it('compareAsc', () => {
-		throw new Error();
+	it('compare', () => {
+		const date1String = '2022-01-01 01:01:01';
+		const date2String = '2022-02-01 01:01:01';
+		const date1 = parse(date1String, DATE_FORMAT, new Date());
+		const date2 = parse(date2String, DATE_FORMAT, new Date());
+
+		const result = Time.compare(date1)(date2);
+		expect(result).toEqual(-1);
 	});
 });

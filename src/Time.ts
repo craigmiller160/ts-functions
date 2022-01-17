@@ -20,7 +20,7 @@ export const parse =
 	(dateString: string): Date =>
 		baseParse(dateString, formatString, new Date());
 
-export const compareAsc =
+export const compare =
 	(dateLeft: Date) =>
 	(dateRight: Date): number =>
 		baseCompareAsc(dateLeft, dateRight);
