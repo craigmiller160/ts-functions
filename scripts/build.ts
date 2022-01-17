@@ -79,12 +79,5 @@ const copyPackageJson = () => {
 	);
 };
 
-const failIfError = (fn: () => SpawnSyncReturns<Buffer>) => {
-	const result = fn();
-	if (result.status !== 0) {
-		process.exit(result.status ?? -1);
-	}
-};
-
 fixEsImports();
 copyPackageJson();
