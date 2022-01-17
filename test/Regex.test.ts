@@ -11,10 +11,12 @@ interface UrlGroups {
 }
 
 const captureUrl = Regex.capture<UrlGroups>(URL_REGEX);
+const testUrl = Regex.test(URL_REGEX);
 
 describe('Regex', () => {
 	it('test', () => {
-		throw new Error();
+		expect(testUrl(URL)).toEqual(true);
+		expect(testUrl('abc')).toEqual(false);
 	});
 
 	describe('capture', () => {
