@@ -3,8 +3,6 @@ import { SpawnSyncReturns } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 
-// TODO add validation to this
-
 interface PackageJson {
     scripts: {
         prepare?: string;
