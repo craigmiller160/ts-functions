@@ -1,10 +1,9 @@
-import * as Option from 'fp-ts/es6/Option';
+import * as Option from 'fp-ts/Option';
 import { match, when } from 'ts-pattern';
 
-export const captureFromRegex = <T>(
-	regex: RegExp | string,
-	text: string
-): Option.Option<T> =>
+export const capture = <T>(
+	regex: RegExp | string
+) => (text: string): Option.Option<T> =>
 	match(text)
 		.with(
 			when<string>((_) => RegExp(regex).test(_)),
