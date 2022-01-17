@@ -1,3 +1,6 @@
-// TODO use fp-ts Task instead of directly returning a Promise
-export const sleep = (millis: number): Promise<void> =>
-	new Promise((resolve) => setTimeout(resolve, millis));
+import * as Task from 'fp-ts/Task';
+
+export const sleep =
+	(millis: number): Task.Task<void> =>
+	() =>
+		new Promise((resolve) => setTimeout(resolve, millis));
