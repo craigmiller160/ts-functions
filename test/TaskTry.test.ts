@@ -45,7 +45,7 @@ describe('TaskTry', () => {
 
 		try {
 			await TaskTry.getOrThrow(failTry)();
-		} catch(ex) {
+		} catch (ex) {
 			expect(ex).toEqual(new Error('Dying'));
 			return;
 		}
