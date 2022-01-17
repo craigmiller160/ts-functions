@@ -11,7 +11,7 @@ module.exports = {
             {
                 patterns: [
                     {
-                        group: ['fp-ts/es6/*', 'fp-ts'],
+                        group: ['fp-ts/es6/*'],
                         message: 'Use commonjs fp-ts import, with full name: "fp-ts/NAME"'
                     }
                 ]
