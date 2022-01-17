@@ -1,6 +1,5 @@
 PROJECTS WITH FUNCTIONS
 
-1) market-tracker-ui
 2) market-tracker-api
 3) craig-build
 
