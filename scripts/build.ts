@@ -6,4 +6,11 @@ const build = () => spawn.sync('tsc', {
     stdio: 'inherit'
 });
 
+const copyFiles = () => {
+    spawn.sync('cp', ['package.json', 'lib'], {
+        cwd: process.cwd(),
+        stdio: 'inherit'
+    });
+};
+
 build();
