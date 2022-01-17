@@ -2,7 +2,7 @@ import fs from 'fs';
 import * as Try from './Try';
 import * as Either from 'fp-ts/Either';
 import * as Option from 'fp-ts/Option';
-import { flow, identity } from 'fp-ts/function';
+import { flow, identity, pipe } from 'fp-ts/function';
 
 export const readFileSync = (
 	filePath: string,
@@ -18,8 +18,8 @@ export const existsSync =
 		return Option.none;
 	};
 
-type RmIfExists = (filePath: string) => Try.Try<unknown>;
-export const rmIfExists: RmIfExists = flow(
+type RmIfExistsSync = (filePath: string) => Try.Try<unknown>;
+export const rmIfExistsSync: RmIfExistsSync = flow(
 	existsSync((path) =>
 		Try.tryCatch(() =>
 			fs.rmSync(path, {
@@ -34,6 +34,25 @@ export const rmIfExists: RmIfExists = flow(
 	)
 );
 
-// TODO mkdir
+export const mkdirSync = (filePath: string): Try.Try<string> =>
+	pipe(
+		Try.tryCatch(() =>
+			fs.mkdirSync(filePath, {
+				recursive: true
+			})
+		),
+		Either.chain((value) =>
+			pipe(
+				Option.fromNullable(value),
+				Option.fold(
+					() =>
+						Either.left(
+							new Error(`Failed to create directory: ${filePath}`)
+						),
+					(value) => Either.right(value)
+				)
+			)
+		)
+	);
 
 // TODO listFiles
