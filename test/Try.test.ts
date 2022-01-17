@@ -10,6 +10,6 @@ describe('Try', () => {
 	});
 
 	it('getOrThrow', () => {
-		throw new Error()
-	})
+		throw new Error();
+	});
 });

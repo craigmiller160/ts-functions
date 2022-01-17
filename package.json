@@ -13,6 +13,7 @@
   "scripts": {
     "build": "yarn lint && yarn test && yarn forceBuild",
     "lint": "craig-lint",
+    "lint:scripts": "eslint scripts --fix",
     "test": "craig-test",
     "forceBuild": "ts-node scripts/build.ts",
     "validate": "yarn lint && yarn test",
