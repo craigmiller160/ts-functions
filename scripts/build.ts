@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import spawn from 'cross-spawn';
-import { SpawnSyncReturns } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { pipe } from 'fp-ts/function';
@@ -24,6 +23,7 @@ const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
 const LIB_PATH = path.join(process.cwd(), 'lib');
 
 const runCommand = (command: string): Try.Try<string> => {
+	console.log(`Command: ${command}`);
 	const result = spawn.sync('bash', ['-c', command], {
 		stdio: 'inherit'
 	});
