@@ -1,6 +1,10 @@
 {
   "name": "@craigmiller160/ts-functions",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.1",
+  "author": "craigmiller160",
+  "publishConfig": {
+    "registry": "https://craigmiller160.ddns.net:30003/repository/npm-private/"
+  },
   "files": [
     "build"
   ],
