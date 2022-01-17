@@ -44,26 +44,6 @@ const buildProject = () => {
 // TODO delete below here
 process.exit(0);
 
-const clean = () => {
-	fs.rmSync(path.join(process.cwd(), 'lib'), {
-		recursive: true,
-		force: true
-	});
-};
-
-const build = (): SpawnSyncReturns<Buffer> => {
-	console.log('Building commonjs code');
-	return spawn.sync('tsc', {
-		stdio: 'inherit'
-	});
-};
-
-const buildES = (): SpawnSyncReturns<Buffer> => {
-	console.log('Building esmodule code');
-	return spawn.sync('tsc', ['-p', 'tsconfig.esmodule.json'], {
-		stdio: 'inherit'
-	});
-};
 
 const fixEsImports = () => {
 	console.log('Fixing ES Imports');
@@ -107,8 +87,5 @@ const failIfError = (fn: () => SpawnSyncReturns<Buffer>) => {
 	}
 };
 
-clean();
-failIfError(build);
-failIfError(buildES);
 fixEsImports();
 copyPackageJson();
