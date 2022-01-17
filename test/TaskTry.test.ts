@@ -31,4 +31,24 @@ describe('TaskTry', () => {
 
 		expect(result).toEqual('Hello');
 	});
+
+	it('getOrThrow', async () => {
+		const successTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(
+			async () => 'Hello'
+		);
+		const failTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(async () => {
+			throw new Error('Dying');
+		});
+
+		const result = await TaskTry.getOrThrow(successTry)();
+		expect(result).toEqual('Hello');
+
+		try {
+			await TaskTry.getOrThrow(failTry)();
+		} catch(ex) {
+			expect(ex).toEqual(new Error('Dying'));
+			return;
+		}
+		throw new Error('Should have thrown error');
+	});
 });
