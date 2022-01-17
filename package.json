@@ -12,7 +12,8 @@
   "module": "es6/index.js",
   "scripts": {
     "build": "yarn lint && yarn test && yarn forceBuild",
-    "lint": "craig-lint && yarn lint:scripts",
+    "lint:project": "craig-lint",
+    "lint": "yarn lint:project && yarn lint:scripts",
     "lint:scripts": "eslint scripts --fix",
     "test": "craig-test",
     "forceBuild": "ts-node scripts/build.ts",
