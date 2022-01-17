@@ -1,5 +1,6 @@
 import fs from 'fs';
 import * as Try from './Try';
+import * as Option from 'fp-ts/Option';
 import { flow } from 'fp-ts/function';
 
 export const readFileSync = (
@@ -9,14 +10,14 @@ export const readFileSync = (
 
 export const existsSync =
 	<T>(fn: (filePath: string) => T) =>
-	(filePath: string): T | null => {
+	(filePath: string): Option.Option<T> => {
 		if (fs.existsSync(filePath)) {
-			return fn(filePath);
+			return Option.fromNullable(fn(filePath));
 		}
-		return null;
+		return Option.none;
 	};
 
-type RmIfExists = (filePath: string) => Try.Try<void> | null;
+type RmIfExists = (filePath: string) => Option.Option<void>;
 export const rmIfExists: RmIfExists = flow(
 	existsSync((path) =>
 		Try.tryCatch(() =>
@@ -25,7 +26,9 @@ export const rmIfExists: RmIfExists = flow(
 				force: true
 			})
 		)
-	)
+	),
+	Option.map(Option.fromEither),
+	Option.flatten
 );
 
 // TODO mkdir
