@@ -13,7 +13,11 @@ interface UrlGroups {
 const captureUrl = Regex.capture<UrlGroups>(URL_REGEX);
 
 describe('Regex', () => {
-	describe('captureFromRegex', () => {
+	it('test', () => {
+		throw new Error();
+	});
+
+	describe('capture', () => {
 		it('has match for all groups', () => {
 			const result: Option.Option<UrlGroups> = captureUrl(URL);
 			expect(result).toEqualSome({
