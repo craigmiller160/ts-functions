@@ -13,6 +13,7 @@
     "lint": "craig-lint",
     "test": "craig-test",
     "forceBuild": "ts-node scripts/build.ts",
+    "prepublish": "echo 'Pre-Publish'",
     "validate": "yarn lint && yarn test",
     "prepare": "husky install"
   },
