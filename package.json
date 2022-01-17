@@ -1,6 +1,17 @@
 {
   "name": "@craigmiller160/ts-functions",
   "version": "1.0.0-beta",
+  "scripts": {
+    "build": "yarn lint && yarn test && yarn forceBuild",
+    "lint": "craig-lint",
+    "test": "craig-test",
+    "forceBuild": "tsc",
+    "validate": "yarn lint && yarn test",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "yarn lint"
+  },
   "peerDependencies": {
     "fp-ts": ">=2.11.7",
     "ts-pattern": ">=3.3.4"
@@ -17,7 +28,9 @@
     "@relmify/jest-fp-ts": "^1.1.1",
     "eslint": "^8.7.0",
     "fp-ts": "^2.11.7",
+    "husky": "^7.0.4",
     "io-ts": "^2.2.16",
+    "lint-staged": "^12.1.7",
     "prettier": "^2.5.1",
     "ts-pattern": "^3.3.4",
     "typescript": "^4.5.4"
