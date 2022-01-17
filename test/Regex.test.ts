@@ -3,15 +3,14 @@ import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 
 const URL = 'https://www.google.com/foo/bar?abc=def&ghi=jkl';
-const URL_NO_QUERY = 'https://www.google.com/foo/bar';
-const URL_REGEX = /^https?:\/\/(?<hostname>.*?)\/.*\??(?<query>.*)$/;
+const URL_REGEX = /^https?:\/\/(?<hostname>.*?)\/.*\?(?<query>.*)$/;
 
 interface UrlGroups {
 	readonly hostname: string;
-	readonly query?: string;
+	readonly query: string;
 }
 
-const captureUrl = Regex.capture<UrlGroups>(URL_REGEX);;
+const captureUrl = Regex.capture<UrlGroups>(URL_REGEX);
 
 describe('Regex', () => {
 	describe('captureFromRegex', () => {
@@ -20,15 +19,12 @@ describe('Regex', () => {
 			expect(result).toEqualSome({
 				hostname: 'www.google.com',
 				query: 'abc=def&ghi=jkl'
-			})
+			});
 		});
 
-		it('has match but not all groups', () => {
-			throw new Error()
-		})
-
 		it('has no match', () => {
-			throw new Error();
+			const result: Option.Option<UrlGroups> = captureUrl('foo-bar');
+			expect(result).toBeNone();
 		});
 	});
 });
