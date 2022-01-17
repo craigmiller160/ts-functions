@@ -1,6 +1,9 @@
 {
   "name": "@craigmiller160/ts-functions",
   "version": "1.0.0-beta",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "yarn lint && yarn test && yarn forceBuild",
     "lint": "craig-lint",
