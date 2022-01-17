@@ -57,10 +57,20 @@ describe('File', () => {
 	});
 
 	it('mkdirSync', () => {
-		throw new Error();
+		const dirPath = path.join(TEMP_PATH, 'dir');
+
+		const result = File.mkdirSync(dirPath);
+		expect(result).toEqualRight(dirPath);
+		expect(fs.existsSync(dirPath)).toEqual(true);
 	});
 
 	it('listFilesSync', () => {
-		throw new Error();
+		const file1 = path.join(TEMP_PATH, 'file1.txt');
+		const file2 = path.join(TEMP_PATH, 'file2.txt');
+		fs.writeFileSync(file1, TEXT);
+		fs.writeFileSync(file2, TEXT);
+
+		const result = File.listFilesSync(TEMP_PATH);
+		expect(result).toEqualRight(['file1.txt', 'file2.txt']);
 	});
 });
