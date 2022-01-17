@@ -3,6 +3,11 @@ import spawn from 'cross-spawn';
 import { SpawnSyncReturns } from 'child_process';
 import path from 'path';
 import fs from 'fs';
+import { pipe } from 'fp-ts/function';
+import * as File from '../src/File';
+import * as Try from '../src/Try'
+import * as Either from 'fp-ts/Either';
+import { match } from 'ts-pattern';
 
 interface PackageJson {
 	scripts: {
@@ -10,12 +15,34 @@ interface PackageJson {
 	};
 }
 
-const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
-
 interface FpTsGroups {
 	readonly importName: string;
 	readonly fileName: string;
 }
+
+const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
+const LIB_PATH = path.join(process.cwd(), 'lib');
+
+const runCommand = (command: string): Try.Try<string> => {
+	const result = spawn.sync('bash', ['-c', command], {
+		stdio: 'inherit'
+	});
+	return match(result)
+		.with({ status: 0 }, () => Either.right(command))
+		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
+}
+
+const buildProject = () => {
+	pipe(
+		LIB_PATH,
+		File.rmIfExistsSync,
+		Either.chain(() => runCommand('tsc')),
+		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
+	);
+};
+
+// TODO delete below here
+process.exit(0);
 
 const clean = () => {
 	fs.rmSync(path.join(process.cwd(), 'lib'), {
