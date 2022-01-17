@@ -7,8 +7,9 @@
     "registry": "https://craigmiller160.ddns.net:30003/repository/npm-private/"
   },
   "publishDirectory": "./lib",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "module": "es6/index.js",
   "scripts": {
     "build": "yarn lint && yarn test && yarn forceBuild",
     "lint": "craig-lint",
