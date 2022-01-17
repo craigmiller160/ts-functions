@@ -8,4 +8,8 @@ describe('Try', () => {
 	it('Try<T> is interchangeable with Either<Error,T>', () => {
 		throw new Error();
 	});
+
+	it('getOrThrow', () => {
+		throw new Error()
+	})
 });
