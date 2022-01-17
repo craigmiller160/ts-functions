@@ -1,3 +1,11 @@
+PROJECTS WITH FUNCTIONS
+
 1) market-tracker-ui
 2) market-tracker-api
 3) craig-build
+
+BUILD STEPS
+
+1) Produce es6 artifact
+2) Add eslint rule to local to enforce commonjs fp-ts import
+3) Add post-process to build to go into es6 artifact and change all fp-ts imports to es6.
