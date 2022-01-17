@@ -9,6 +9,13 @@ interface PackageJson {
     }
 }
 
+const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/
+
+interface FpTsGroups {
+    readonly importName: string;
+    readonly fileName: string;
+}
+
 const clean = () => {
     fs.rmSync(path.join(process.cwd(), 'lib'), {
         recursive: true,
@@ -28,7 +35,27 @@ const buildES = (): SpawnSyncReturns<Buffer> => {
     return spawn.sync('tsc', ['-p', 'tsconfig.esmodule.json'], {
         stdio: 'inherit'
     });
-}
+};
+
+const fixEsImports = () => {
+    console.log('Fixing ES Imports');
+    const esOutput = path.join(process.cwd(), 'lib', 'es');
+    const files = fs.readdirSync(esOutput);
+    files.forEach((file) => {
+        const fullFilePath = path.join(esOutput, file);
+        const text = fs.readFileSync(fullFilePath, 'utf8');
+        const newText = text.split('\n')
+            .map((line) => {
+                if (FP_TS_REGEX.test(line)) {
+                    const groups = FP_TS_REGEX.exec(line)?.groups as unknown as FpTsGroups;
+                    return `${groups.importName}'fp-ts/es6/${groups.fileName}';`;
+                }
+                return line;
+            })
+            .join('\n');
+        fs.writeFileSync(fullFilePath, newText);
+    });
+};
 
 const copyPackageJson = () => {
     const packageJsonTxt = fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf8');
@@ -47,4 +74,5 @@ const failIfError = (fn: () => SpawnSyncReturns<Buffer>) => {
 clean();
 failIfError(build);
 failIfError(buildES);
+fixEsImports();
 copyPackageJson();
