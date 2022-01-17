@@ -2,8 +2,3 @@ PROJECTS WITH FUNCTIONS
 
 2) market-tracker-api
 3) craig-build
-
-BUILD STEPS
-
-3) Add post-process to build to go into es6 artifact and change all fp-ts imports to es6.
-4) Update the eslint lib with import restrictions to enforce only importing es6 from this lib.
