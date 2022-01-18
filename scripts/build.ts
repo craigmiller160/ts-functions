@@ -33,6 +33,7 @@ const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
 const LIB_PATH = path.join(process.cwd(), 'lib');
 const ES_LIB_PATH = path.join(LIB_PATH, 'es');
 const PACKAGE_JSON_PATH = path.join(process.cwd(), 'package.json');
+const PACKAGE_JSON_LIB_PATH = path.join(LIB_PATH, 'package.json');
 
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
 const concatWithNewline = Text.concat('\n');
@@ -110,7 +111,7 @@ const copyPackageJson = (): Try.Try<void> =>
 			})
 		),
 		Either.chain(Json.stringify),
-		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_PATH, _))
+		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_LIB_PATH, _))
 	);
 
 pipe(buildProject(), Either.chain(fixEsImports), Either.chain(copyPackageJson), Either.fold(
