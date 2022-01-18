@@ -9,7 +9,6 @@ export const readFileSync = (
 	encoding: BufferEncoding = 'utf8'
 ): Try.Try<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
 
-// TODO write tests
 export const writeFileSync = (
 	filePath: string,
 	content: string

@@ -27,6 +27,14 @@ describe('File', () => {
 		expect(result).toEqualRight(TEXT);
 	});
 
+	it('writeFileSync', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		File.writeFileSync(filePath, TEXT);
+
+		const fileContent = fs.readFileSync(filePath, 'utf8');
+		expect(fileContent).toEqual(TEXT);
+	});
+
 	it('existsSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
