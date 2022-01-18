@@ -51,7 +51,10 @@ const fixEsImports = () => {
 				(file) => path.join(ES_LIB_PATH, file),
 				File.readFileSync,
 				Either.map(flow(
-					Text.split('\n') // TODO left off here
+					Text.split('\n'),
+					Arr.map((line) => {
+						return line;
+					})
 				))
 			))
 		))
