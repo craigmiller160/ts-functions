@@ -110,7 +110,7 @@ const copyPackageJson = (): Try.Try<void> =>
 				}
 			})
 		),
-		Either.chain(Json.stringify),
+		Either.chain((_) => Json.stringify(_, 2)),
 		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_LIB_PATH, _))
 	);
 
