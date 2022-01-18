@@ -11,6 +11,7 @@ import * as RArr from 'fp-ts/ReadonlyArray';
 import * as Text from '../src/Text';
 import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
+import * as Json from '../src/Json';
 
 interface PackageJson {
 	scripts: {
@@ -31,6 +32,7 @@ interface FileHolder {
 const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
 const LIB_PATH = path.join(process.cwd(), 'lib');
 const ES_LIB_PATH = path.join(LIB_PATH, 'es');
+const PACKAGE_JSON_PATH = path.join(process.cwd(), 'package.json');
 
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
 const concatWithNewline = Text.concat('\n');
@@ -77,7 +79,7 @@ const fixImportsInFile = (file: string): Try.Try<FileHolder> => {
 const writeFile = (fileHolder: FileHolder): Try.Try<void> =>
 	File.writeFileSync(fileHolder.filePath, fileHolder.fileContent);
 
-const fixEsImports = (): Try.Try<any> => {
+const fixEsImports = (): Try.Try<ReadonlyArray<void>> => {
 	console.log('Fixing ES Imports');
 
 	return pipe(
@@ -94,42 +96,21 @@ const buildProject = (): Try.Try<string> =>
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
 
-pipe(buildProject(), Either.chain(fixEsImports));
+const copyPackageJson = (): Try.Try<void> =>
+	pipe(
+		File.readFileSync(PACKAGE_JSON_PATH),
+		Either.chain((_) => Json.parse<PackageJson>(_)),
+		Either.map(
+			(_): PackageJson => ({
+				..._,
+				scripts: {
+					..._.scripts,
+					prepare: undefined
+				}
+			})
+		),
+		Either.chain(Json.stringify),
+		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_PATH, _))
+	);
 
-// const fixEsImports2 = () => {
-// 	console.log('Fixing ES Imports');
-// 	const esOutput = path.join(process.cwd(), 'lib', 'es');
-// 	const files = fs.readdirSync(esOutput);
-// 	files.forEach((file) => {
-// 		const fullFilePath = path.join(esOutput, file);
-// 		const text = fs.readFileSync(fullFilePath, 'utf8');
-// 		const newText = text
-// 			.split('\n')
-// 			.map((line) => {
-// 				if (FP_TS_REGEX.test(line)) {
-// 					const groups = FP_TS_REGEX.exec(line)
-// 						?.groups as unknown as FpTsGroups;
-// 					return `${groups.importName}'fp-ts/es6/${groups.fileName}';`;
-// 				}
-// 				return line;
-// 			})
-// 			.join('\n');
-// 		fs.writeFileSync(fullFilePath, newText);
-// 	});
-// };
-
-// const copyPackageJson = () => {
-// 	const packageJsonTxt = fs.readFileSync(
-// 		path.join(process.cwd(), 'package.json'),
-// 		'utf8'
-// 	);
-// 	const packageJson = JSON.parse(packageJsonTxt) as PackageJson;
-// 	delete packageJson.scripts.prepare;
-// 	fs.writeFileSync(
-// 		path.join(process.cwd(), 'lib', 'package.json'),
-// 		JSON.stringify(packageJson, null, 2)
-// 	);
-// };
-//
-// fixEsImports2();
-// copyPackageJson();
+pipe(buildProject(), Either.chain(fixEsImports), Either.chain(copyPackageJson));
