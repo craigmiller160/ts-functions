@@ -44,24 +44,19 @@ const runCommand = (command: string): Try.Try<string> => {
 		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
 };
 
+const fixImportIfPresent = (line: string): string =>
+	pipe(
+		captureFpTsGroups(line),
+		Option.fold(
+			() => line,
+			(groups) => `${groups.importName}'fp-ts/es6/${groups.fileName}'`
+		)
+	);
+
 const fixImportsInFile: (file: string) => Try.Try<string[]> = flow(
 	(file) => path.join(ES_LIB_PATH, file),
 	File.readFileSync,
-	Either.map(
-		flow(
-			Text.split('\n'),
-			Arr.map((line) =>
-				pipe(
-					captureFpTsGroups(line),
-					Option.fold(
-						() => line,
-						(groups) =>
-							`${groups.importName}'fp-ts/es6/${groups.fileName}'`
-					)
-				)
-			)
-		)
-	)
+	Either.map(flow(Text.split('\n'), Arr.map(fixImportIfPresent)))
 );
 
 const fixEsImports = () => {
@@ -70,7 +65,7 @@ const fixEsImports = () => {
 	pipe(
 		// TODO clean this up and re-combine everything
 		File.listFilesSync(ES_LIB_PATH),
-		Either.map(flow(Arr.map(fixImportsInFile)))
+		Either.chain(flow(Arr.map(fixImportsInFile), Either.sequenceArray))
 	);
 };
 
