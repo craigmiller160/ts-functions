@@ -5,5 +5,5 @@ export const split =
 		text.split(delimiter);
 
 // TODO write test
-export const combine = (delimiter: string) => (s1: string, s2: string) =>
+export const concat = (delimiter: string) => (s1: string, s2: string) =>
 	`${s1}${delimiter}${s2}`;
