@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import spawn from 'cross-spawn';
 import path from 'path';
-import fs from 'fs';
 import { flow, pipe } from 'fp-ts/function';
 import * as File from '../src/File';
 import * as Try from '../src/Try';
@@ -33,6 +32,7 @@ const LIB_PATH = path.join(process.cwd(), 'lib');
 const ES_LIB_PATH = path.join(LIB_PATH, 'es');
 
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
+const concatWithNewline = Text.concat('\n');
 
 const runCommand = (command: string): Try.Try<string> => {
 	console.log(`Command: ${command}`);
@@ -53,25 +53,36 @@ const fixImportIfPresent = (line: string): string =>
 		)
 	);
 
-const fixImportsInFile: (file: string) => Try.Try<string> = flow(
-	(file) => path.join(ES_LIB_PATH, file),
-	File.readFileSync,
-	Either.map(
-		flow(
-			Text.split('\n'),
-			Arr.map(fixImportIfPresent),
-			Arr.reduce('', (a, b) => `${a}\n${b}`)
+const fixImportsInFile = (file: string): Try.Try<FileHolder> => {
+	const fullFilePath = path.join(ES_LIB_PATH, file);
+	return pipe(
+		File.readFileSync(fullFilePath),
+		Either.map(
+			flow(
+				Text.split('\n'),
+				Arr.map(fixImportIfPresent),
+				Arr.reduce('', concatWithNewline)
+			)
+		),
+		Either.map(
+			(content): FileHolder => ({
+				filePath: fullFilePath,
+				fileContent: content
+			})
 		)
-	)
-);
+	);
+};
 
-const fixEsImports = () => {
+const writeFile = (fileHolder: FileHolder): Try.Try<void> =>
+	File.writeFileSync(fileHolder.filePath, fileHolder.fileContent);
+
+const fixEsImports = (): Try.Try<any> => {
 	console.log('Fixing ES Imports');
 
-	pipe(
+	return pipe(
 		File.listFilesSync(ES_LIB_PATH),
 		Either.chain(flow(Arr.map(fixImportsInFile), Either.sequenceArray)),
-		// TODO need file name and content, then write it out
+		Either.chain(flow(Arr.map(writeFile), Either.sequenceArray))
 	);
 };
 
@@ -82,8 +93,7 @@ const buildProject = (): Try.Try<string> =>
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
 
-// TODO delete below here
-process.exit(0);
+pipe(buildProject(), Either.chain(fixEsImports));
 
 // const fixEsImports2 = () => {
 // 	console.log('Fixing ES Imports');
