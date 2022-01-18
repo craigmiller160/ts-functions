@@ -8,6 +8,7 @@ import * as Try from '../src/Try'
 import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
 import * as Arr from 'fp-ts/Array';
+import * as Text from '../src/Text'
 
 interface PackageJson {
 	scripts: {
@@ -46,7 +47,13 @@ const fixEsImports = () => {
 		ES_LIB_PATH,
 		File.listFilesSync,
 		Either.map(flow(
-			Arr.map((file) => path.join(ES_LIB_PATH, file))
+			Arr.map(flow(
+				(file) => path.join(ES_LIB_PATH, file),
+				File.readFileSync,
+				Either.map(flow(
+					Text.split('\n') // TODO left off here
+				))
+			))
 		))
 	)
 };
