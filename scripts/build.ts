@@ -4,13 +4,13 @@ import path from 'path';
 import fs from 'fs';
 import { flow, pipe } from 'fp-ts/function';
 import * as File from '../src/File';
-import * as Try from '../src/Try'
+import * as Try from '../src/Try';
 import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
 import * as Arr from 'fp-ts/Array';
-import * as Text from '../src/Text'
+import * as Text from '../src/Text';
 import * as Regex from '../src/Regex';
-import * as Option from 'fp-ts/Option'
+import * as Option from 'fp-ts/Option';
 
 interface PackageJson {
 	scripts: {
@@ -44,30 +44,34 @@ const runCommand = (command: string): Try.Try<string> => {
 		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
 };
 
+const fixImportsInFile: (file: string) => Try.Try<string[]> = flow(
+	(file) => path.join(ES_LIB_PATH, file),
+	File.readFileSync,
+	Either.map(
+		flow(
+			Text.split('\n'),
+			Arr.map((line) =>
+				pipe(
+					captureFpTsGroups(line),
+					Option.fold(
+						() => line,
+						(groups) =>
+							`${groups.importName}'fp-ts/es6/${groups.fileName}'`
+					)
+				)
+			)
+		)
+	)
+);
+
 const fixEsImports = () => {
 	console.log('Fixing ES Imports');
 
-	pipe( // TODO clean this up and re-combine everything
+	pipe(
+		// TODO clean this up and re-combine everything
 		File.listFilesSync(ES_LIB_PATH),
-		Either.map(flow(
-			Arr.map(flow(
-				(file) => path.join(ES_LIB_PATH, file),
-				File.readFileSync,
-				Either.map(flow(
-					Text.split('\n'),
-					Arr.map((line) =>
-						pipe(
-							captureFpTsGroups(line),
-							Option.fold(
-								() => line,
-								(groups) => `${groups.importName}'fp-ts/es6/${groups.fileName}'`
-							)
-						)
-					)
-				))
-			))
-		))
-	)
+		Either.map(flow(Arr.map(fixImportsInFile)))
+	);
 };
 
 const buildProject = (): Try.Try<string> =>
@@ -79,7 +83,6 @@ const buildProject = (): Try.Try<string> =>
 
 // TODO delete below here
 process.exit(0);
-
 
 const fixEsImports2 = () => {
 	console.log('Fixing ES Imports');
