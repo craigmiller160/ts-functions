@@ -2,11 +2,12 @@
 import spawn from 'cross-spawn';
 import path from 'path';
 import fs from 'fs';
-import { pipe } from 'fp-ts/function';
+import { flow, pipe } from 'fp-ts/function';
 import * as File from '../src/File';
 import * as Try from '../src/Try'
 import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
+import * as Arr from 'fp-ts/Array';
 
 interface PackageJson {
 	scripts: {
@@ -19,8 +20,14 @@ interface FpTsGroups {
 	readonly fileName: string;
 }
 
+interface FileHolder {
+	readonly filePath: string;
+	readonly fileContent: string;
+}
+
 const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
 const LIB_PATH = path.join(process.cwd(), 'lib');
+const ES_LIB_PATH = path.join(LIB_PATH, 'es');
 
 const runCommand = (command: string): Try.Try<string> => {
 	console.log(`Command: ${command}`);
@@ -30,7 +37,19 @@ const runCommand = (command: string): Try.Try<string> => {
 	return match(result)
 		.with({ status: 0 }, () => Either.right(command))
 		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
-}
+};
+
+const fixEsImports = () => {
+	console.log('Fixing ES Imports');
+
+	pipe(
+		ES_LIB_PATH,
+		File.listFilesSync,
+		Either.map(flow(
+			Arr.map((file) => path.join(ES_LIB_PATH, file))
+		))
+	)
+};
 
 const buildProject = (): Try.Try<string> =>
 	pipe(
@@ -44,7 +63,7 @@ const buildProject = (): Try.Try<string> =>
 process.exit(0);
 
 
-const fixEsImports = () => {
+const fixEsImports2 = () => {
 	console.log('Fixing ES Imports');
 	const esOutput = path.join(process.cwd(), 'lib', 'es');
 	const files = fs.readdirSync(esOutput);
@@ -79,5 +98,5 @@ const copyPackageJson = () => {
 	);
 };
 
-fixEsImports();
+fixEsImports2();
 copyPackageJson();
