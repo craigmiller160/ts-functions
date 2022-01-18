@@ -47,7 +47,7 @@ const runCommand = (command: string): Try.Try<string> => {
 const fixEsImports = () => {
 	console.log('Fixing ES Imports');
 
-	pipe(
+	pipe( // TODO clean this up and re-combine everything
 		File.listFilesSync(ES_LIB_PATH),
 		Either.map(flow(
 			Arr.map(flow(
