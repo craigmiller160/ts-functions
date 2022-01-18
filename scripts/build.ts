@@ -9,6 +9,8 @@ import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
 import * as Arr from 'fp-ts/Array';
 import * as Text from '../src/Text'
+import * as Regex from '../src/Regex';
+import * as Option from 'fp-ts/Option'
 
 interface PackageJson {
 	scripts: {
@@ -30,6 +32,8 @@ const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
 const LIB_PATH = path.join(process.cwd(), 'lib');
 const ES_LIB_PATH = path.join(LIB_PATH, 'es');
 
+const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
+
 const runCommand = (command: string): Try.Try<string> => {
 	console.log(`Command: ${command}`);
 	const result = spawn.sync('bash', ['-c', command], {
@@ -44,17 +48,22 @@ const fixEsImports = () => {
 	console.log('Fixing ES Imports');
 
 	pipe(
-		ES_LIB_PATH,
-		File.listFilesSync,
+		File.listFilesSync(ES_LIB_PATH),
 		Either.map(flow(
 			Arr.map(flow(
 				(file) => path.join(ES_LIB_PATH, file),
 				File.readFileSync,
 				Either.map(flow(
 					Text.split('\n'),
-					Arr.map((line) => {
-						return line;
-					})
+					Arr.map((line) =>
+						pipe(
+							captureFpTsGroups(line),
+							Option.fold(
+								() => line,
+								(groups) => `${groups.importName}'fp-ts/es6/${groups.fileName}'`
+							)
+						)
+					)
 				))
 			))
 		))
@@ -63,8 +72,7 @@ const fixEsImports = () => {
 
 const buildProject = (): Try.Try<string> =>
 	pipe(
-		LIB_PATH,
-		File.rmIfExistsSync,
+		File.rmIfExistsSync(LIB_PATH),
 		Either.chain(() => runCommand('tsc')),
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
