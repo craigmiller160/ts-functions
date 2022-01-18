@@ -9,6 +9,12 @@ export const readFileSync = (
 	encoding: BufferEncoding = 'utf8'
 ): Try.Try<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
 
+// TODO write tests
+export const writeFileSync = (
+	filePath: string,
+	content: string
+): Try.Try<void> => Try.tryCatch(() => fs.writeFileSync(filePath, content));
+
 export const existsSync =
 	<T>(fn: (filePath: string) => T) =>
 	(filePath: string): Option.Option<T> => {
