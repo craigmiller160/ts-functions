@@ -113,4 +113,13 @@ const copyPackageJson = (): Try.Try<void> =>
 		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_PATH, _))
 	);
 
-pipe(buildProject(), Either.chain(fixEsImports), Either.chain(copyPackageJson));
+pipe(buildProject(), Either.chain(fixEsImports), Either.chain(copyPackageJson), Either.fold(
+	(ex) => {
+		console.error('Critical error in build', ex);
+		process.exit(1);
+	},
+	() => {
+		console.log('Build completed successfully')
+		process.exit(0);
+	}
+));
