@@ -6,7 +6,6 @@ import * as File from '../src/File';
 import * as Try from '../src/Try';
 import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
-import * as Arr from 'fp-ts/Array';
 import * as RArr from 'fp-ts/ReadonlyArray';
 import * as Text from '../src/Text';
 import * as Regex from '../src/Regex';
@@ -65,8 +64,8 @@ const fixImportsInFile = (file: string): Try.Try<FileHolder> => {
 		Either.map(
 			flow(
 				Text.split('\n'),
-				Arr.map(fixImportIfPresent),
-				Arr.reduce('', concatWithNewline)
+				RArr.map(fixImportIfPresent),
+				RArr.reduce('', concatWithNewline)
 			)
 		),
 		Either.map(
@@ -86,7 +85,7 @@ const fixEsImports = (): Try.Try<ReadonlyArray<void>> => {
 
 	return pipe(
 		File.listFilesSync(ES_LIB_PATH),
-		Either.chain(flow(Arr.map(fixImportsInFile), Either.sequenceArray)),
+		Either.chain(flow(RArr.map(fixImportsInFile), Either.sequenceArray)),
 		Either.chain(flow(RArr.map(writeFile), Either.sequenceArray))
 	);
 };

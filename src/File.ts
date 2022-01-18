@@ -3,6 +3,7 @@ import * as Try from './Try';
 import * as Either from 'fp-ts/Either';
 import * as Option from 'fp-ts/Option';
 import { flow, identity, pipe } from 'fp-ts/function';
+import * as RArr from 'fp-ts/ReadonlyArray';
 
 export const readFileSync = (
 	filePath: string,
@@ -60,5 +61,7 @@ export const mkdirSync = (filePath: string): Try.Try<string> =>
 		)
 	);
 
-export const listFilesSync = (filePath: string): Try.Try<string[]> =>
-	Try.tryCatch(() => fs.readdirSync(filePath));
+export const listFilesSync = (
+	filePath: string
+): Try.Try<ReadonlyArray<string>> =>
+	Try.tryCatch(() => RArr.fromArray(fs.readdirSync(filePath)));
