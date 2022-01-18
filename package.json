@@ -24,9 +24,9 @@
     "*.{ts,tsx}": "yarn lint"
   },
   "peerDependencies": {
+    "date-fns": ">=2.28.0",
     "fp-ts": ">=2.11.7",
-    "ts-pattern": ">=3.3.4",
-    "date-fns": ">=2.28.0"
+    "ts-pattern": ">=3.3.4"
   },
   "devDependencies": {
     "@craigmiller160/config-merge": "^1.0.0",
@@ -43,6 +43,7 @@
     "date-fns": "^2.28.0",
     "fp-ts": "^2.11.7",
     "husky": "^7.0.4",
+    "immer": "^9.0.12",
     "io-ts": "^2.2.16",
     "lint-staged": "^12.1.7",
     "prettier": "^2.5.1",

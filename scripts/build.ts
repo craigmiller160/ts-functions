@@ -12,6 +12,7 @@ import * as Text from '../src/Text';
 import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 import * as Json from '../src/Json';
+import immer from 'immer';
 
 interface PackageJson {
 	scripts: {
@@ -101,13 +102,9 @@ const copyPackageJson = (): Try.Try<void> =>
 	pipe(
 		File.readFileSync(PACKAGE_JSON_PATH),
 		Either.chain((_) => Json.parse<PackageJson>(_)),
-		Either.map(
-			(_): PackageJson => ({
-				..._,
-				scripts: {
-					..._.scripts,
-					prepare: undefined
-				}
+		Either.map((_) =>
+			immer(_, (draft) => {
+				delete draft.scripts.prepare;
 			})
 		),
 		Either.chain((_) => Json.stringify(_, 2)),
