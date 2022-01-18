@@ -53,19 +53,25 @@ const fixImportIfPresent = (line: string): string =>
 		)
 	);
 
-const fixImportsInFile: (file: string) => Try.Try<string[]> = flow(
+const fixImportsInFile: (file: string) => Try.Try<string> = flow(
 	(file) => path.join(ES_LIB_PATH, file),
 	File.readFileSync,
-	Either.map(flow(Text.split('\n'), Arr.map(fixImportIfPresent)))
+	Either.map(
+		flow(
+			Text.split('\n'),
+			Arr.map(fixImportIfPresent),
+			Arr.reduce('', (a, b) => `${a}\n${b}`)
+		)
+	)
 );
 
 const fixEsImports = () => {
 	console.log('Fixing ES Imports');
 
 	pipe(
-		// TODO clean this up and re-combine everything
 		File.listFilesSync(ES_LIB_PATH),
-		Either.chain(flow(Arr.map(fixImportsInFile), Either.sequenceArray))
+		Either.chain(flow(Arr.map(fixImportsInFile), Either.sequenceArray)),
+		// TODO need file name and content, then write it out
 	);
 };
 
@@ -79,40 +85,40 @@ const buildProject = (): Try.Try<string> =>
 // TODO delete below here
 process.exit(0);
 
-const fixEsImports2 = () => {
-	console.log('Fixing ES Imports');
-	const esOutput = path.join(process.cwd(), 'lib', 'es');
-	const files = fs.readdirSync(esOutput);
-	files.forEach((file) => {
-		const fullFilePath = path.join(esOutput, file);
-		const text = fs.readFileSync(fullFilePath, 'utf8');
-		const newText = text
-			.split('\n')
-			.map((line) => {
-				if (FP_TS_REGEX.test(line)) {
-					const groups = FP_TS_REGEX.exec(line)
-						?.groups as unknown as FpTsGroups;
-					return `${groups.importName}'fp-ts/es6/${groups.fileName}';`;
-				}
-				return line;
-			})
-			.join('\n');
-		fs.writeFileSync(fullFilePath, newText);
-	});
-};
+// const fixEsImports2 = () => {
+// 	console.log('Fixing ES Imports');
+// 	const esOutput = path.join(process.cwd(), 'lib', 'es');
+// 	const files = fs.readdirSync(esOutput);
+// 	files.forEach((file) => {
+// 		const fullFilePath = path.join(esOutput, file);
+// 		const text = fs.readFileSync(fullFilePath, 'utf8');
+// 		const newText = text
+// 			.split('\n')
+// 			.map((line) => {
+// 				if (FP_TS_REGEX.test(line)) {
+// 					const groups = FP_TS_REGEX.exec(line)
+// 						?.groups as unknown as FpTsGroups;
+// 					return `${groups.importName}'fp-ts/es6/${groups.fileName}';`;
+// 				}
+// 				return line;
+// 			})
+// 			.join('\n');
+// 		fs.writeFileSync(fullFilePath, newText);
+// 	});
+// };
 
-const copyPackageJson = () => {
-	const packageJsonTxt = fs.readFileSync(
-		path.join(process.cwd(), 'package.json'),
-		'utf8'
-	);
-	const packageJson = JSON.parse(packageJsonTxt) as PackageJson;
-	delete packageJson.scripts.prepare;
-	fs.writeFileSync(
-		path.join(process.cwd(), 'lib', 'package.json'),
-		JSON.stringify(packageJson, null, 2)
-	);
-};
-
-fixEsImports2();
-copyPackageJson();
+// const copyPackageJson = () => {
+// 	const packageJsonTxt = fs.readFileSync(
+// 		path.join(process.cwd(), 'package.json'),
+// 		'utf8'
+// 	);
+// 	const packageJson = JSON.parse(packageJsonTxt) as PackageJson;
+// 	delete packageJson.scripts.prepare;
+// 	fs.writeFileSync(
+// 		path.join(process.cwd(), 'lib', 'package.json'),
+// 		JSON.stringify(packageJson, null, 2)
+// 	);
+// };
+//
+// fixEsImports2();
+// copyPackageJson();
