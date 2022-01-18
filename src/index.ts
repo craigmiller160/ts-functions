@@ -1,2 +1,11 @@
 export * as Regex from './Regex';
 export * as Sleep from './Sleep';
+export * as File from './File';
+export * as Json from './Json';
+export * as OptionExt from './OptionExt';
+export * as Pattern from './Pattern';
+export * as TaskTry from './TaskTry';
+export * as Try from './Try';
+export * as Text from './Text';
+export * as Time from './Time';
+export * as Uri from './Uri';
