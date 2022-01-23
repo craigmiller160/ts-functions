@@ -12,6 +12,7 @@ import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 import * as Json from '../src/Json';
 import immer from 'immer';
+import { TryT } from '../src/types';
 
 interface PackageJson {
 	scripts: {
@@ -38,7 +39,7 @@ const PACKAGE_JSON_LIB_PATH = path.join(LIB_PATH, 'package.json');
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
 const concatWithNewline = Text.concat('\n');
 
-const runCommand = (command: string): Try.Try<string> => {
+const runCommand = (command: string): TryT<string> => {
 	console.log(`Command: ${command}`);
 	const result = spawn.sync('bash', ['-c', command], {
 		stdio: 'inherit'
@@ -57,7 +58,7 @@ const fixImportIfPresent = (line: string): string =>
 		)
 	);
 
-const fixImportsInFile = (file: string): Try.Try<FileHolder> => {
+const fixImportsInFile = (file: string): TryT<FileHolder> => {
 	const fullFilePath = path.join(ES_LIB_PATH, file);
 	return pipe(
 		File.readFileSync(fullFilePath),
@@ -77,10 +78,10 @@ const fixImportsInFile = (file: string): Try.Try<FileHolder> => {
 	);
 };
 
-const writeFile = (fileHolder: FileHolder): Try.Try<void> =>
+const writeFile = (fileHolder: FileHolder): TryT<void> =>
 	File.writeFileSync(fileHolder.filePath, fileHolder.fileContent);
 
-const fixEsImports = (): Try.Try<ReadonlyArray<void>> => {
+const fixEsImports = (): TryT<ReadonlyArray<void>> => {
 	console.log('Fixing ES Imports');
 
 	return pipe(
@@ -90,14 +91,14 @@ const fixEsImports = (): Try.Try<ReadonlyArray<void>> => {
 	);
 };
 
-const buildProject = (): Try.Try<string> =>
+const buildProject = (): TryT<string> =>
 	pipe(
 		File.rmIfExistsSync(LIB_PATH),
 		Either.chain(() => runCommand('tsc')),
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
 
-const copyPackageJson = (): Try.Try<void> =>
+const copyPackageJson = (): TryT<void> =>
 	pipe(
 		File.readFileSync(PACKAGE_JSON_PATH),
 		Either.chain((_) => Json.parse<PackageJson>(_)),

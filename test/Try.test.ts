@@ -3,11 +3,12 @@ import * as Either from 'fp-ts/Either';
 import { identity } from 'fp-ts/function';
 import '@relmify/jest-fp-ts';
 import { getOrThrow } from '../src/Try';
+import { TryT } from '../src/types';
 
 describe('Try', () => {
 	it('tryCatch', () => {
-		const successTry: Try.Try<string> = Try.tryCatch(() => 'Hello');
-		const failTry: Try.Try<string> = Try.tryCatch(() => {
+		const successTry: TryT<string> = Try.tryCatch(() => 'Hello');
+		const failTry: TryT<string> = Try.tryCatch(() => {
 			throw new Error('Dying');
 		});
 
@@ -22,8 +23,8 @@ describe('Try', () => {
 	});
 
 	it('getOrThrow', () => {
-		const successTry: Try.Try<string> = Try.tryCatch(() => 'Hello');
-		const failTry: Try.Try<string> = Try.tryCatch(() => {
+		const successTry: TryT<string> = Try.tryCatch(() => 'Hello');
+		const failTry: TryT<string> = Try.tryCatch(() => {
 			throw new Error('Dying');
 		});
 

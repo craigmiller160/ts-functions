@@ -1,6 +1,6 @@
 import * as Json from '../src/Json';
-import * as Try from '../src/Try';
 import '@relmify/jest-fp-ts';
+import { TryT } from '../src/types';
 
 interface Value {
 	readonly one: string;
@@ -9,7 +9,7 @@ interface Value {
 describe('Json', () => {
 	it('parse', () => {
 		const text = '{"one":"two"}';
-		const result: Try.Try<Value> = Json.parse<Value>(text);
+		const result: TryT<Value> = Json.parse<Value>(text);
 		expect(result).toEqualRight({
 			one: 'two'
 		});
@@ -19,7 +19,7 @@ describe('Json', () => {
 		const value: Value = {
 			one: 'two'
 		};
-		const result: Try.Try<string> = Json.stringify(value);
+		const result: TryT<string> = Json.stringify(value);
 		expect(result).toEqualRight('{"one":"two"}');
 	});
 });

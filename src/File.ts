@@ -4,16 +4,15 @@ import * as Either from 'fp-ts/Either';
 import * as Option from 'fp-ts/Option';
 import { flow, identity, pipe } from 'fp-ts/function';
 import * as RArr from 'fp-ts/ReadonlyArray';
+import { TryT } from './types';
 
 export const readFileSync = (
 	filePath: string,
 	encoding: BufferEncoding = 'utf8'
-): Try.Try<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
+): TryT<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
 
-export const writeFileSync = (
-	filePath: string,
-	content: string
-): Try.Try<void> => Try.tryCatch(() => fs.writeFileSync(filePath, content));
+export const writeFileSync = (filePath: string, content: string): TryT<void> =>
+	Try.tryCatch(() => fs.writeFileSync(filePath, content));
 
 export const existsSync =
 	<T>(fn: (filePath: string) => T) =>
@@ -24,7 +23,7 @@ export const existsSync =
 		return Option.none;
 	};
 
-type RmIfExistsSync = (filePath: string) => Try.Try<unknown>;
+type RmIfExistsSync = (filePath: string) => TryT<unknown>;
 export const rmIfExistsSync: RmIfExistsSync = flow(
 	existsSync((path) =>
 		Try.tryCatch(() =>
@@ -34,13 +33,10 @@ export const rmIfExistsSync: RmIfExistsSync = flow(
 			})
 		)
 	),
-	Option.fold<Try.Try<void>, Try.Try<unknown>>(
-		() => Either.right(null),
-		identity
-	)
+	Option.fold<TryT<void>, TryT<unknown>>(() => Either.right(null), identity)
 );
 
-export const mkdirSync = (filePath: string): Try.Try<string> =>
+export const mkdirSync = (filePath: string): TryT<string> =>
 	pipe(
 		Try.tryCatch(() =>
 			fs.mkdirSync(filePath, {
@@ -61,7 +57,5 @@ export const mkdirSync = (filePath: string): Try.Try<string> =>
 		)
 	);
 
-export const listFilesSync = (
-	filePath: string
-): Try.Try<ReadonlyArray<string>> =>
+export const listFilesSync = (filePath: string): TryT<ReadonlyArray<string>> =>
 	Try.tryCatch(() => RArr.fromArray(fs.readdirSync(filePath)));
