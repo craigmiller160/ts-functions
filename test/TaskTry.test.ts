@@ -3,13 +3,14 @@ import * as Try from '../src/Try';
 import * as TaskEither from 'fp-ts/TaskEither';
 import * as Task from 'fp-ts/Task';
 import '@relmify/jest-fp-ts';
+import { TaskTryT } from '../src/types';
 
 describe('TaskTry', () => {
 	it('tryCatch', async () => {
-		const successTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(
+		const successTry: TaskTryT<string> = TaskTry.tryCatch(
 			async () => 'Hello'
 		);
-		const failTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(async () => {
+		const failTry: TaskTryT<string> = TaskTry.tryCatch(async () => {
 			throw new Error('Dying');
 		});
 
@@ -21,7 +22,7 @@ describe('TaskTry', () => {
 	});
 
 	it('TaskTry<T> is interchangeable with TaskEither<Error,T>', async () => {
-		const successTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(
+		const successTry: TaskTryT<string> = TaskTry.tryCatch(
 			async () => 'Hello'
 		);
 		const result = await TaskEither.fold(
@@ -33,10 +34,10 @@ describe('TaskTry', () => {
 	});
 
 	it('getOrThrow', async () => {
-		const successTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(
+		const successTry: TaskTryT<string> = TaskTry.tryCatch(
 			async () => 'Hello'
 		);
-		const failTry: TaskTry.TaskTry<string> = TaskTry.tryCatch(async () => {
+		const failTry: TaskTryT<string> = TaskTry.tryCatch(async () => {
 			throw new Error('Dying');
 		});
 
