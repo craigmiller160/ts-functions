@@ -13,3 +13,5 @@ export type ReaderEitherT<D, E, T> = ReaderEither<D, E, T>;
 export type ReaderTaskEitherT<D, E, T> = ReaderTaskEither<D, E, T>;
 export type { Task as TaskT } from 'fp-ts/Task';
 export type { ReaderTask as ReaderTaskT } from 'fp-ts/ReaderTask';
+export type { IO as IOT } from 'fp-ts/IO';
+export type { IOEither as IOEitherT } from 'fp-ts/IOEither';
