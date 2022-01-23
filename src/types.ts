@@ -12,3 +12,4 @@ export type { Reader as ReaderT } from 'fp-ts/Reader';
 export type ReaderEitherT<D, E, T> = ReaderEither<D, E, T>;
 export type ReaderTaskEitherT<D, E, T> = ReaderTaskEither<D, E, T>;
 export type { Task as TaskT } from 'fp-ts/Task';
+export type { ReaderTask as ReaderTaskT } from 'fp-ts/ReaderTask';
