@@ -15,3 +15,4 @@ export type { Task as TaskT } from 'fp-ts/Task';
 export type { ReaderTask as ReaderTaskT } from 'fp-ts/ReaderTask';
 export type { IO as IOT } from 'fp-ts/IO';
 export type { IOEither as IOEitherT } from 'fp-ts/IOEither';
+export type { Predicate as PredicateT } from 'fp-ts/Predicate';
