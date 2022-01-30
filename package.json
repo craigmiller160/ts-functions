@@ -14,7 +14,7 @@
     "build": "yarn lint && yarn test && yarn forceBuild",
     "lint:project": "craig-lint",
     "lint": "yarn lint:project && yarn lint:scripts",
-    "lint:scripts": "eslint scripts --fix",
+    "lint:scripts": "eslint scripts --fix --max-warnings=0",
     "test": "craig-test",
     "forceBuild": "ts-node scripts/build.ts",
     "validate": "yarn lint && yarn test",

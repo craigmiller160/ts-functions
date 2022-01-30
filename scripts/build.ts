@@ -3,7 +3,6 @@ import spawn from 'cross-spawn';
 import path from 'path';
 import { flow, pipe } from 'fp-ts/function';
 import * as File from '../src/File';
-import * as Try from '../src/Try';
 import * as Either from 'fp-ts/Either';
 import { match } from 'ts-pattern';
 import * as RArr from 'fp-ts/ReadonlyArray';
