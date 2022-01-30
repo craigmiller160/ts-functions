@@ -18,6 +18,14 @@ describe('DateFns', () => {
 		expect(actual).toEqual(expected);
 	});
 
+	it('addHours', () => {
+		throw new Error();
+	});
+
+	it('addDays', () => {
+		throw new Error();
+	});
+
 	it('addWeeks', () => {
 		const date = new Date();
 		const expected = addWeeks(date, 1);
@@ -37,6 +45,30 @@ describe('DateFns', () => {
 		const expected = addYears(date, 1);
 		const actual = Time.addYears(1)(date);
 		expect(actual).toEqual(expected);
+	});
+
+	it('subMinutes', () => {
+		throw new Error();
+	});
+
+	it('subHours', () => {
+		throw new Error();
+	});
+
+	it('subDays', () => {
+		throw new Error();
+	});
+
+	it('subWeeks', () => {
+		throw new Error();
+	});
+
+	it('subMonths', () => {
+		throw new Error();
+	});
+
+	it('subYears', () => {
+		throw new Error();
 	});
 
 	it('format', () => {

@@ -1,17 +1,35 @@
 import {
 	addMinutes as baseAddMinutes,
+	addHours as baseAddHours,
+	addDays as baseAddDays,
 	addWeeks as baseAddWeeks,
 	addMonths as baseAddMonths,
 	addYears as baseAddYears,
 	format as baseFormat,
 	parse as baseParse,
-	compareAsc as baseCompareAsc
+	compareAsc as baseCompareAsc,
+	subMinutes as baseSubMinutes,
+	subHours as baseSubHours,
+	subWeeks as baseSubWeeks,
+	subMonths as baseSubMonths,
+	subYears as baseSubYears,
+	subDays as baseSubDays
 } from 'date-fns';
 
 export const addMinutes =
 	(amount: number) =>
 	(date: Date): Date =>
 		baseAddMinutes(date, amount);
+
+export const addHours =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseAddHours(date, amount);
+
+export const addDays =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseAddDays(date, amount);
 
 export const addWeeks =
 	(amount: number) =>
@@ -27,6 +45,36 @@ export const addYears =
 	(amount: number) =>
 	(date: Date): Date =>
 		baseAddYears(date, amount);
+
+export const subMinutes =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubMinutes(date, amount);
+
+export const subHours =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubHours(date, amount);
+
+export const subDays =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubDays(date, amount);
+
+export const subWeeks =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubWeeks(date, amount);
+
+export const subMonths =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubMonths(date, amount);
+
+export const subYears =
+	(amount: number) =>
+	(date: Date): Date =>
+		baseSubYears(date, amount);
 
 export const format =
 	(formatString: string) =>
