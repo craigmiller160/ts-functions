@@ -11,6 +11,18 @@ describe('DateFns', () => {
 		expect(actual).toEqual(expected);
 	});
 
+	it('addWeeks', () => {
+		throw new Error();
+	});
+
+	it('addMonths', () => {
+		throw new Error();
+	});
+
+	it('addYears', () => {
+		throw new Error();
+	});
+
 	it('format', () => {
 		const date = new Date();
 		const expected = format(date, DATE_FORMAT);
