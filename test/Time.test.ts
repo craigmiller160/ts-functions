@@ -1,4 +1,11 @@
-import { addMinutes, format, parse } from 'date-fns';
+import {
+	addMinutes,
+	addMonths,
+	addYears,
+	addWeeks,
+	format,
+	parse
+} from 'date-fns';
 import * as Time from '../src/Time';
 
 const DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';
@@ -12,15 +19,24 @@ describe('DateFns', () => {
 	});
 
 	it('addWeeks', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = addWeeks(date, 1);
+		const actual = Time.addWeeks(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('addMonths', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = addMonths(date, 1);
+		const actual = Time.addMonths(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('addYears', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = addYears(date, 1);
+		const actual = Time.addYears(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('format', () => {
