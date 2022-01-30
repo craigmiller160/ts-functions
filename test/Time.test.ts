@@ -4,7 +4,15 @@ import {
 	addYears,
 	addWeeks,
 	format,
-	parse
+	parse,
+	addHours,
+	addDays,
+	subMinutes,
+	subHours,
+	subDays,
+	subWeeks,
+	subMonths,
+	subYears
 } from 'date-fns';
 import * as Time from '../src/Time';
 
@@ -19,11 +27,17 @@ describe('DateFns', () => {
 	});
 
 	it('addHours', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = addHours(date, 1);
+		const actual = Time.addHours(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('addDays', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = addDays(date, 1);
+		const actual = Time.addDays(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('addWeeks', () => {
@@ -48,27 +62,45 @@ describe('DateFns', () => {
 	});
 
 	it('subMinutes', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subMinutes(date, 1);
+		const actual = Time.subMinutes(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('subHours', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subHours(date, 1);
+		const actual = Time.subHours(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('subDays', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subDays(date, 1);
+		const actual = Time.subDays(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('subWeeks', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subWeeks(date, 1);
+		const actual = Time.subWeeks(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('subMonths', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subMonths(date, 1);
+		const actual = Time.subMonths(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('subYears', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = subYears(date, 1);
+		const actual = Time.subYears(1)(date);
+		expect(actual).toEqual(expected);
 	});
 
 	it('format', () => {
