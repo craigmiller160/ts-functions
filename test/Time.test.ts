@@ -12,9 +12,11 @@ import {
 	subDays,
 	subWeeks,
 	subMonths,
-	subYears
+	subYears,
+	set
 } from 'date-fns';
 import * as Time from '../src/Time';
+import { SetTimeOptions } from '../src/Time';
 
 const DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';
 
@@ -125,5 +127,36 @@ describe('DateFns', () => {
 
 		const result = Time.compare(date1)(date2);
 		expect(result).toEqual(-1);
+	});
+
+	it('set with all options', () => {
+		const date = new Date();
+		const options: SetTimeOptions = {
+			year: 2000,
+			month: 1,
+			date: 2,
+			hours: 3,
+			minutes: 4,
+			seconds: 5,
+			milliseconds: 6
+		};
+
+		const expected = set(date, options);
+		const actual = Time.set(options)(date);
+
+		expect(actual).toEqual(expected);
+	});
+
+	it('set with just time', () => {
+		const date = new Date();
+		const options: SetTimeOptions = {
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+			milliseconds: 0
+		};
+		const expected = set(date, options);
+		const actual = Time.set(options)(date);
+		expect(actual).toEqual(expected);
 	});
 });

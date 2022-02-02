@@ -13,8 +13,24 @@ import {
 	subWeeks as baseSubWeeks,
 	subMonths as baseSubMonths,
 	subYears as baseSubYears,
-	subDays as baseSubDays
+	subDays as baseSubDays,
+	set as baseSet
 } from 'date-fns';
+
+export interface SetTimeOptions {
+	readonly year?: number;
+	readonly month?: number;
+	readonly date?: number;
+	readonly hours?: number;
+	readonly minutes?: number;
+	readonly seconds?: number;
+	readonly milliseconds?: number;
+}
+
+export const set =
+	(options: SetTimeOptions) =>
+	(date: Date): Date =>
+		baseSet(date, options);
 
 export const addMinutes =
 	(amount: number) =>
