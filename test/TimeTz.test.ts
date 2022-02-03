@@ -1,4 +1,4 @@
-import { addMinutes, format } from 'date-fns';
+import { addMinutes, format, set } from 'date-fns';
 import * as TimeTz from '../src/TimeTz';
 
 const TIMESTAMP_FORMAT = 'yyyy-MM-dd HH:mm:ss.SSS';
@@ -21,7 +21,20 @@ describe('TimeTz', () => {
 	});
 
 	it('format', () => {
-		// TODO this will work, above does not
-		throw new Error();
+		const date = set(new Date(), {
+			year: 2020,
+			month: 1,
+			date: 1,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+			milliseconds: 0
+		});
+		const expectedUtc = format(
+			addMinutes(date, OFFSET_MINS),
+			TIMESTAMP_FORMAT
+		);
+		const actualUtc = TimeTz.format('UTC')(TIMESTAMP_FORMAT)(date);
+		expect(actualUtc).toEqual(expectedUtc);
 	});
 });
