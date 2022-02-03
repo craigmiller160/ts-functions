@@ -179,4 +179,8 @@ describe('DateFns', () => {
 		const actualUtc = Time.formatTZ('UTC')(TIMESTAMP_FORMAT)(date);
 		expect(actualUtc).toEqual(expectedUtc);
 	});
+
+	it('setUtc', () => {
+		throw new Error();
+	});
 });

@@ -33,6 +33,11 @@ export const set =
 	(date: Date): Date =>
 		baseSet(date, options);
 
+export const setUtc =
+	(options: SetTimeOptions) =>
+	(date: Date): Date =>
+		baseAddMinutes(baseSet(date, options), date.getTimezoneOffset() * -1);
+
 export const addMinutes =
 	(amount: number) =>
 	(date: Date): Date =>
