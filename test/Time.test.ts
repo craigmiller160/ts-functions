@@ -181,6 +181,19 @@ describe('DateFns', () => {
 	});
 
 	it('setUtc', () => {
-		throw new Error();
+		const date = new Date();
+		const expected = set(date, {
+			hours: 16,
+			minutes: 0,
+			seconds: 0,
+			milliseconds: 0
+		});
+		const actual = Time.setUtc({
+			hours: 21,
+			minutes: 0,
+			seconds: 0,
+			milliseconds: 0
+		})(date);
+		expect(actual).toEqual(expected);
 	});
 });
