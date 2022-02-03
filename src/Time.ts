@@ -16,6 +16,7 @@ import {
 	subDays as baseSubDays,
 	set as baseSet
 } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 export interface SetTimeOptions {
 	readonly year?: number;
@@ -96,6 +97,12 @@ export const format =
 	(formatString: string) =>
 	(date: Date): string =>
 		baseFormat(date, formatString);
+
+export const formatTZ =
+	(timeZone: string) =>
+	(formatString: string) =>
+	(date: Date): string =>
+		formatInTimeZone(date, timeZone, formatString);
 
 export const parse =
 	(formatString: string) =>
