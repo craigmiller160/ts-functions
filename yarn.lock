@@ -308,10 +308,10 @@
   dependencies:
     eslint-plugin-jest "^25.3.2"
 
-"@craigmiller160/eslint-config-js@^1.0.0-beta.5":
-  version "1.0.0-beta.5"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-js/-/eslint-config-js-1.0.0-beta.5.tgz#b032edddaf1542c41bae209901429f7aad29694d"
-  integrity sha512-AE0FjF8FsaK/6k174ui3M6sroj7DGdjNViKOADLJr38gmvbMvaYfG2COTPEu94iHwuZcs/xlXMfrsxNkjWf9mQ==
+"@craigmiller160/eslint-config-js@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-js/-/eslint-config-js-1.0.0.tgz#228680c9072eb8d6bdf891bd417842a9c38a3d9f"
+  integrity sha512-svaYf4vVdeIcYQ3iwHNF5l79yf11pb05uz8QqTlNybs2NC/BNfxUKsoRoB/t4dwzCOHopg08dK5ydojwMNrNDw==
   dependencies:
     cross-spawn "^7.0.3"
     eslint "^8.5.0"
@@ -324,10 +324,10 @@
     eslint-config-prettier "^8.3.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@craigmiller160/eslint-config-ts@^1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-ts/-/eslint-config-ts-1.0.0-beta.1.tgz#38b93ec22a346d1b4d90f174c2f15ce533939720"
-  integrity sha512-kOF+UuQKoaJBRoI24UB5MBM7lJfK6TfYjwY/MtCeO5K6a623Iz7rRz0/oaiiI90v2tLJnhlCe+xnNehUQVOhnA==
+"@craigmiller160/eslint-config-ts@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-ts/-/eslint-config-ts-1.0.0.tgz#bb9ab0e2bbf92ca7d03df2a91ca34dfafcc2b27b"
+  integrity sha512-jRM6e/Bfr+GOXX+mqpHEUjTFfLxW89MXp0BU6+PYTQ4R6tjwutJjvP8sykPtnBUxuZYIxsH+GUHwnEgAa5mpTw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.8.1"
     "@typescript-eslint/parser" "^5.8.1"
@@ -340,10 +340,10 @@
     "@types/jest" "^27.0.3"
     ts-jest "^27.1.2"
 
-"@craigmiller160/jest-config@^1.0.0-beta.10":
-  version "1.0.0-beta.12"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/jest-config/-/jest-config-1.0.0-beta.12.tgz#79af000e7ea1dc5c21812cbe4aa3b9dd3ba301c1"
-  integrity sha512-dsrdevvTPjQL3PDvz9nnkhGLAYq3qGg/yHES93ex5jh3qu/ttOz2Hd+IpNy7TN9+LoWKciie9CO4FMy6Swo68Q==
+"@craigmiller160/jest-config@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/jest-config/-/jest-config-1.0.0.tgz#583837c3967ce370fcf17f39bf3fbf61df9c07f7"
+  integrity sha512-F/qqOc+WtGNQIPX3mG0egTbeIq1qkktbqiHTzc0ZL4Ne//QFlwZWO9FJ3vzpZAiVV4GrJjtNJNIDzf2HaPV7Og==
   dependencies:
     cross-env "^7.0.3"
     cross-spawn "^7.0.3"
