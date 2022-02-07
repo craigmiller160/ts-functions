@@ -36,7 +36,12 @@ describe('File', () => {
 	});
 
 	it('appendFileSync', () => {
-		throw new Error();
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		File.appendFileSync(filePath, TEXT);
+		File.appendFileSync(filePath, TEXT);
+
+		const fileContent = fs.readFileSync(filePath, 'utf8');
+		expect(fileContent).toEqual(`${TEXT}${TEXT}`);
 	});
 
 	it('existsSync', () => {
