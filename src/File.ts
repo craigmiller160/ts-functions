@@ -14,6 +14,9 @@ export const readFileSync = (
 export const writeFileSync = (filePath: string, content: string): TryT<void> =>
 	Try.tryCatch(() => fs.writeFileSync(filePath, content));
 
+export const appendFileSync = (filePath: string, content: string): TryT<void> =>
+	Try.tryCatch(() => fs.appendFileSync(filePath, content));
+
 export const existsSync =
 	<T>(fn: (filePath: string) => T) =>
 	(filePath: string): Option.Option<T> => {
