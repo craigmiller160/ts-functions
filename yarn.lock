@@ -301,10 +301,10 @@
   dependencies:
     lodash.merge "^4.6.2"
 
-"@craigmiller160/eslint-config-jest@^1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-jest/-/eslint-config-jest-1.0.0-beta.1.tgz#f660e092b4610853d32c6952ab272ae04559ac85"
-  integrity sha512-HelPQP/JbNoJkfiSUI8jgrXPUsxWVNXZXcrOKH0ylRtcyOCHDwwg6zb1ETcYkA9FqRFm0jOFW5NjAOllGdpRRw==
+"@craigmiller160/eslint-config-jest@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-jest/-/eslint-config-jest-1.0.0.tgz#33561582506e1c59ebb2d5c2ae1d9f57ca64adb8"
+  integrity sha512-npQpmIsabZVbTwMtc3Sj172HqOL/rcZLNRSfS61XnKez/aRyJ/Wg/lSsSryXseGiEvbX3sIQLVAQuG7qUzz4bQ==
   dependencies:
     eslint-plugin-jest "^25.3.2"
 
@@ -316,10 +316,10 @@
     cross-spawn "^7.0.3"
     eslint "^8.5.0"
 
-"@craigmiller160/eslint-config-prettier@^1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-prettier/-/eslint-config-prettier-1.0.0-beta.1.tgz#a61293224ec93ec2dd4e3ed33d9eb2ce48369817"
-  integrity sha512-Sv6oklv75FVpldJg1UY8buVIcDGGMEwguD+Aod9IIq9lisv9tVCXmsVJcmW966yQz+tUf9nlqkTup4JnxixhAQ==
+"@craigmiller160/eslint-config-prettier@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/eslint-config-prettier/-/eslint-config-prettier-1.0.0.tgz#69094ea475b133ed9540781626aca87215b9f158"
+  integrity sha512-9TXfKZeGLH/aTgU/g0Zpf1wzXozRQtQ/dAS1+naM64UAHqOLxyBjpuUVCxEa+oFluofVUsBpT9N5wURWSlp91w==
   dependencies:
     eslint-config-prettier "^8.3.0"
     eslint-plugin-prettier "^4.0.0"
