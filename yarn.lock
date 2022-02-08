@@ -332,10 +332,10 @@
     "@typescript-eslint/eslint-plugin" "^5.8.1"
     "@typescript-eslint/parser" "^5.8.1"
 
-"@craigmiller160/jest-config-ts@^1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/jest-config-ts/-/jest-config-ts-1.0.0-beta.2.tgz#3ece5b038f6aad12911a59f77dc572b8bdc519dd"
-  integrity sha512-WhqVXh+UBhvNyEkhQJHHSwFVUKF6EelNQbPiqs8qFcFJb2XCkj6b4CKipYVAVChbaV9hsV1Z4PtbUZ5mSJANRg==
+"@craigmiller160/jest-config-ts@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/jest-config-ts/-/jest-config-ts-1.0.0.tgz#3209ec59bb3ceed83e6d95eb9e57dee0848bbbdf"
+  integrity sha512-+mtnzKZsT8pedMgsD5B52fs18I3JE4qWdVzYCtN50VS3h5D05gdkJ8VROPaf9d0QVX1x8CDxecz9BRxnW81hhQ==
   dependencies:
     "@types/jest" "^27.0.3"
     ts-jest "^27.1.2"
@@ -350,10 +350,10 @@
     identity-obj-proxy "^3.0.0"
     jest "^27.4.5"
 
-"@craigmiller160/prettier-config@^1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/prettier-config/-/prettier-config-1.0.0-beta.1.tgz#f414e462f34352724b21372d50ebd62563cc3a25"
-  integrity sha512-fBHU/OmGPMitz9Oy0xgKD8VfahsvH9r+nhgrRhE3vXKBRCT+mLojhvYL6ze2MEfc7la7kL/HYNoW54oHAN+eLQ==
+"@craigmiller160/prettier-config@1.0.0":
+  version "1.0.0"
+  resolved "https://craigmiller160.ddns.net:30003/repository/npm-group/@craigmiller160/prettier-config/-/prettier-config-1.0.0.tgz#b4e4899ad3c5e1f6b92a6b032df42d8e8e97b9ff"
+  integrity sha512-X2D3uUf3azwfgcm4JT06chSxNgDGKspc+i87oNvOFHnuErGUfK8gxWmU7cdySXN6ZRGMdemQx9g/AeqbpMHo5A==
   dependencies:
     prettier "^2.5.1"
 
