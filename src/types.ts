@@ -16,3 +16,5 @@ export type { ReaderTask as ReaderTaskT } from 'fp-ts/ReaderTask';
 export type { IO as IOT } from 'fp-ts/IO';
 export type { IOEither as IOEitherT } from 'fp-ts/IOEither';
 export type { Predicate as PredicateT } from 'fp-ts/Predicate';
+export type { NonEmptyArray as NonEmptyArrayT } from 'fp-ts/NonEmptyArray';
+export type { ReadonlyNonEmptyArray as ReadonlyNonEmptyArrayT } from 'fp-ts/ReadonlyNonEmptyArray';
