@@ -15,11 +15,19 @@ describe('Json', () => {
 		});
 	});
 
+	it('parseOption', () => {
+		throw new Error();
+	});
+
 	it('stringify', () => {
 		const value: Value = {
 			one: 'two'
 		};
 		const result: TryT<string> = Json.stringify(value);
 		expect(result).toEqualRight('{"one":"two"}');
+	});
+
+	it('stringifyOption', () => {
+		throw new Error();
 	});
 });
