@@ -24,3 +24,5 @@ export const envLookup = (key: string): IOT<OptionT<string>> =>
 		allEnv(),
 		IO.map((env) => Option.fromNullable(env[key]))
 	);
+
+export const exit = (code: number): IOT<never> => IO.of(process.exit(code));
