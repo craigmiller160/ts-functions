@@ -11,15 +11,15 @@ export const allRawArgv = (): IOT<ReadonlyArray<string>> => IO.of(process.argv);
 export const allUserArgv = (): IOT<ReadonlyArray<string>> =>
 	pipe(IO.of(process.argv), IO.map(RArray.dropLeft(2)));
 
-export const rawArgvLookup = (index: number): IOT<OptionT<string>> =>
+export const rawArgvLookupO = (index: number): IOT<OptionT<string>> =>
 	pipe(allRawArgv(), IO.map(RArray.lookup(index)));
 
-export const userArgvLookup = (index: number): IOT<OptionT<string>> =>
+export const userArgvLookupO = (index: number): IOT<OptionT<string>> =>
 	pipe(allUserArgv(), IO.map(RArray.lookup(index)));
 
 export const allEnv = (): IOT<NodeJS.ProcessEnv> => IO.of(process.env);
 
-export const envLookup = (key: string): IOT<OptionT<string>> =>
+export const envLookupO = (key: string): IOT<OptionT<string>> =>
 	pipe(
 		allEnv(),
 		IO.map((env) => Option.fromNullable(env[key]))

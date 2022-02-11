@@ -21,15 +21,15 @@ describe('Process', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('rawArgvLookup', () => {
+	it('rawArgvLookupO', () => {
 		const expected = process.argv[1];
-		const actual = Process.rawArgvLookup(1)();
+		const actual = Process.rawArgvLookupO(1)();
 		expect(actual).toEqualSome(expected);
 	});
 
-	it('userArgvLookup', () => {
+	it('userArgvLookupO', () => {
 		const expected = Option.fromNullable(process.argv.slice(2)[1]);
-		const actual = Process.userArgvLookup(1)();
+		const actual = Process.userArgvLookupO(1)();
 		expect(actual).toEqual(expected);
 	});
 
@@ -39,10 +39,10 @@ describe('Process', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('envLookup', () => {
+	it('envLookupO', () => {
 		const key = Object.keys(process.env)[0];
 		const expected = process.env[key];
-		const actual = Process.envLookup(key)();
+		const actual = Process.envLookupO(key)();
 		expect(actual).toEqualSome(expected);
 	});
 });
