@@ -31,3 +31,33 @@ export interface EnhancedLogger<R> extends BaseLogger<R> {
 
 export type ProvidedLogger = BaseLogger<void>;
 export type Logger = EnhancedLogger<IOT<void>>;
+
+const info =
+	(provided: ProvidedLogger): BaseLog<IOT<void>> =>
+	(msg) =>
+	() =>
+		provided.info(msg);
+
+const debug =
+	(provided: ProvidedLogger): BaseLog<IOT<void>> =>
+	(msg) =>
+	() =>
+		provided.debug(msg);
+
+const warn =
+	(provided: ProvidedLogger): BaseLog<IOT<void>> =>
+	(msg) =>
+	() =>
+		provided.warn(msg);
+
+const error =
+	(provided: ProvidedLogger): BaseLog<IOT<void>> =>
+	(msg) =>
+	() =>
+		provided.error(msg);
+
+const verbose =
+	(provided: ProvidedLogger): BaseLog<IOT<void>> =>
+	(msg) =>
+	() =>
+		provided.verbose(msg);
