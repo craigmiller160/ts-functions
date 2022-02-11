@@ -27,10 +27,18 @@ describe('Process', () => {
 		expect(actual).toEqualSome(expected);
 	});
 
+	it('rawArgvLookupE', () => {
+		throw new Error();
+	});
+
 	it('userArgvLookupO', () => {
 		const expected = Option.fromNullable(process.argv.slice(2)[1]);
 		const actual = Process.userArgvLookupO(1)();
 		expect(actual).toEqual(expected);
+	});
+
+	it('userArgvLookupE', () => {
+		throw new Error();
 	});
 
 	it('allEnv', () => {
@@ -44,5 +52,9 @@ describe('Process', () => {
 		const expected = process.env[key];
 		const actual = Process.envLookupO(key)();
 		expect(actual).toEqualSome(expected);
+	});
+
+	it('envLookupE', () => {
+		throw new Error();
 	});
 });

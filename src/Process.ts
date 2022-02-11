@@ -1,8 +1,9 @@
-import { IOT, OptionT } from './types';
+import { IOT, IOEitherT, OptionT } from './types';
 import { pipe } from 'fp-ts/function';
 import * as IO from 'fp-ts/IO';
 import * as RArray from 'fp-ts/ReadonlyArray';
 import * as Option from 'fp-ts/Option';
+import * as IOEither from 'fp-ts/IOEither';
 
 export const cwd = (): IOT<string> => () => process.cwd();
 
