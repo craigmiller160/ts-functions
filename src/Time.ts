@@ -28,6 +28,8 @@ export interface SetTimeOptions {
 	readonly milliseconds?: number;
 }
 
+export const fromMillis = (millis: number): Date => new Date(millis);
+
 export const set =
 	(options: SetTimeOptions) =>
 	(date: Date): Date =>

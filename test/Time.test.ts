@@ -23,6 +23,12 @@ const OFFSET_MINS = new Date().getTimezoneOffset();
 const TIMESTAMP_FORMAT = 'yyyy-MM-dd HH:mm:ss.SSS';
 
 describe('DateFns', () => {
+	it('fromMillis', () => {
+		const expected = new Date();
+		const actual = Time.fromMillis(expected.getTime());
+		expect(actual).toEqual(expected);
+	});
+
 	it('addMinutes', () => {
 		const date = new Date();
 		const expected = addMinutes(date, 10);
