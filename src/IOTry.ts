@@ -2,8 +2,6 @@ import * as IOEither from 'fp-ts/IOEither';
 import { Lazy } from 'fp-ts/function';
 import { unknownToError } from './unknownToError';
 
-// TODO write tests
-
 export type IOTry<T> = IOEither.IOEither<Error, T>;
 
 export const tryCatch = <T>(fn: Lazy<T>): IOTry<T> =>
