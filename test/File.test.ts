@@ -4,6 +4,7 @@ import fs from 'fs';
 import '@relmify/jest-fp-ts';
 import * as IOEither from 'fp-ts/IOEither';
 import * as Option from 'fp-ts/Option';
+import { pipe } from 'fp-ts/function';
 
 const TEMP_PATH = path.join(process.cwd(), 'node_modules', 'temp_test_dir');
 const TEXT = 'This is the file text';
@@ -31,7 +32,7 @@ describe('File', () => {
 
 	it('writeFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.writeFileSync(filePath, TEXT)();
+		File.writeFileSync(filePath)(TEXT)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(TEXT);
@@ -39,8 +40,11 @@ describe('File', () => {
 
 	it('appendFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.appendFileSync(filePath, TEXT)();
-		File.appendFileSync(filePath, TEXT)();
+		const appendToFile = File.appendFileSync(filePath);
+		pipe(
+			appendToFile(TEXT),
+			IOEither.chain(() => appendToFile(TEXT))
+		)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(`${TEXT}${TEXT}`);
@@ -72,16 +76,24 @@ describe('File', () => {
 		expect(fs.existsSync(filePath)).toEqual(false);
 	});
 
-	it('rmSync directory', () => {
+	it('rmSyncWithOptions file', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSyncWithOptions()(filePath)();
+		expect(fs.existsSync(filePath)).toEqual(false);
+	});
+
+	it('rmSyncWithOptions directory', () => {
 		const dirPath = path.join(TEMP_PATH, 'dir');
 		const filePath = path.join(dirPath, 'file.txt');
 		fs.mkdirSync(dirPath);
 		fs.writeFileSync(filePath, TEXT);
 
-		File.rmSync(dirPath, {
+		File.rmSyncWithOptions({
 			recursive: true,
 			force: true
-		})();
+		})(dirPath)();
 
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
@@ -96,16 +108,25 @@ describe('File', () => {
 		expect(fs.existsSync(filePath)).toEqual(false);
 	});
 
-	it('rmIfExistsSync directory', () => {
+	it('rmIfExistsSyncWithOptions file', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		const result = File.rmIfExistsSyncWithOptions()(filePath)();
+		expect(result).toBeRight();
+		expect(fs.existsSync(filePath)).toEqual(false);
+	});
+
+	it('rmIfExistsSyncWithOptions directory', () => {
 		const dirPath = path.join(TEMP_PATH, 'dir');
 		const filePath = path.join(dirPath, 'file.txt');
 		fs.mkdirSync(dirPath);
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(dirPath, {
+		const result = File.rmIfExistsSyncWithOptions({
 			recursive: true,
 			force: true
-		})();
+		})(dirPath)();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
