@@ -22,3 +22,6 @@ export const updateFirstMatch =
 		newArr[index] = newItem;
 		return newArr;
 	};
+
+export const toMutable = <T>(arr: ReadonlyArray<T>): Array<T> =>
+	arr as Array<T>;
