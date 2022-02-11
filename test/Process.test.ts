@@ -1,4 +1,5 @@
 import * as Process from '../src/Process';
+import '@relmify/jest-fp-ts';
 
 describe('Process', () => {
 	it('cwd', () => {
@@ -19,19 +20,28 @@ describe('Process', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('lookupRawArgv', () => {
-		throw new Error();
+	it('rawArgvLookup', () => {
+		const expected = process.argv[1];
+		const actual = Process.rawArgvLookup(1)();
+		expect(actual).toEqualSome(expected);
 	});
 
-	it('lookupUserArgv', () => {
-		throw new Error();
+	it('userArgvLookup', () => {
+		const expected = process.argv.slice(2)[1];
+		const actual = Process.userArgvLookup(1)();
+		expect(actual).toEqualSome(expected);
 	});
 
 	it('allEnv', () => {
-		throw new Error();
+		const expected = process.env;
+		const actual = Process.allEnv()();
+		expect(actual).toEqual(expected);
 	});
 
-	it('lookupEnv', () => {
-		throw new Error();
+	it('envLookup', () => {
+		const key = Object.keys(process.env)[0];
+		const expected = process.env[key];
+		const actual = Process.envLookup(key)();
+		expect(actual).toEqualSome(expected);
 	});
 });
