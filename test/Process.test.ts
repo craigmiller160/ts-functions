@@ -42,7 +42,7 @@ describe('Process', () => {
 
 	it('userArgvLookupE', () => {
 		const expected = Either.fromOption(
-			() => new Error('Raw Argv not found: 1')
+			() => new Error('User Argv not found: 1')
 		)(Option.fromNullable(process.argv.slice(2)[1]));
 		const actual = Process.userArgvLookupE(1)();
 		expect(actual).toEqual(expected);
