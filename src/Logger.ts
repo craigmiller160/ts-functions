@@ -61,3 +61,36 @@ const verbose =
 	(msg) =>
 	() =>
 		provided.verbose(msg);
+
+const getMessageWithStack = (msg: string, error: Error): string =>
+	`${msg} ${error.stack ?? ''}`;
+
+const errorWithStack =
+	(provided: ProvidedLogger): ErrorLog<IOT<void>> =>
+	(msg, error) =>
+	() =>
+		provided.error(getMessageWithStack(msg, error));
+
+const warnWithStack =
+	(provided: ProvidedLogger): ErrorLog<IOT<void>> =>
+	(msg, error) =>
+	() =>
+		provided.warn(getMessageWithStack(msg, error));
+
+const infoWithStack =
+	(provided: ProvidedLogger): ErrorLog<IOT<void>> =>
+	(msg, error) =>
+	() =>
+		provided.info(getMessageWithStack(msg, error));
+
+const debugWithStack =
+	(provided: ProvidedLogger): ErrorLog<IOT<void>> =>
+	(msg, error) =>
+	() =>
+		provided.debug(getMessageWithStack(msg, error));
+
+const verboseWithStack =
+	(provided: ProvidedLogger): ErrorLog<IOT<void>> =>
+	(msg, error) =>
+	() =>
+		provided.verbose(getMessageWithStack(msg, error));
