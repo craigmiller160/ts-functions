@@ -77,7 +77,11 @@ describe('File', () => {
 	});
 
 	it('rmSyncWithOptions file', () => {
-		throw new Error();
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSyncWithOptions()(filePath)();
+		expect(fs.existsSync(filePath)).toEqual(false);
 	});
 
 	it('rmSyncWithOptions directory', () => {
@@ -105,7 +109,12 @@ describe('File', () => {
 	});
 
 	it('rmIfExistsSyncWithOptions file', () => {
-		throw new Error();
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		const result = File.rmIfExistsSyncWithOptions()(filePath)();
+		expect(result).toBeRight();
+		expect(fs.existsSync(filePath)).toEqual(false);
 	});
 
 	it('rmIfExistsSyncWithOptions directory', () => {
