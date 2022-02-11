@@ -120,7 +120,7 @@ const updatePackageJson = (packageJsonString: string): TryT<string> =>
 				delete draft.scripts.prepare;
 			})
 		),
-		Either.chain((_) => Json.stringifyE(_, 2))
+		Either.chain(Json.stringifyIndentE(2))
 	);
 
 const copyPackageJson = (): IOTryT<void> =>
