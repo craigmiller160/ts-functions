@@ -1,19 +1,13 @@
 import { IOT } from './types';
 
-export type ProvidedLog = (msg: string) => void;
-export interface ProvidedLogger {
-	readonly debug: ProvidedLog;
-	readonly info: ProvidedLog;
-	readonly warn: ProvidedLog;
-	readonly error: ProvidedLog;
-	readonly verbose: ProvidedLog;
+export type BaseLog<R> = (msg: string) => R;
+export interface BaseLogger<R> {
+	readonly debug: BaseLog<R>;
+	readonly info: BaseLog<R>;
+	readonly warn: BaseLog<R>;
+	readonly error: BaseLog<R>;
+	readonly verbose: BaseLog<R>;
 }
 
-export type Log = (msg: string) => IOT<void>;
-export interface Logger {
-	readonly debug: Log;
-	readonly info: Log;
-	readonly warn: Log;
-	readonly error: Log;
-	readonly verbose: Log;
-}
+export type ProvidedLogger = BaseLogger<void>;
+export type Logger = BaseLogger<IOT<void>>;
