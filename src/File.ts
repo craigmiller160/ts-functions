@@ -39,11 +39,9 @@ export const doIfExistsSync =
 			)
 		);
 
-// TODO update tests
 export const rmSync = (filePath: string, options?: RmOptions): IOTryT<void> =>
 	IOTry.tryCatch(() => fs.rmSync(filePath, options));
 
-// TODO update tests
 export const rmIfExistsSync = (
 	filePath: string,
 	options?: RmOptions

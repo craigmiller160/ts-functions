@@ -64,6 +64,14 @@ describe('File', () => {
 		expect(result).toEqualRight(Option.some(`File: ${filePath}`));
 	});
 
+	it('rmSync file', () => {
+		throw new Error();
+	});
+
+	it('rmSync directory', () => {
+		throw new Error();
+	});
+
 	it('rmIfExistsSync file', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
