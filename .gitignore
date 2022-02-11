@@ -8,3 +8,4 @@ yalc.lock
 coverage
 build
 lib
+test/workingDir/lib
