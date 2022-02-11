@@ -16,7 +16,7 @@
     "lint": "yarn lint:project && yarn lint:scripts",
     "lint:scripts": "eslint scripts --fix --max-warnings=0",
     "test": "craig-test",
-    "forceBuild": "ts-node scripts/build.ts",
+    "forceBuild": "ts-node scripts/runBuild.ts",
     "validate": "yarn lint && yarn test",
     "prepare": "husky install"
   },
