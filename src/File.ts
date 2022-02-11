@@ -22,11 +22,9 @@ export const appendFileSync = (
 	content: string
 ): IOTryT<void> => IOTry.tryCatch(() => fs.appendFileSync(filePath, content));
 
-// TODO update tests
 export const existsSync = (filePath: string): IOTryT<boolean> =>
 	IOTry.tryCatch(() => fs.existsSync(filePath));
 
-// TODO update tests
 export const doIfExistsSync =
 	<T>(fn: (filePath: string) => IOTryT<T>) =>
 	(filePath: string): IOTryT<OptionT<T>> =>

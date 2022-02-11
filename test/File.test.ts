@@ -2,6 +2,8 @@ import * as File from '../src/File';
 import path from 'path';
 import fs from 'fs';
 import '@relmify/jest-fp-ts';
+import * as IOEither from 'fp-ts/IOEither';
+import * as Option from 'fp-ts/Option';
 
 const TEMP_PATH = path.join(process.cwd(), 'node_modules', 'temp_test_dir');
 const TEXT = 'This is the file text';
@@ -50,6 +52,16 @@ describe('File', () => {
 
 		const result = File.existsSync(filePath)();
 		expect(result).toEqualRight(true);
+	});
+
+	it('doIfExistsSync', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		const result = File.doIfExistsSync((path) =>
+			IOEither.right(`File: ${path}`)
+		)(filePath)();
+		expect(result).toEqualRight(Option.some(`File: ${filePath}`));
 	});
 
 	it('rmIfExistsSync file', () => {
