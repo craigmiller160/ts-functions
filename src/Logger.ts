@@ -12,7 +12,7 @@ export interface BaseLogger<R> {
 export type ErrorLog<R> = (msg: string, error: Error) => R;
 
 export interface EnhancedLogger<R> extends BaseLogger<R> {
-	readonly error2: ErrorLog<R>; // TODO rename
+	readonly errorWithStack: ErrorLog<R>;
 }
 
 export type ProvidedLogger = BaseLogger<void>;
