@@ -5,6 +5,10 @@ interface TestProvidedLogger extends ProvidedLogger {
 }
 
 const error = new Error('Dying');
+const obj = {
+	abc: 'def'
+};
+const objString = JSON.stringify(obj);
 
 describe('Logger', () => {
 	let testLogger: TestProvidedLogger;
@@ -82,22 +86,27 @@ describe('Logger', () => {
 	});
 
 	it('debugWithJson', () => {
-		throw new Error();
+		logger.debugWithJson('Hello', obj)();
+		expect(testLogger.value).toEqual(`Debug: Hello ${objString}`);
 	});
 
 	it('infoWithJson', () => {
-		throw new Error();
+		logger.infoWithJson('Hello', obj)();
+		expect(testLogger.value).toEqual(`Info: Hello ${objString}`);
 	});
 
 	it('warnWithJson', () => {
-		throw new Error();
+		logger.warnWithJson('Hello', obj)();
+		expect(testLogger.value).toEqual(`Warn: Hello ${objString}`);
 	});
 
 	it('errorWithJson', () => {
-		throw new Error();
+		logger.errorWithJson('Hello', obj)();
+		expect(testLogger.value).toEqual(`Error: Hello ${objString}`);
 	});
 
 	it('verboseWithJson', () => {
-		throw new Error();
+		logger.verboseWithJson('Hello', obj)();
+		expect(testLogger.value).toEqual(`Verbose: Hello ${objString}`);
 	});
 });
