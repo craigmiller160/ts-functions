@@ -9,5 +9,11 @@ export interface BaseLogger<R> {
 	readonly verbose: BaseLog<R>;
 }
 
+export type ErrorLog<R> = (msg: string, error: Error) => R;
+
+export interface EnhancedLogger<R> extends BaseLogger<R> {
+	readonly error2: ErrorLog<R>; // TODO rename
+}
+
 export type ProvidedLogger = BaseLogger<void>;
-export type Logger = BaseLogger<IOT<void>>;
+export type Logger = EnhancedLogger<IOT<void>>;
