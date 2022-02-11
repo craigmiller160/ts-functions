@@ -1,10 +1,10 @@
 import { createLogger, Logger, ProvidedLogger } from '../src/Logger';
 
-export {};
-
 interface TestProvidedLogger extends ProvidedLogger {
 	value: string;
 }
+
+const error = new Error('Dying');
 
 describe('Logger', () => {
 	let testLogger: TestProvidedLogger;
@@ -57,23 +57,28 @@ describe('Logger', () => {
 	});
 
 	it('errorWithStack', () => {
-		throw new Error();
+		logger.errorWithStack('Hello', error)();
+		expect(testLogger.value).toEqual(`Error: Hello ${error.stack ?? ''}`);
 	});
 
 	it('warnWithStack', () => {
-		throw new Error();
+		logger.warnWithStack('Hello', error)();
+		expect(testLogger.value).toEqual(`Warn: Hello ${error.stack ?? ''}`);
 	});
 
 	it('infoWithStack', () => {
-		throw new Error();
+		logger.infoWithStack('Hello', error)();
+		expect(testLogger.value).toEqual(`Info: Hello ${error.stack ?? ''}`);
 	});
 
 	it('debugWithStack', () => {
-		throw new Error();
+		logger.debugWithStack('Hello', error)();
+		expect(testLogger.value).toEqual(`Debug: Hello ${error.stack ?? ''}`);
 	});
 
 	it('verboseWithStack', () => {
-		throw new Error();
+		logger.verboseWithStack('Hello', error)();
+		expect(testLogger.value).toEqual(`Verbose: Hello ${error.stack ?? ''}`);
 	});
 
 	it('debugWithJson', () => {
