@@ -1,6 +1,12 @@
 import { IOT } from './types';
 
 export type BaseLog<R> = (msg: string) => R;
+export type ErrorLog<R> = (msg: string, error: Error) => R;
+export type JsonLog<R> = (
+	msg: string,
+	value: object | ReadonlyArray<unknown>
+) => R;
+
 export interface BaseLogger<R> {
 	readonly debug: BaseLog<R>;
 	readonly info: BaseLog<R>;
@@ -8,12 +14,6 @@ export interface BaseLogger<R> {
 	readonly error: BaseLog<R>;
 	readonly verbose: BaseLog<R>;
 }
-
-export type ErrorLog<R> = (msg: string, error: Error) => R;
-export type JsonLog<R> = (
-	msg: string,
-	value: object | ReadonlyArray<unknown>
-) => R;
 
 export interface EnhancedLogger<R> extends BaseLogger<R> {
 	readonly errorWithStack: ErrorLog<R>;
