@@ -9,7 +9,7 @@ import { TryT } from './types';
 export const readFileSync = (
 	filePath: string,
 	encoding: BufferEncoding = 'utf8'
-): TryT<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
+): IOTryT<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
 
 export const writeFileSync = (filePath: string, content: string): TryT<void> =>
 	Try.tryCatch(() => fs.writeFileSync(filePath, content));

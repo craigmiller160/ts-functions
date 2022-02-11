@@ -11,7 +11,8 @@ import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 import * as Json from '../src/Json';
 import immer from 'immer';
-import { TryT } from '../src/types';
+import { TryT, IOTryT } from '../src/types';
+import * as IOEither from 'fp-ts/IOEither';
 
 interface PackageJson {
 	scripts: {
@@ -38,14 +39,16 @@ const PACKAGE_JSON_LIB_PATH = path.join(LIB_PATH, 'package.json');
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
 const concatWithNewline = Text.concat('\n');
 
-const runCommand = (command: string): TryT<string> => {
+const runCommand = (command: string): IOTryT<string> => {
 	console.log(`Command: ${command}`);
 	const result = spawn.sync('bash', ['-c', command], {
 		stdio: 'inherit'
 	});
 	return match(result)
-		.with({ status: 0 }, () => Either.right(command))
-		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
+		.with({ status: 0 }, () => IOEither.right(command))
+		.otherwise(() =>
+			IOEither.left(new Error(`Command failed: ${command}`))
+		);
 };
 
 const fixImportIfPresent = (line: string): string =>
