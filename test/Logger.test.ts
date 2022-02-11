@@ -37,19 +37,23 @@ describe('Logger', () => {
 	});
 
 	it('info', () => {
-		throw new Error();
+		logger.info('Hello World')();
+		expect(testLogger.value).toEqual('Info: Hello World');
 	});
 
 	it('warn', () => {
-		throw new Error();
+		logger.warn('Hello World')();
+		expect(testLogger.value).toEqual('Warn: Hello World');
 	});
 
 	it('error', () => {
-		throw new Error();
+		logger.error('Hello World')();
+		expect(testLogger.value).toEqual('Error: Hello World');
 	});
 
 	it('verbose', () => {
-		throw new Error();
+		logger.verbose('Hello World')();
+		expect(testLogger.value).toEqual('Verbose: Hello World');
 	});
 
 	it('errorWithStack', () => {
