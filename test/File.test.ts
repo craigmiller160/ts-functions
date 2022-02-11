@@ -23,13 +23,13 @@ describe('File', () => {
 	it('readFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
-		const result = File.readFileSync(filePath);
+		const result = File.readFileSync(filePath)();
 		expect(result).toEqualRight(TEXT);
 	});
 
 	it('writeFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.writeFileSync(filePath, TEXT);
+		File.writeFileSync(filePath, TEXT)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(TEXT);
@@ -37,8 +37,8 @@ describe('File', () => {
 
 	it('appendFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.appendFileSync(filePath, TEXT);
-		File.appendFileSync(filePath, TEXT);
+		File.appendFileSync(filePath, TEXT)();
+		File.appendFileSync(filePath, TEXT)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(`${TEXT}${TEXT}`);
@@ -56,7 +56,7 @@ describe('File', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(filePath);
+		const result = File.rmIfExistsSync(filePath)();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 	});
@@ -67,7 +67,7 @@ describe('File', () => {
 		fs.mkdirSync(dirPath);
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(dirPath);
+		const result = File.rmIfExistsSync(dirPath)();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
@@ -76,7 +76,7 @@ describe('File', () => {
 	it('mkdirSync', () => {
 		const dirPath = path.join(TEMP_PATH, 'dir');
 
-		const result = File.mkdirSync(dirPath);
+		const result = File.mkdirSync(dirPath)();
 		expect(result).toEqualRight(dirPath);
 		expect(fs.existsSync(dirPath)).toEqual(true);
 	});
@@ -87,7 +87,7 @@ describe('File', () => {
 		fs.writeFileSync(file1, TEXT);
 		fs.writeFileSync(file2, TEXT);
 
-		const result = File.listFilesSync(TEMP_PATH);
+		const result = File.listFilesSync(TEMP_PATH)();
 		expect(result).toEqualRight(['file1.txt', 'file2.txt']);
 	});
 });
