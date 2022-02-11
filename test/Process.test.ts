@@ -1,6 +1,7 @@
 import * as Process from '../src/Process';
 import '@relmify/jest-fp-ts';
 import * as Option from 'fp-ts/Option';
+import * as Either from 'fp-ts/Either';
 
 describe('Process', () => {
 	it('cwd', () => {
@@ -28,7 +29,9 @@ describe('Process', () => {
 	});
 
 	it('rawArgvLookupE', () => {
-		throw new Error();
+		const expected = process.argv[1];
+		const actual = Process.rawArgvLookupE(1)();
+		expect(actual).toEqualRight(expected);
 	});
 
 	it('userArgvLookupO', () => {
@@ -38,7 +41,11 @@ describe('Process', () => {
 	});
 
 	it('userArgvLookupE', () => {
-		throw new Error();
+		const expected = Either.fromOption(
+			() => new Error('Raw Argv not found: 1')
+		)(Option.fromNullable(process.argv.slice(2)[1]));
+		const actual = Process.userArgvLookupE(1)();
+		expect(actual).toEqual(expected);
 	});
 
 	it('allEnv', () => {
@@ -55,6 +62,9 @@ describe('Process', () => {
 	});
 
 	it('envLookupE', () => {
-		throw new Error();
+		const key = Object.keys(process.env)[0];
+		const expected = process.env[key];
+		const actual = Process.envLookupE(key)();
+		expect(actual).toEqualRight(expected);
 	});
 });
