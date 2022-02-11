@@ -95,7 +95,10 @@ const fixEsImports = (): TryT<ReadonlyArray<void>> => {
 
 const buildProject = (): TryT<string> =>
 	pipe(
-		File.rmIfExistsSync(LIB_PATH),
+		File.rmIfExistsSync(LIB_PATH, {
+			recursive: true,
+			force: true
+		}),
 		Either.chain(() => runCommand('tsc')),
 		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);

@@ -65,11 +65,26 @@ describe('File', () => {
 	});
 
 	it('rmSync file', () => {
-		throw new Error();
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSync(filePath)();
+		expect(fs.existsSync(filePath)).toEqual(false);
 	});
 
 	it('rmSync directory', () => {
-		throw new Error();
+		const dirPath = path.join(TEMP_PATH, 'dir');
+		const filePath = path.join(dirPath, 'file.txt');
+		fs.mkdirSync(dirPath);
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSync(dirPath, {
+			recursive: true,
+			force: true
+		})();
+
+		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(dirPath)).toEqual(false);
 	});
 
 	it('rmIfExistsSync file', () => {
@@ -87,7 +102,10 @@ describe('File', () => {
 		fs.mkdirSync(dirPath);
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(dirPath)();
+		const result = File.rmIfExistsSync(dirPath, {
+			recursive: true,
+			force: true
+		})();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
