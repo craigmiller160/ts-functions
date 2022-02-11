@@ -1,5 +1,6 @@
 import * as Process from '../src/Process';
 import '@relmify/jest-fp-ts';
+import * as Option from 'fp-ts/Option';
 
 describe('Process', () => {
 	it('cwd', () => {
@@ -27,9 +28,9 @@ describe('Process', () => {
 	});
 
 	it('userArgvLookup', () => {
-		const expected = process.argv.slice(2)[1];
+		const expected = Option.fromNullable(process.argv.slice(2)[1]);
 		const actual = Process.userArgvLookup(1)();
-		expect(actual).toEqualSome(expected);
+		expect(actual).toEqual(expected);
 	});
 
 	it('allEnv', () => {
