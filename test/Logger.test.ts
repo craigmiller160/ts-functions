@@ -1,4 +1,4 @@
-import { ProvidedLogger } from '../src/Logger';
+import { createLogger, Logger, ProvidedLogger } from '../src/Logger';
 
 export {};
 
@@ -8,6 +8,7 @@ interface TestProvidedLogger extends ProvidedLogger {
 
 describe('Logger', () => {
 	let testLogger: TestProvidedLogger;
+	let logger: Logger;
 	beforeEach(() => {
 		testLogger = {
 			value: '',
@@ -27,10 +28,12 @@ describe('Logger', () => {
 				this.value = `Verbose: ${msg}`;
 			}
 		};
+		logger = createLogger(testLogger);
 	});
 
 	it('debug', () => {
-		throw new Error();
+		logger.debug('Hello World')();
+		expect(testLogger.value).toEqual('Debug: Hello World');
 	});
 
 	it('info', () => {
