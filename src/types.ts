@@ -1,5 +1,6 @@
 import { ReaderEither } from 'fp-ts/ReaderEither';
 import { ReaderTaskEither } from 'fp-ts/ReaderTaskEither';
+import { IOEither } from 'fp-ts/IOEither';
 
 export type { TaskTry as TaskTryT } from './TaskTry';
 export type { Try as TryT } from './Try';
@@ -14,7 +15,8 @@ export type ReaderTaskEitherT<D, E, T> = ReaderTaskEither<D, E, T>;
 export type { Task as TaskT } from 'fp-ts/Task';
 export type { ReaderTask as ReaderTaskT } from 'fp-ts/ReaderTask';
 export type { IO as IOT } from 'fp-ts/IO';
-export type { IOEither as IOEitherT } from 'fp-ts/IOEither';
+export type IOEitherT<E, T> = IOEither<E, T>;
+export type IOTryT<T> = IOEither<Error, T>;
 export type { Predicate as PredicateT } from 'fp-ts/Predicate';
 export type { NonEmptyArray as NonEmptyArrayT } from 'fp-ts/NonEmptyArray';
 export type { ReadonlyNonEmptyArray as ReadonlyNonEmptyArrayT } from 'fp-ts/ReadonlyNonEmptyArray';
