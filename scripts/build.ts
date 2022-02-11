@@ -113,13 +113,13 @@ const buildProject = (): IOTryT<string> =>
 
 const updatePackageJson = (packageJsonString: string): TryT<string> =>
 	pipe(
-		Json.parse<PackageJson>(packageJsonString),
+		Json.parseE<PackageJson>(packageJsonString),
 		Either.map((_) =>
 			immer(_, (draft) => {
 				delete draft.scripts.prepare;
 			})
 		),
-		Either.chain((_) => Json.stringify(_, 2))
+		Either.chain((_) => Json.stringifyE(_, 2))
 	);
 
 const copyPackageJson = (): IOTryT<void> =>
