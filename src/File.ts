@@ -39,17 +39,23 @@ export const doIfExistsSync =
 			)
 		);
 
-export const rmSync =
+export const rmSync = (filePath: string): IOTryT<void> =>
+	rmSyncWithOptions()(filePath);
+
+export const rmSyncWithOptions =
 	(options?: RmOptions) =>
 	(filePath: string): IOTryT<void> =>
 		IOTry.tryCatch(() => fs.rmSync(filePath, options));
 
-export const rmIfExistsSync =
+export const rmIfExistsSync = (filePath: string): IOTryT<void> =>
+	rmIfExistsSyncWithOptions()(filePath);
+
+export const rmIfExistsSyncWithOptions =
 	(options?: RmOptions) =>
 	(filePath: string): IOTryT<void> =>
 		pipe(
 			filePath,
-			doIfExistsSync(() => rmSync(options)(filePath)),
+			doIfExistsSync(() => rmSyncWithOptions(options)(filePath)),
 			IOEither.map(Option.fold(constVoid, constVoid))
 		);
 
