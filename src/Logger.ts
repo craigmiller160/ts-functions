@@ -133,3 +133,27 @@ const errorWithJson =
 	(msg, value) =>
 	() =>
 		provided.error(getMessageWithJson(msg, value));
+
+const verboseWithJson =
+	(provided: ProvidedLogger): JsonLog<IOT<void>> =>
+	(msg, value) =>
+	() =>
+		provided.verbose(getMessageWithJson(msg, value));
+
+export const createLogger = (provided: ProvidedLogger): Logger => ({
+	debug: debug(provided),
+	info: info(provided),
+	warn: warn(provided),
+	error: error(provided),
+	verbose: verbose(provided),
+	errorWithStack: errorWithStack(provided),
+	warnWithStack: warnWithStack(provided),
+	infoWithStack: infoWithStack(provided),
+	debugWithStack: debugWithStack(provided),
+	verboseWithStack: verboseWithStack(provided),
+	debugWithJson: debugWithJson(provided),
+	infoWithJson: infoWithJson(provided),
+	warnWithJson: warnWithJson(provided),
+	errorWithJson: errorWithJson(provided),
+	verboseWithJson: verboseWithJson(provided)
+});
