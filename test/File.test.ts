@@ -48,8 +48,8 @@ describe('File', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.existsSync(() => 'Success')(filePath);
-		expect(result).toEqualSome('Success');
+		const result = File.existsSync(filePath)();
+		expect(result).toEqualRight(true);
 	});
 
 	it('rmIfExistsSync file', () => {
