@@ -38,4 +38,20 @@ describe('Json', () => {
 		const result: OptionT<string> = Json.stringifyO(value);
 		expect(result).toEqualSome('{"one":"two"}');
 	});
+
+	it('stringifyIndentE', () => {
+		const value: Value = {
+			one: 'two'
+		};
+		const result: TryT<string> = Json.stringifyIndentE(2)(value);
+		expect(result).toEqualRight('{\n  "one": "two"\n}');
+	});
+
+	it('stringifyIndentO', () => {
+		const value: Value = {
+			one: 'two'
+		};
+		const result: OptionT<string> = Json.stringifyIndentO(2)(value);
+		expect(result).toEqualSome('{\n  "one": "two"\n}');
+	});
 });
