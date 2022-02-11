@@ -1,10 +1,11 @@
-import fs from 'fs';
+import fs, { RmOptions } from 'fs';
 import * as Option from 'fp-ts/Option';
-import { flow, identity, pipe } from 'fp-ts/function';
+import { constVoid, pipe } from 'fp-ts/function';
 import * as RArr from 'fp-ts/ReadonlyArray';
 import { IOTryT, OptionT } from './types';
 import * as IOTry from './IOTry';
 import * as IOEither from 'fp-ts/IOEither';
+import { match } from 'ts-pattern';
 
 export const readFileSync = (
 	filePath: string,
@@ -21,30 +22,39 @@ export const appendFileSync = (
 	content: string
 ): IOTryT<void> => IOTry.tryCatch(() => fs.appendFileSync(filePath, content));
 
-// TODO think about types for this one
-export const existsSync =
-	<T>(fn: (filePath: string) => T) =>
-	(filePath: string): OptionT<T> => {
-		if (fs.existsSync(filePath)) {
-			return Option.fromNullable(fn(filePath));
-		}
-		return Option.none;
-	};
+// TODO update tests
+export const existsSync = (filePath: string): IOTryT<boolean> =>
+	IOTry.tryCatch(() => fs.existsSync(filePath));
 
-export const rmIfExistsSync: (filePath: string) => IOTryT<unknown> = flow(
-	existsSync((path) =>
-		IOTry.tryCatch(() =>
-			fs.rmSync(path, {
-				recursive: true,
-				force: true
-			})
-		)
-	),
-	Option.fold<IOTryT<void>, IOTryT<unknown>>(
-		() => IOEither.right(null),
-		identity
-	)
-);
+// TODO update tests
+export const doIfExistsSync =
+	<T>(fn: (filePath: string) => IOTryT<T>) =>
+	(filePath: string): IOTryT<OptionT<T>> =>
+		pipe(
+			existsSync(filePath),
+			IOEither.chain((exists) =>
+				match(exists)
+					.with(true, () =>
+						pipe(fn(filePath), IOEither.map(Option.fromNullable))
+					)
+					.otherwise(() => IOEither.right(Option.none))
+			)
+		);
+
+// TODO update tests
+export const rmSync = (filePath: string, options?: RmOptions): IOTryT<void> =>
+	IOTry.tryCatch(() => fs.rmSync(filePath, options));
+
+// TODO update tests
+export const rmIfExistsSync = (
+	filePath: string,
+	options?: RmOptions
+): IOTryT<void> =>
+	pipe(
+		filePath,
+		doIfExistsSync(() => rmSync(filePath, options)),
+		IOEither.map(Option.fold(constVoid, constVoid))
+	);
 
 export const mkdirSync = (filePath: string): IOTryT<string> =>
 	pipe(
