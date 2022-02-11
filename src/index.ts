@@ -12,3 +12,4 @@ export * as Uri from './Uri';
 export * as types from './types';
 export * as IOTry from './IOTry';
 export * as ReadonlyArrayExt from './ReadonlyArrayExt';
+export * as Process from './Process';
