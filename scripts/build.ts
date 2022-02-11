@@ -12,6 +12,7 @@ import * as Option from 'fp-ts/Option';
 import * as Json from '../src/Json';
 import immer from 'immer';
 import { TryT } from '../src/types';
+import { getCwd } from './getCwd';
 
 interface PackageJson {
 	scripts: {
@@ -30,9 +31,9 @@ interface FileHolder {
 }
 
 const FP_TS_REGEX = /^(?<importName>.*)'fp-ts\/(?<fileName>.*)';$/;
-const LIB_PATH = path.join(process.cwd(), 'lib');
+const LIB_PATH = path.join(getCwd(), 'lib');
 const ES_LIB_PATH = path.join(LIB_PATH, 'es');
-const PACKAGE_JSON_PATH = path.join(process.cwd(), 'package.json');
+const PACKAGE_JSON_PATH = path.join(getCwd(), 'package.json');
 const PACKAGE_JSON_LIB_PATH = path.join(LIB_PATH, 'package.json');
 
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
