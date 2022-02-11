@@ -1,4 +1,7 @@
 import { IOT } from './types';
+import { pipe } from 'fp-ts/function';
+import * as Json from './Json';
+import * as Option from 'fp-ts/Option';
 
 export type BaseLog<R> = (msg: string) => R;
 export type ErrorLog<R> = (msg: string, error: Error) => R;
@@ -94,3 +97,39 @@ const verboseWithStack =
 	(msg, error) =>
 	() =>
 		provided.verbose(getMessageWithStack(msg, error));
+
+const getMessageWithJson = (
+	msg: string,
+	value: object | ReadonlyArray<unknown>
+): string =>
+	pipe(
+		Json.stringifyO(value),
+		Option.fold(
+			() => msg,
+			(_) => `${msg} ${_}`
+		)
+	);
+
+const debugWithJson =
+	(provided: ProvidedLogger): JsonLog<IOT<void>> =>
+	(msg, value) =>
+	() =>
+		provided.debug(getMessageWithJson(msg, value));
+
+const infoWithJson =
+	(provided: ProvidedLogger): JsonLog<IOT<void>> =>
+	(msg, value) =>
+	() =>
+		provided.info(getMessageWithJson(msg, value));
+
+const warnWithJson =
+	(provided: ProvidedLogger): JsonLog<IOT<void>> =>
+	(msg, value) =>
+	() =>
+		provided.warn(getMessageWithJson(msg, value));
+
+const errorWithJson =
+	(provided: ProvidedLogger): JsonLog<IOT<void>> =>
+	(msg, value) =>
+	() =>
+		provided.error(getMessageWithJson(msg, value));
