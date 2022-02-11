@@ -8,11 +8,15 @@ describe('Process', () => {
 	});
 
 	it('allRawArgv', () => {
-		throw new Error();
+		const expected = process.argv;
+		const actual = Process.allRawArgv()();
+		expect(actual).toEqual(expected);
 	});
 
 	it('allUserArgv', () => {
-		throw new Error();
+		const expected = process.argv.slice(2);
+		const actual = Process.allUserArgv()();
+		expect(actual).toEqual(expected);
 	});
 
 	it('lookupRawArgv', () => {
