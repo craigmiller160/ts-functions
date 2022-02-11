@@ -12,15 +12,15 @@ export const readFileSync = (
 	encoding: BufferEncoding = 'utf8'
 ): IOTryT<string> => IOTry.tryCatch(() => fs.readFileSync(filePath, encoding));
 
-export const writeFileSync = (
-	filePath: string,
-	content: string
-): IOTryT<void> => IOTry.tryCatch(() => fs.writeFileSync(filePath, content));
+export const writeFileSync =
+	(filePath: string) =>
+	(content: string): IOTryT<void> =>
+		IOTry.tryCatch(() => fs.writeFileSync(filePath, content));
 
-export const appendFileSync = (
-	filePath: string,
-	content: string
-): IOTryT<void> => IOTry.tryCatch(() => fs.appendFileSync(filePath, content));
+export const appendFileSync =
+	(filePath: string) =>
+	(content: string): IOTryT<void> =>
+		IOTry.tryCatch(() => fs.appendFileSync(filePath, content));
 
 export const existsSync = (filePath: string): IOTryT<boolean> =>
 	IOTry.tryCatch(() => fs.existsSync(filePath));
@@ -39,18 +39,19 @@ export const doIfExistsSync =
 			)
 		);
 
-export const rmSync = (filePath: string, options?: RmOptions): IOTryT<void> =>
-	IOTry.tryCatch(() => fs.rmSync(filePath, options));
+export const rmSync =
+	(options?: RmOptions) =>
+	(filePath: string): IOTryT<void> =>
+		IOTry.tryCatch(() => fs.rmSync(filePath, options));
 
-export const rmIfExistsSync = (
-	filePath: string,
-	options?: RmOptions
-): IOTryT<void> =>
-	pipe(
-		filePath,
-		doIfExistsSync(() => rmSync(filePath, options)),
-		IOEither.map(Option.fold(constVoid, constVoid))
-	);
+export const rmIfExistsSync =
+	(options?: RmOptions) =>
+	(filePath: string): IOTryT<void> =>
+		pipe(
+			filePath,
+			doIfExistsSync(() => rmSync(options)(filePath)),
+			IOEither.map(Option.fold(constVoid, constVoid))
+		);
 
 export const mkdirSync = (filePath: string): IOTryT<string> =>
 	pipe(
