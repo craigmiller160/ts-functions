@@ -1,6 +1,7 @@
 import * as Process from '../src/Process';
 import '@relmify/jest-fp-ts';
 import * as Option from 'fp-ts/Option';
+import * as Either from 'fp-ts/Either';
 
 describe('Process', () => {
 	it('cwd', () => {
@@ -21,15 +22,29 @@ describe('Process', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('rawArgvLookup', () => {
+	it('rawArgvLookupO', () => {
 		const expected = process.argv[1];
-		const actual = Process.rawArgvLookup(1)();
+		const actual = Process.rawArgvLookupO(1)();
 		expect(actual).toEqualSome(expected);
 	});
 
-	it('userArgvLookup', () => {
+	it('rawArgvLookupE', () => {
+		const expected = process.argv[1];
+		const actual = Process.rawArgvLookupE(1)();
+		expect(actual).toEqualRight(expected);
+	});
+
+	it('userArgvLookupO', () => {
 		const expected = Option.fromNullable(process.argv.slice(2)[1]);
-		const actual = Process.userArgvLookup(1)();
+		const actual = Process.userArgvLookupO(1)();
+		expect(actual).toEqual(expected);
+	});
+
+	it('userArgvLookupE', () => {
+		const expected = Either.fromOption(
+			() => new Error('Raw Argv not found: 1')
+		)(Option.fromNullable(process.argv.slice(2)[1]));
+		const actual = Process.userArgvLookupE(1)();
 		expect(actual).toEqual(expected);
 	});
 
@@ -39,10 +54,17 @@ describe('Process', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('envLookup', () => {
+	it('envLookupO', () => {
 		const key = Object.keys(process.env)[0];
 		const expected = process.env[key];
-		const actual = Process.envLookup(key)();
+		const actual = Process.envLookupO(key)();
 		expect(actual).toEqualSome(expected);
+	});
+
+	it('envLookupE', () => {
+		const key = Object.keys(process.env)[0];
+		const expected = process.env[key];
+		const actual = Process.envLookupE(key)();
+		expect(actual).toEqualRight(expected);
 	});
 });
