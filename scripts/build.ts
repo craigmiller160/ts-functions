@@ -42,6 +42,10 @@ const concatWithNewline: MonoidT<string> = {
 	empty: '',
 	concat: Text.concat('\n')
 };
+const rmDirectoryIfExists = File.rmIfExistsSyncWithOptions({
+	recursive: true,
+	force: true
+});
 
 const runCommand = (command: string): IOTryT<string> => {
 	console.log(`Command: ${command}`);
@@ -87,7 +91,7 @@ const readFileAndfixImports = (file: string): IOTryT<FileHolder> => {
 };
 
 const writeFile = (fileHolder: FileHolder): IOTryT<void> =>
-	File.writeFileSync(fileHolder.filePath, fileHolder.fileContent);
+	File.writeFileSync(fileHolder.filePath)(fileHolder.fileContent);
 
 const fixEsImports = (): IOTryT<ReadonlyArray<void>> => {
 	console.log('Fixing ES Imports');
@@ -103,10 +107,7 @@ const fixEsImports = (): IOTryT<ReadonlyArray<void>> => {
 
 const buildProject = (): IOTryT<string> =>
 	pipe(
-		File.rmIfExistsSync(LIB_PATH, {
-			recursive: true,
-			force: true
-		}),
+		rmDirectoryIfExists(LIB_PATH),
 		IOEither.chain(() => runCommand('tsc')),
 		IOEither.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
@@ -126,7 +127,7 @@ const copyPackageJson = (): IOTryT<void> =>
 	pipe(
 		File.readFileSync(PACKAGE_JSON_PATH),
 		IOEither.chainEitherK(updatePackageJson),
-		IOEither.chain((_) => File.writeFileSync(PACKAGE_JSON_LIB_PATH, _))
+		IOEither.chain(File.writeFileSync(PACKAGE_JSON_LIB_PATH))
 	);
 
 pipe(
