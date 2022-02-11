@@ -93,7 +93,7 @@ describe('File', () => {
 		File.rmSyncWithOptions({
 			recursive: true,
 			force: true
-		})(filePath)();
+		})(dirPath)();
 
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
