@@ -3,14 +3,11 @@ import { pipe } from 'fp-ts/function';
 import * as Json from './Json';
 import * as Option from 'fp-ts/Option';
 
-export type BaseLog<R> = (msg: string) => R;
-export type ErrorLog<R> = (msg: string, error: Error) => R;
-export type JsonLog<R> = (
-	msg: string,
-	value: object | ReadonlyArray<unknown>
-) => R;
+type BaseLog<R> = (msg: string) => R;
+type ErrorLog<R> = (msg: string, error: Error) => R;
+type JsonLog<R> = (msg: string, value: object | ReadonlyArray<unknown>) => R;
 
-export interface BaseLogger<R> {
+interface BaseLogger<R> {
 	readonly debug: BaseLog<R>;
 	readonly info: BaseLog<R>;
 	readonly warn: BaseLog<R>;
@@ -18,7 +15,7 @@ export interface BaseLogger<R> {
 	readonly verbose: BaseLog<R>;
 }
 
-export interface EnhancedLogger<R> extends BaseLogger<R> {
+interface EnhancedLogger<R> extends BaseLogger<R> {
 	readonly errorWithStack: ErrorLog<R>;
 	readonly warnWithStack: ErrorLog<R>;
 	readonly infoWithStack: ErrorLog<R>;

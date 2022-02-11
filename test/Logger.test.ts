@@ -1,6 +1,34 @@
+import { ProvidedLogger } from '../src/Logger';
+
 export {};
 
+interface TestProvidedLogger extends ProvidedLogger {
+	value: string;
+}
+
 describe('Logger', () => {
+	let testLogger: TestProvidedLogger;
+	beforeEach(() => {
+		testLogger = {
+			value: '',
+			debug(msg) {
+				this.value = `Debug: ${msg}`;
+			},
+			info(msg) {
+				this.value = `Info: ${msg}`;
+			},
+			warn(msg) {
+				this.value = `Warn: ${msg}`;
+			},
+			error(msg) {
+				this.value = `Error: ${msg}`;
+			},
+			verbose(msg) {
+				this.value = `Verbose: ${msg}`;
+			}
+		};
+	});
+
 	it('debug', () => {
 		throw new Error();
 	});
