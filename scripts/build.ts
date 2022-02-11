@@ -11,7 +11,9 @@ import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 import * as Json from '../src/Json';
 import immer from 'immer';
-import { TryT } from '../src/types';
+import { TryT, IOTryT, MonoidT } from '../src/types';
+import * as IOEither from 'fp-ts/IOEither';
+import * as Monoid from 'fp-ts/Monoid';
 
 interface PackageJson {
 	scripts: {
@@ -36,16 +38,21 @@ const PACKAGE_JSON_PATH = path.join(process.cwd(), 'package.json');
 const PACKAGE_JSON_LIB_PATH = path.join(LIB_PATH, 'package.json');
 
 const captureFpTsGroups = Regex.capture<FpTsGroups>(FP_TS_REGEX);
-const concatWithNewline = Text.concat('\n');
+const concatWithNewline: MonoidT<string> = {
+	empty: '',
+	concat: Text.concat('\n')
+};
 
-const runCommand = (command: string): TryT<string> => {
+const runCommand = (command: string): IOTryT<string> => {
 	console.log(`Command: ${command}`);
 	const result = spawn.sync('bash', ['-c', command], {
 		stdio: 'inherit'
 	});
 	return match(result)
-		.with({ status: 0 }, () => Either.right(command))
-		.otherwise(() => Either.left(new Error(`Command failed: ${command}`)));
+		.with({ status: 0 }, () => IOEither.right(command))
+		.otherwise(() =>
+			IOEither.left(new Error(`Command failed: ${command}`))
+		);
 };
 
 const fixImportIfPresent = (line: string): string =>
@@ -57,18 +64,20 @@ const fixImportIfPresent = (line: string): string =>
 		)
 	);
 
-const fixImportsInFile = (file: string): TryT<FileHolder> => {
+const fixImportsInFile = (fileContent: string): string =>
+	pipe(
+		fileContent,
+		Text.split('\n'),
+		RArr.map(fixImportIfPresent),
+		Monoid.concatAll(concatWithNewline)
+	);
+
+const readFileAndfixImports = (file: string): IOTryT<FileHolder> => {
 	const fullFilePath = path.join(ES_LIB_PATH, file);
 	return pipe(
 		File.readFileSync(fullFilePath),
-		Either.map(
-			flow(
-				Text.split('\n'),
-				RArr.map(fixImportIfPresent),
-				RArr.reduce('', concatWithNewline)
-			)
-		),
-		Either.map(
+		IOEither.map(fixImportsInFile),
+		IOEither.map(
 			(content): FileHolder => ({
 				filePath: fullFilePath,
 				fileContent: content
@@ -77,44 +86,54 @@ const fixImportsInFile = (file: string): TryT<FileHolder> => {
 	);
 };
 
-const writeFile = (fileHolder: FileHolder): TryT<void> =>
+const writeFile = (fileHolder: FileHolder): IOTryT<void> =>
 	File.writeFileSync(fileHolder.filePath, fileHolder.fileContent);
 
-const fixEsImports = (): TryT<ReadonlyArray<void>> => {
+const fixEsImports = (): IOTryT<ReadonlyArray<void>> => {
 	console.log('Fixing ES Imports');
 
 	return pipe(
 		File.listFilesSync(ES_LIB_PATH),
-		Either.chain(flow(RArr.map(fixImportsInFile), Either.sequenceArray)),
-		Either.chain(flow(RArr.map(writeFile), Either.sequenceArray))
+		IOEither.chain(
+			flow(RArr.map(readFileAndfixImports), IOEither.sequenceArray)
+		),
+		IOEither.chain(flow(RArr.map(writeFile), IOEither.sequenceArray))
 	);
 };
 
-const buildProject = (): TryT<string> =>
+const buildProject = (): IOTryT<string> =>
 	pipe(
-		File.rmIfExistsSync(LIB_PATH),
-		Either.chain(() => runCommand('tsc')),
-		Either.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
+		File.rmIfExistsSync(LIB_PATH, {
+			recursive: true,
+			force: true
+		}),
+		IOEither.chain(() => runCommand('tsc')),
+		IOEither.chain(() => runCommand('tsc -p tsconfig.esmodule.json'))
 	);
 
-const copyPackageJson = (): TryT<void> =>
+const updatePackageJson = (packageJsonString: string): TryT<string> =>
 	pipe(
-		File.readFileSync(PACKAGE_JSON_PATH),
-		Either.chain((_) => Json.parse<PackageJson>(_)),
+		Json.parseE<PackageJson>(packageJsonString),
 		Either.map((_) =>
 			immer(_, (draft) => {
 				delete draft.scripts.prepare;
 			})
 		),
-		Either.chain((_) => Json.stringify(_, 2)),
-		Either.chain((_) => File.writeFileSync(PACKAGE_JSON_LIB_PATH, _))
+		Either.chain((_) => Json.stringifyE(_, 2))
+	);
+
+const copyPackageJson = (): IOTryT<void> =>
+	pipe(
+		File.readFileSync(PACKAGE_JSON_PATH),
+		IOEither.chainEitherK(updatePackageJson),
+		IOEither.chain((_) => File.writeFileSync(PACKAGE_JSON_LIB_PATH, _))
 	);
 
 pipe(
 	buildProject(),
-	Either.chain(fixEsImports),
-	Either.chain(copyPackageJson),
-	Either.fold(
+	IOEither.chain(fixEsImports),
+	IOEither.chain(copyPackageJson),
+	IOEither.fold(
 		(ex) => {
 			console.error('Critical error in build', ex);
 			process.exit(1);
@@ -124,4 +143,4 @@ pipe(
 			process.exit(0);
 		}
 	)
-);
+)();

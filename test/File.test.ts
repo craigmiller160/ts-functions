@@ -2,6 +2,8 @@ import * as File from '../src/File';
 import path from 'path';
 import fs from 'fs';
 import '@relmify/jest-fp-ts';
+import * as IOEither from 'fp-ts/IOEither';
+import * as Option from 'fp-ts/Option';
 
 const TEMP_PATH = path.join(process.cwd(), 'node_modules', 'temp_test_dir');
 const TEXT = 'This is the file text';
@@ -23,13 +25,13 @@ describe('File', () => {
 	it('readFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
-		const result = File.readFileSync(filePath);
+		const result = File.readFileSync(filePath)();
 		expect(result).toEqualRight(TEXT);
 	});
 
 	it('writeFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.writeFileSync(filePath, TEXT);
+		File.writeFileSync(filePath, TEXT)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(TEXT);
@@ -37,8 +39,8 @@ describe('File', () => {
 
 	it('appendFileSync', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
-		File.appendFileSync(filePath, TEXT);
-		File.appendFileSync(filePath, TEXT);
+		File.appendFileSync(filePath, TEXT)();
+		File.appendFileSync(filePath, TEXT)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
 		expect(fileContent).toEqual(`${TEXT}${TEXT}`);
@@ -48,15 +50,48 @@ describe('File', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.existsSync(() => 'Success')(filePath);
-		expect(result).toEqualSome('Success');
+		const result = File.existsSync(filePath)();
+		expect(result).toEqualRight(true);
+	});
+
+	it('doIfExistsSync', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		const result = File.doIfExistsSync((path) =>
+			IOEither.right(`File: ${path}`)
+		)(filePath)();
+		expect(result).toEqualRight(Option.some(`File: ${filePath}`));
+	});
+
+	it('rmSync file', () => {
+		const filePath = path.join(TEMP_PATH, 'file.txt');
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSync(filePath)();
+		expect(fs.existsSync(filePath)).toEqual(false);
+	});
+
+	it('rmSync directory', () => {
+		const dirPath = path.join(TEMP_PATH, 'dir');
+		const filePath = path.join(dirPath, 'file.txt');
+		fs.mkdirSync(dirPath);
+		fs.writeFileSync(filePath, TEXT);
+
+		File.rmSync(dirPath, {
+			recursive: true,
+			force: true
+		})();
+
+		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(dirPath)).toEqual(false);
 	});
 
 	it('rmIfExistsSync file', () => {
 		const filePath = path.join(TEMP_PATH, 'file.txt');
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(filePath);
+		const result = File.rmIfExistsSync(filePath)();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 	});
@@ -67,7 +102,10 @@ describe('File', () => {
 		fs.mkdirSync(dirPath);
 		fs.writeFileSync(filePath, TEXT);
 
-		const result = File.rmIfExistsSync(dirPath);
+		const result = File.rmIfExistsSync(dirPath, {
+			recursive: true,
+			force: true
+		})();
 		expect(result).toBeRight();
 		expect(fs.existsSync(filePath)).toEqual(false);
 		expect(fs.existsSync(dirPath)).toEqual(false);
@@ -76,7 +114,7 @@ describe('File', () => {
 	it('mkdirSync', () => {
 		const dirPath = path.join(TEMP_PATH, 'dir');
 
-		const result = File.mkdirSync(dirPath);
+		const result = File.mkdirSync(dirPath)();
 		expect(result).toEqualRight(dirPath);
 		expect(fs.existsSync(dirPath)).toEqual(true);
 	});
@@ -87,7 +125,7 @@ describe('File', () => {
 		fs.writeFileSync(file1, TEXT);
 		fs.writeFileSync(file2, TEXT);
 
-		const result = File.listFilesSync(TEMP_PATH);
+		const result = File.listFilesSync(TEMP_PATH)();
 		expect(result).toEqualRight(['file1.txt', 'file2.txt']);
 	});
 });

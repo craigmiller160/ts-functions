@@ -1,64 +1,79 @@
-import fs from 'fs';
-import * as Try from './Try';
-import * as Either from 'fp-ts/Either';
+import fs, { RmOptions } from 'fs';
 import * as Option from 'fp-ts/Option';
-import { flow, identity, pipe } from 'fp-ts/function';
+import { constVoid, pipe } from 'fp-ts/function';
 import * as RArr from 'fp-ts/ReadonlyArray';
-import { TryT } from './types';
+import { IOTryT, OptionT } from './types';
+import * as IOTry from './IOTry';
+import * as IOEither from 'fp-ts/IOEither';
+import { match } from 'ts-pattern';
 
 export const readFileSync = (
 	filePath: string,
 	encoding: BufferEncoding = 'utf8'
-): TryT<string> => Try.tryCatch(() => fs.readFileSync(filePath, encoding));
+): IOTryT<string> => IOTry.tryCatch(() => fs.readFileSync(filePath, encoding));
 
-export const writeFileSync = (filePath: string, content: string): TryT<void> =>
-	Try.tryCatch(() => fs.writeFileSync(filePath, content));
+export const writeFileSync = (
+	filePath: string,
+	content: string
+): IOTryT<void> => IOTry.tryCatch(() => fs.writeFileSync(filePath, content));
 
-export const appendFileSync = (filePath: string, content: string): TryT<void> =>
-	Try.tryCatch(() => fs.appendFileSync(filePath, content));
+export const appendFileSync = (
+	filePath: string,
+	content: string
+): IOTryT<void> => IOTry.tryCatch(() => fs.appendFileSync(filePath, content));
 
-export const existsSync =
-	<T>(fn: (filePath: string) => T) =>
-	(filePath: string): Option.Option<T> => {
-		if (fs.existsSync(filePath)) {
-			return Option.fromNullable(fn(filePath));
-		}
-		return Option.none;
-	};
+export const existsSync = (filePath: string): IOTryT<boolean> =>
+	IOTry.tryCatch(() => fs.existsSync(filePath));
 
-type RmIfExistsSync = (filePath: string) => TryT<unknown>;
-export const rmIfExistsSync: RmIfExistsSync = flow(
-	existsSync((path) =>
-		Try.tryCatch(() =>
-			fs.rmSync(path, {
-				recursive: true,
-				force: true
-			})
-		)
-	),
-	Option.fold<TryT<void>, TryT<unknown>>(() => Either.right(null), identity)
-);
+export const doIfExistsSync =
+	<T>(fn: (filePath: string) => IOTryT<T>) =>
+	(filePath: string): IOTryT<OptionT<T>> =>
+		pipe(
+			existsSync(filePath),
+			IOEither.chain((exists) =>
+				match(exists)
+					.with(true, () =>
+						pipe(fn(filePath), IOEither.map(Option.fromNullable))
+					)
+					.otherwise(() => IOEither.right(Option.none))
+			)
+		);
 
-export const mkdirSync = (filePath: string): TryT<string> =>
+export const rmSync = (filePath: string, options?: RmOptions): IOTryT<void> =>
+	IOTry.tryCatch(() => fs.rmSync(filePath, options));
+
+export const rmIfExistsSync = (
+	filePath: string,
+	options?: RmOptions
+): IOTryT<void> =>
 	pipe(
-		Try.tryCatch(() =>
+		filePath,
+		doIfExistsSync(() => rmSync(filePath, options)),
+		IOEither.map(Option.fold(constVoid, constVoid))
+	);
+
+export const mkdirSync = (filePath: string): IOTryT<string> =>
+	pipe(
+		IOTry.tryCatch(() =>
 			fs.mkdirSync(filePath, {
 				recursive: true
 			})
 		),
-		Either.chain((value) =>
+		IOEither.chain((value) =>
 			pipe(
 				Option.fromNullable(value),
 				Option.fold(
 					() =>
-						Either.left(
+						IOEither.left(
 							new Error(`Failed to create directory: ${filePath}`)
 						),
-					(value) => Either.right(value)
+					(value) => IOEither.right(value)
 				)
 			)
 		)
 	);
 
-export const listFilesSync = (filePath: string): TryT<ReadonlyArray<string>> =>
-	Try.tryCatch(() => RArr.fromArray(fs.readdirSync(filePath)));
+export const listFilesSync = (
+	filePath: string
+): IOTryT<ReadonlyArray<string>> =>
+	IOTry.tryCatch(() => RArr.fromArray(fs.readdirSync(filePath)));

@@ -9,3 +9,6 @@ export * as Try from './Try';
 export * as Text from './Text';
 export * as Time from './Time';
 export * as Uri from './Uri';
+export * as types from './types';
+export * as IOTry from './IOTry';
+export * as ReadonlyArrayExt from './ReadonlyArrayExt';
