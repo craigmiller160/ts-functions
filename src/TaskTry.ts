@@ -15,7 +15,6 @@ export const getOrThrow = <T>(theTry: TaskTry<T>): TaskT<T> =>
 		throw ex;
 	}, Task.of)(theTry);
 
-// TODO write test
 export const chainTryCatch =
 	<T1, T2>(fn: (value: T1) => Promise<T2>) =>
 	(ma: TaskTry<T1>): TaskTry<T2> =>
