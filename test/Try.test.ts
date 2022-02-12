@@ -5,6 +5,8 @@ import '@relmify/jest-fp-ts';
 import { getOrThrow } from '../src/Try';
 import { TryT } from '../src/types';
 
+const t: TryT<string> = Either.right('Hello');
+
 describe('Try', () => {
 	it('tryCatch', () => {
 		const successTry: TryT<string> = Try.tryCatch(() => 'Hello');
@@ -38,5 +40,21 @@ describe('Try', () => {
 			return;
 		}
 		throw new Error('Should have thrown Error');
+	});
+
+	describe('chainTryCatch', () => {
+		it('successful', () => {
+			const result = Try.chainTryCatch(
+				(value: string) => `${value} World`
+			)(t);
+			expect(result).toEqualRight('Hello World');
+		});
+
+		it('fails', () => {
+			const result = Try.chainTryCatch(() => {
+				throw new Error('Dying');
+			})(t);
+			expect(result).toEqualLeft(new Error('Dying'));
+		});
 	});
 });

@@ -13,7 +13,6 @@ export const getOrThrow = <T>(theTry: Try<T>): T =>
 		throw ex;
 	}, identity)(theTry);
 
-// TODO write test
 export const chainTryCatch =
 	<T1, T2>(fn: (value: T1) => T2) =>
 	(ma: Try<T1>): Try<T2> =>
