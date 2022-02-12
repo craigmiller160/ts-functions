@@ -14,3 +14,5 @@ export * as IOTry from './IOTry';
 export * as ReadonlyArrayExt from './ReadonlyArrayExt';
 export * as Process from './Process';
 export * as Logger from './Logger';
+export * as EitherExt from './EitherExt';
+export * as TaskEitherExt from './TaskEitherExt';
