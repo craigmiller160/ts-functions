@@ -4,6 +4,8 @@ import * as Task from 'fp-ts/Task';
 import '@relmify/jest-fp-ts';
 import { TaskTryT, TryT } from '../src/types';
 
+const te: TaskTryT<string> = TaskEither.right('Hello');
+
 describe('TaskTry', () => {
 	it('tryCatch', async () => {
 		const successTry: TaskTryT<string> = TaskTry.tryCatch(
@@ -50,5 +52,21 @@ describe('TaskTry', () => {
 			return;
 		}
 		throw new Error('Should have thrown error');
+	});
+
+	describe('chainTryCatch', () => {
+		it('successful promise', async () => {
+			const result = await TaskTry.chainTryCatch(
+				async (value: string) => `${value} World`
+			)(te)();
+			expect(result).toEqualRight('Hello World');
+		});
+
+		it('failed promise', async () => {
+			const result = await TaskTry.chainTryCatch(async () => {
+				throw new Error('Dying');
+			})(te)();
+			expect(result).toEqualLeft(new Error('Dying'));
+		});
 	});
 });
