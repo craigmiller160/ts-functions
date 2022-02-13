@@ -13,7 +13,8 @@ import {
 	subWeeks,
 	subMonths,
 	subYears,
-	set
+	set,
+	differenceInDays
 } from 'date-fns';
 import * as Time from '../src/Time';
 import { SetTimeOptions } from '../src/Time';
@@ -26,6 +27,14 @@ describe('DateFns', () => {
 	it('fromMillis', () => {
 		const expected = new Date();
 		const actual = Time.fromMillis(expected.getTime());
+		expect(actual).toEqual(expected);
+	});
+
+	it('differenceInDays', () => {
+		const start = new Date();
+		const end = addDays(new Date(), 10);
+		const expected = differenceInDays(start, end);
+		const actual = Time.differenceInDays(start)(end);
 		expect(actual).toEqual(expected);
 	});
 

@@ -14,6 +14,7 @@ import {
 	subMonths as baseSubMonths,
 	subYears as baseSubYears,
 	subDays as baseSubDays,
+	differenceInDays as baseDifferenceInDays,
 	set as baseSet
 } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -27,6 +28,11 @@ export interface SetTimeOptions {
 	readonly seconds?: number;
 	readonly milliseconds?: number;
 }
+
+export const differenceInDays =
+	(start: Date) =>
+	(end: Date): number =>
+		baseDifferenceInDays(start, end);
 
 export const fromMillis = (millis: number): Date => new Date(millis);
 
