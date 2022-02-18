@@ -62,7 +62,10 @@ export const envLookupE = (key: string): IOTryT<string> =>
 		)
 	);
 
-export const exit = (code: number): IOT<never> => IO.of(process.exit(code));
+export const exit =
+	(code: number): IOT<never> =>
+	() =>
+		process.exit(code);
 
 export const delayedExit =
 	(code: number): IOT<unknown> =>
