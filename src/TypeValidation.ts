@@ -12,6 +12,13 @@ export class TypeValidationError extends Error {
 	}
 }
 
+export type IoTsValidator<I, O> = (input: I) => ValidationT<O>;
+
+export const validate =
+	<I, O>(fn: IoTsValidator<I, O>) =>
+	(input: I): TryT<O> =>
+		pipe(fn(input), handleResult);
+
 export const handleResult = <T>(result: ValidationT<T>): TryT<T> =>
 	pipe(
 		result,
