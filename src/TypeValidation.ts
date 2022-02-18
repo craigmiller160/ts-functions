@@ -4,8 +4,6 @@ import * as Either from 'fp-ts/Either';
 import { PathReporter } from 'io-ts/PathReporter';
 import * as ioType from 'io-ts';
 
-// TODO add io-ts to eslint restrictions and build changes
-
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
 	constructor(errors: ReadonlyArray<string>) {
