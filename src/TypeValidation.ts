@@ -14,7 +14,7 @@ export class TypeValidationError extends Error {
 	}
 }
 
-export const handleValidationResult = <T>(result: ValidationT<T>): TryT<T> =>
+export const handleResult = <T>(result: ValidationT<T>): TryT<T> =>
 	pipe(
 		result,
 		Either.mapLeft(ioType.failures),
