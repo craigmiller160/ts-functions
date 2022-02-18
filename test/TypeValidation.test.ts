@@ -1,6 +1,7 @@
 import * as ioType from 'io-ts';
 import * as TypeValidation from '../src/TypeValidation';
 import '@relmify/jest-fp-ts';
+import { TypeValidationError } from '../src/TypeValidation';
 
 const TheTypeV = ioType.type({
 	hello: ioType.string
@@ -19,7 +20,18 @@ describe('TypeValidation', () => {
 		});
 
 		it('failure', () => {
-			throw new Error();
+			const data = {
+				hello: 11
+			};
+			const validationResult = TheTypeV.decode(data);
+			const result = TypeValidation.handleResult(validationResult);
+			expect(result).toEqualLeft(expect.any(TypeValidationError));
+			expect(result).toEqualLeft(
+				expect.objectContaining({
+					message:
+						'Invalid value 11 supplied to : { hello: string }/hello: string'
+				})
+			);
 		});
 	});
 });
