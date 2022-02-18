@@ -35,12 +35,12 @@ describe('TypeValidation', () => {
 		});
 	});
 
-	describe('validate', () => {
+	describe('decode', () => {
 		it('success', () => {
 			const data: TheType = {
 				hello: 'world'
 			};
-			const result = TypeValidation.validate(TheTypeV.decode)(data);
+			const result = TypeValidation.decode(TheTypeV)(data);
 			expect(result).toEqualRight(data);
 		});
 
@@ -48,7 +48,7 @@ describe('TypeValidation', () => {
 			const data = {
 				hello: 11
 			};
-			const result = TypeValidation.validate(TheTypeV.decode)(data);
+			const result = TypeValidation.decode(TheTypeV)(data);
 			expect(result).toEqualLeft(expect.any(TypeValidationError));
 			expect(result).toEqualLeft(
 				expect.objectContaining({
