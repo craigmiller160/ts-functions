@@ -32,8 +32,7 @@ export const handleResult = <T>(result: ValidationT<T>): TryT<T> =>
 
 enum CurrentEntryType {
 	OBJECT,
-	ARRAY,
-	VALUE
+	ARRAY
 }
 
 interface ReportPathContext {
@@ -48,8 +47,7 @@ const typeToCurrentEntryType = (type: Decoder<any, any>): CurrentEntryType =>
 	match(type.name)
 		.with(startsWith('Array'), () => CurrentEntryType.ARRAY)
 		.with(startsWith('ReadonlyArray'), () => CurrentEntryType.ARRAY)
-		.with(startsWith('Readonly'), () => CurrentEntryType.OBJECT)
-		.otherwise(() => CurrentEntryType.VALUE);
+		.otherwise(() => CurrentEntryType.OBJECT);
 
 const createErrorMessage = (error: ValidationError): string => {
 	pipe(
