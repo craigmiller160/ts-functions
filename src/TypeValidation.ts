@@ -3,7 +3,7 @@ import { identity, pipe } from 'fp-ts/function';
 import * as Either from 'fp-ts/Either';
 import { PathReporter } from 'io-ts/PathReporter';
 import * as ioType from 'io-ts';
-import { Decoder, ReadonlyType, Type, ValidationError } from 'io-ts';
+import { Decoder, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
 import { match, when } from 'ts-pattern';

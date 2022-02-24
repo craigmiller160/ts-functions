@@ -78,9 +78,12 @@ describe('TypeValidation', () => {
 			}, IO.of)
 		)();
 		const result = tradierHistoryV.decode(obj);
-		// const report = PathReporter.report(result);
-		// console.log(report);
 		const report = ReadableReporter.report(result);
-		console.log(report);
+		expect(report).toEqual([
+			"IO Type Error: Expected 'history.day[4].open' to be type 'number', received 'NaN'",
+			"IO Type Error: Expected 'history.day[4].high' to be type 'number', received 'NaN'",
+			"IO Type Error: Expected 'history.day[4].low' to be type 'number', received 'NaN'",
+			"IO Type Error: Expected 'history.day[4].close' to be type 'number', received 'NaN'"
+		]);
 	});
 });
