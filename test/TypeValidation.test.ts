@@ -99,9 +99,3 @@ describe('TypeValidation', () => {
 		// })
 	});
 });
-
-/*
- * 1) Tag contains "Array" means it's an array, next key will be an index
- * 2) Contexts, the key propertires represent the path to the bad field
- * 3) Return string[]
- */

@@ -1,4 +1,4 @@
-import { TryT, ValidationT } from './types';
+import { MonoidT, TryT, ValidationT } from './types';
 import { identity, pipe } from 'fp-ts/function';
 import * as Either from 'fp-ts/Either';
 import { PathReporter } from 'io-ts/PathReporter';
@@ -8,6 +8,7 @@ import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
 import { match, when } from 'ts-pattern';
 import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
+import * as Monoid from 'fp-ts/Monoid';
 
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
@@ -49,25 +50,38 @@ const typeToCurrentEntryType = (type: Decoder<any, any>): CurrentEntryType =>
 		.with(startsWith('ReadonlyArray'), () => CurrentEntryType.ARRAY)
 		.otherwise(() => CurrentEntryType.OBJECT);
 
+const reportPathContextMonoid: MonoidT<ReportPathContext> = {
+	empty: {
+		path: '',
+		currentEntryType: CurrentEntryType.OBJECT
+	},
+	concat: (ctx1: ReportPathContext, ctx2: ReportPathContext): ReportPathContext => {
+		if (ctx1.path === '') {
+			return ctx2;
+		}
+
+
+	}
+};
+
 const createErrorMessage = (error: ValidationError): string => {
-	pipe(
+	const fullContext = pipe(
 		error.context,
 		RArray.map(
 			(ctx): ReportPathContext => ({
 				path: ctx.key,
 				currentEntryType: typeToCurrentEntryType(ctx.type)
 			})
-		)
+		),
+		Monoid.concatAll(reportPathContextMonoid)
 	);
-	return '';
+	return `IO Type Error: '${fullContext.path}' cannot be ${error.value}`;
 };
 
 const createReadableReport = (
 	errors: ReadonlyArray<ValidationError>
-): ReadonlyArray<string> => {
+): ReadonlyArray<string> =>
 	pipe(errors, RArray.map(createErrorMessage));
-	return [];
-};
 
 export const ReadableReporter: Reporter<ReadonlyArray<string>> = {
 	report: (result: ValidationT<unknown>): ReadonlyArray<string> =>
