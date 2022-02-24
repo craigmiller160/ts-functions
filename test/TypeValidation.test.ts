@@ -2,6 +2,14 @@ import * as ioType from 'io-ts';
 import * as TypeValidation from '../src/TypeValidation';
 import '@relmify/jest-fp-ts';
 import { TypeValidationError } from '../src/TypeValidation';
+import * as File from '../src/File';
+import * as Json from '../src/Json';
+import path from 'path';
+import { pipe } from 'fp-ts/function';
+import * as IOEither from 'fp-ts/IOEither';
+import * as IO from 'fp-ts/IO';
+import { tradierHistoryV } from './testutils/TradierHistory';
+import { PathReporter } from 'io-ts/PathReporter';
 
 const TheTypeV = ioType.type({
 	hello: ioType.string
@@ -57,5 +65,22 @@ describe('TypeValidation', () => {
 				})
 			);
 		});
+	});
+
+	// TODO replace this with better tests
+	it('error messages', () => {
+		const obj = pipe(
+			File.readFileSync(
+				path.join(__dirname, 'resources', 'BadResponse.json'),
+				'utf8'
+			),
+			IOEither.chainEitherK(Json.parseE),
+			IOEither.fold((ex) => {
+				throw ex;
+			}, IO.of)
+		)();
+		const result = tradierHistoryV.decode(obj);
+		const report = PathReporter.report(result);
+		console.log(report);
 	});
 });
