@@ -9,8 +9,6 @@ import { pipe } from 'fp-ts/function';
 import * as IOEither from 'fp-ts/IOEither';
 import * as IO from 'fp-ts/IO';
 import { tradierHistoryV } from './testutils/TradierHistory';
-import { PathReporter } from 'io-ts/PathReporter';
-import * as Either from 'fp-ts/Either';
 
 const TheTypeV = ioType.type({
 	hello: ioType.string

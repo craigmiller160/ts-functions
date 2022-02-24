@@ -44,7 +44,9 @@ interface ReportPathContext {
 const startsWith = (value: string): GuardPattern<string> =>
 	when((_) => _.startsWith(value));
 
-const typeToCurrentEntryType = (type: Decoder<any, any>): CurrentEntryType =>
+const typeToCurrentEntryType = (
+	type: Decoder<unknown, unknown>
+): CurrentEntryType =>
 	match(type.name)
 		.with(startsWith('Array'), () => CurrentEntryType.ARRAY)
 		.with(startsWith('ReadonlyArray'), () => CurrentEntryType.ARRAY)
@@ -55,12 +57,21 @@ const reportPathContextMonoid: MonoidT<ReportPathContext> = {
 		path: '',
 		currentEntryType: CurrentEntryType.OBJECT
 	},
-	concat: (ctx1: ReportPathContext, ctx2: ReportPathContext): ReportPathContext => {
+	concat: (
+		ctx1: ReportPathContext,
+		ctx2: ReportPathContext
+	): ReportPathContext => {
 		if (ctx1.path === '') {
 			return ctx2;
 		}
 
-
+		const newPath = match(ctx1.currentEntryType)
+			.with(CurrentEntryType.ARRAY, () => `${ctx1.path}[${ctx2.path}]`)
+			.otherwise(() => `${ctx1.path}.${ctx2.path}`);
+		return {
+			path: newPath,
+			currentEntryType: ctx2.currentEntryType
+		};
 	}
 };
 
@@ -81,8 +92,7 @@ const createErrorMessage = (error: ValidationError): string => {
 
 const createReadableReport = (
 	errors: ReadonlyArray<ValidationError>
-): ReadonlyArray<string> =>
-	pipe(errors, RArray.map(createErrorMessage));
+): ReadonlyArray<string> => pipe(errors, RArray.map(createErrorMessage));
 
 export const ReadableReporter: Reporter<ReadonlyArray<string>> = {
 	report: (result: ValidationT<unknown>): ReadonlyArray<string> =>
