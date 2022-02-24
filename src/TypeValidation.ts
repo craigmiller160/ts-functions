@@ -38,8 +38,7 @@ enum CurrentEntryType {
 
 interface ReportPathContext {
 	readonly path: string;
-	// TODO figure out solution here to make non-nullable
-	readonly currentEntryDecoder?: Decoder<unknown, unknown>;
+	readonly currentEntryDecoder: Decoder<unknown, unknown>;
 	readonly currentEntryType: CurrentEntryType;
 }
 
@@ -57,7 +56,7 @@ const typeToCurrentEntryType = (
 const reportPathContextMonoid: MonoidT<ReportPathContext> = {
 	empty: {
 		path: '',
-		currentEntryDecoder: undefined,
+		currentEntryDecoder: ioType.unknown,
 		currentEntryType: CurrentEntryType.OBJECT
 	},
 	concat: (
@@ -92,10 +91,7 @@ const createErrorMessage = (error: ValidationError): string => {
 		Monoid.concatAll(reportPathContextMonoid)
 	);
 
-	const typeName = (
-		fullContext.currentEntryDecoder?.name ?? 'unknown'
-	).replace(/<.*$/, '');
-
+	const typeName = fullContext.currentEntryDecoder.name.replace(/<.*$/, '');
 	return `IO Type Error: Expected '${fullContext.path}' to be type '${typeName}', received '${error.value}'`;
 };
 
