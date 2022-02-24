@@ -75,6 +75,7 @@ const createErrorMessage = (error: ValidationError): string => {
 		),
 		Monoid.concatAll(reportPathContextMonoid)
 	);
+	// TODO what about the type of the value, that would be useful
 	return `IO Type Error: '${fullContext.path}' cannot be ${error.value}`;
 };
 

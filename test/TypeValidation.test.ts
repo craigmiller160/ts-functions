@@ -85,17 +85,5 @@ describe('TypeValidation', () => {
 		// console.log(report);
 		const report = ReadableReporter.report(result);
 		console.log(report);
-
-		// const errors = pipe(
-		// 	result,
-		// 	Either.fold(
-		// 		(errors) => errors,
-		// 		() => []
-		// 	)
-		// );
-		// errors.map((error) => {
-		// 	const types = error.context.map((ctx) => ctx.type)
-		// 	types[0].name // must start with Array or ReadonlyArray
-		// })
 	});
 });
