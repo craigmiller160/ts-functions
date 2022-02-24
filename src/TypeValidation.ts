@@ -3,7 +3,7 @@ import { identity, pipe } from 'fp-ts/function';
 import * as Either from 'fp-ts/Either';
 import { PathReporter } from 'io-ts/PathReporter';
 import * as ioType from 'io-ts';
-import { Decoder, Type, ValidationError } from 'io-ts';
+import { Decoder, ReadonlyType, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
 import { match, when } from 'ts-pattern';
@@ -38,6 +38,8 @@ enum CurrentEntryType {
 
 interface ReportPathContext {
 	readonly path: string;
+	// TODO figure out solution here to make non-nullable
+	readonly currentEntryDecoder?: Decoder<unknown, unknown>;
 	readonly currentEntryType: CurrentEntryType;
 }
 
@@ -55,6 +57,7 @@ const typeToCurrentEntryType = (
 const reportPathContextMonoid: MonoidT<ReportPathContext> = {
 	empty: {
 		path: '',
+		currentEntryDecoder: undefined,
 		currentEntryType: CurrentEntryType.OBJECT
 	},
 	concat: (
@@ -70,6 +73,7 @@ const reportPathContextMonoid: MonoidT<ReportPathContext> = {
 			.otherwise(() => `${ctx1.path}.${ctx2.path}`);
 		return {
 			path: newPath,
+			currentEntryDecoder: ctx2.currentEntryDecoder,
 			currentEntryType: ctx2.currentEntryType
 		};
 	}
@@ -81,13 +85,18 @@ const createErrorMessage = (error: ValidationError): string => {
 		RArray.map(
 			(ctx): ReportPathContext => ({
 				path: ctx.key,
+				currentEntryDecoder: ctx.type,
 				currentEntryType: typeToCurrentEntryType(ctx.type)
 			})
 		),
 		Monoid.concatAll(reportPathContextMonoid)
 	);
-	// TODO what about the type of the value, that would be useful
-	return `IO Type Error: '${fullContext.path}' cannot be ${error.value}`;
+
+	const typeName = (
+		fullContext.currentEntryDecoder?.name ?? 'unknown'
+	).replace(/<.*$/, '');
+
+	return `IO Type Error: Expected '${fullContext.path}' to be type '${typeName}', received '${error.value}'`;
 };
 
 const createReadableReport = (
