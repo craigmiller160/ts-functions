@@ -36,7 +36,7 @@ describe('TypeValidation', () => {
 			expect(result).toEqualLeft(
 				expect.objectContaining({
 					message:
-						'Invalid value 11 supplied to : { hello: string }/hello: string'
+						"IO Type Error: Expected 'hello' to be type 'string', received '11'"
 				})
 			);
 		});
@@ -60,7 +60,7 @@ describe('TypeValidation', () => {
 			expect(result).toEqualLeft(
 				expect.objectContaining({
 					message:
-						'Invalid value 11 supplied to : { hello: string }/hello: string'
+						"IO Type Error: Expected 'hello' to be type 'string', received '11'"
 				})
 			);
 		});
