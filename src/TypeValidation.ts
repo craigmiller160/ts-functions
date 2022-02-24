@@ -1,7 +1,6 @@
 import { MonoidT, TryT, ValidationT } from './types';
 import { identity, pipe } from 'fp-ts/function';
 import * as Either from 'fp-ts/Either';
-import { PathReporter } from 'io-ts/PathReporter';
 import * as ioType from 'io-ts';
 import { Decoder, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
@@ -27,7 +26,7 @@ export const handleResult = <T>(result: ValidationT<T>): TryT<T> =>
 	pipe(
 		result,
 		Either.mapLeft(ioType.failures),
-		Either.mapLeft(PathReporter.report),
+		Either.mapLeft(ReadableReporter.report),
 		Either.mapLeft((report) => new TypeValidationError(report))
 	);
 
