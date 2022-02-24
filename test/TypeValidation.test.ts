@@ -1,7 +1,7 @@
 import * as ioType from 'io-ts';
 import * as TypeValidation from '../src/TypeValidation';
 import '@relmify/jest-fp-ts';
-import { TypeValidationError } from '../src/TypeValidation';
+import { ReadableReporter, TypeValidationError } from '../src/TypeValidation';
 import * as File from '../src/File';
 import * as Json from '../src/Json';
 import path from 'path';
@@ -10,6 +10,7 @@ import * as IOEither from 'fp-ts/IOEither';
 import * as IO from 'fp-ts/IO';
 import { tradierHistoryV } from './testutils/TradierHistory';
 import { PathReporter } from 'io-ts/PathReporter';
+import * as Either from 'fp-ts/Either';
 
 const TheTypeV = ioType.type({
 	hello: ioType.string
@@ -80,7 +81,27 @@ describe('TypeValidation', () => {
 			}, IO.of)
 		)();
 		const result = tradierHistoryV.decode(obj);
-		const report = PathReporter.report(result);
+		// const report = PathReporter.report(result);
+		// console.log(report);
+		const report = ReadableReporter.report(result);
 		console.log(report);
+
+		// const errors = pipe(
+		// 	result,
+		// 	Either.fold(
+		// 		(errors) => errors,
+		// 		() => []
+		// 	)
+		// );
+		// errors.map((error) => {
+		// 	const types = error.context.map((ctx) => ctx.type)
+		// 	types[0].name // must start with Array or ReadonlyArray
+		// })
 	});
 });
+
+/*
+ * 1) Tag contains "Array" means it's an array, next key will be an index
+ * 2) Contexts, the key propertires represent the path to the bad field
+ * 3) Return string[]
+ */
