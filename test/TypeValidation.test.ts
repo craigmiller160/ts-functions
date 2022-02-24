@@ -66,8 +66,7 @@ describe('TypeValidation', () => {
 		});
 	});
 
-	// TODO replace this with better tests
-	it('error messages', () => {
+	it('ReadableReporter produces detailed error message', () => {
 		const obj = pipe(
 			File.readFileSync(
 				path.join(__dirname, 'resources', 'BadResponse.json'),
