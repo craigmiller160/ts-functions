@@ -9,6 +9,19 @@ import { match, when } from 'ts-pattern';
 import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
 import * as Monoid from 'fp-ts/Monoid';
 
+export class NaNType extends Type<typeof Number.NaN> {
+	constructor() {
+		super(
+			'NaN',
+			(u): u is typeof NaN => Number.isNaN(u),
+			(u, c) => (this.is(u) ? ioType.success(u) : ioType.failure(u, c)),
+			identity
+		);
+	}
+}
+
+export const typeNaN = new NaNType();
+
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
 	constructor(errors: ReadonlyArray<string>) {
