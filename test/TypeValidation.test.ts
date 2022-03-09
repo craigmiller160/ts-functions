@@ -15,33 +15,7 @@ const TheTypeV = ioType.type({
 });
 type TheType = ioType.TypeOf<typeof TheTypeV>;
 
-const NaNTypeV = ioType.type({
-	theNaN: TypeValidation.typeNaN,
-	numOrNaN: ioType.union([ioType.number, TypeValidation.typeNaN])
-});
-type TheNaNType = ioType.TypeOf<typeof NaNTypeV>;
-
 describe('TypeValidation', () => {
-	describe('NaN', () => {
-		it('allows NaN', () => {
-			const value: TheNaNType = {
-				theNaN: NaN,
-				numOrNaN: 1
-			};
-			const result = NaNTypeV.decode(value);
-			expect(result).toEqualRight(value);
-		});
-
-		it('allows NaN in number union type', () => {
-			const value: TheNaNType = {
-				theNaN: NaN,
-				numOrNaN: NaN
-			};
-			const result = NaNTypeV.decode(value);
-			expect(result).toEqualRight(value);
-		});
-	});
-
 	describe('handleResult', () => {
 		it('success', () => {
 			const data: TheType = {

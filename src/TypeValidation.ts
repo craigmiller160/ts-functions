@@ -2,29 +2,12 @@ import { MonoidT, TryT, ValidationT } from './types';
 import { identity, pipe } from 'fp-ts/function';
 import * as Either from 'fp-ts/Either';
 import * as ioType from 'io-ts';
-import { Decoder, Props, Type, ValidationError } from 'io-ts';
+import { Decoder, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
 import { match, when } from 'ts-pattern';
 import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
 import * as Monoid from 'fp-ts/Monoid';
-
-export class NaNType extends Type<typeof Number.NaN> {
-	constructor() {
-		super(
-			'NaN',
-			(u): u is typeof NaN => Number.isNaN(u),
-			(u, c) => (this.is(u) ? ioType.success(u) : ioType.failure(u, c)),
-			identity
-		);
-	}
-}
-
-export const typeNaN = new NaNType();
-
-export const readonlyType = <P extends Props>(
-	props: P
-): ioType.ReadonlyC<ioType.TypeC<P>> => ioType.readonly(ioType.type(props));
 
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
