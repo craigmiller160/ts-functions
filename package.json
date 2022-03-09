@@ -21,7 +21,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "yarn lint"
+    "*.{ts,tsx}": "eslint --fix --max-warnings=0"
   },
   "peerDependencies": {
     "date-fns": ">=2.28.0",
