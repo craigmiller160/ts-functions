@@ -17,8 +17,10 @@ export class TypeValidationError extends Error {
 	}
 }
 
+export type TypeDecoder<I, O> = (input: I) => TryT<O>;
+
 export const decode =
-	<A, O = A, I = unknown>(ioTsType: Type<A, O, I>) =>
+	<A, O = A, I = unknown>(ioTsType: Type<A, O, I>): TypeDecoder<I, A> =>
 	(input: I): TryT<A> =>
 		pipe(ioTsType.decode(input), handleResult);
 

@@ -21,3 +21,4 @@ export type { NonEmptyArray as NonEmptyArrayT } from 'fp-ts/NonEmptyArray';
 export type { ReadonlyNonEmptyArray as ReadonlyNonEmptyArrayT } from 'fp-ts/ReadonlyNonEmptyArray';
 export type { Monoid as MonoidT } from 'fp-ts/Monoid';
 export type { Validation as ValidationT } from 'io-ts';
+export type { TypeDecoder } from './TypeValidation';
