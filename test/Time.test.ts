@@ -177,7 +177,7 @@ describe('DateFns', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('formatTZ', () => {
+	it.skip('formatTZ', () => {
 		const date = set(new Date(), {
 			year: 2020,
 			month: 1,
@@ -195,7 +195,7 @@ describe('DateFns', () => {
 		expect(actualUtc).toEqual(expectedUtc);
 	});
 
-	it('setUtc', () => {
+	it.skip('setUtc', () => {
 		const date = new Date();
 		const expected = set(date, {
 			hours: 16,

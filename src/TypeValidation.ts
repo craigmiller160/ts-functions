@@ -5,9 +5,9 @@ import * as ioType from 'io-ts';
 import { Decoder, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
-import { match, when } from 'ts-pattern';
-import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
+import { match, P } from 'ts-pattern';
 import * as Monoid from 'fp-ts/Monoid';
+import { GuardP } from 'ts-pattern/dist/types/Pattern';
 
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
@@ -43,8 +43,8 @@ interface ReportPathContext {
 	readonly currentEntryType: CurrentEntryType;
 }
 
-const startsWith = (value: string): GuardPattern<string> =>
-	when((_) => _.startsWith(value));
+const startsWith = (value: string): GuardP<string, boolean> =>
+	P.when((_) => _.startsWith(value));
 
 const typeToCurrentEntryType = (
 	type: Decoder<unknown, unknown>
