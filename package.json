@@ -1,6 +1,6 @@
 {
   "name": "@craigmiller160/ts-functions",
-  "version": "1.4.0-beta",
+  "version": "1.4.0",
   "author": "craigmiller160",
   "sideEffects": false,
   "publishConfig": {
