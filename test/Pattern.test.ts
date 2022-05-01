@@ -1,6 +1,6 @@
 import { match } from 'ts-pattern';
 import * as Pattern from '../src/Pattern';
-import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
+import { GuardP } from 'ts-pattern/dist/types/Pattern';
 
 const URL = 'https://www.google.com/foo/bar?abc=def&ghi=jkl';
 const URL_REGEX = /^https?:\/\/(?<hostname>.*?)\/.*\?(?<query>.*)$/;
@@ -11,7 +11,7 @@ const doMatchRegexPattern = (value: string): string =>
 		.otherwise(() => 'Failure');
 
 const lengthPattern =
-	(pattern: (l: number) => GuardPattern<string | Array<unknown>>) =>
+	(pattern: (l: number) => GuardP<string | Array<unknown>, boolean>) =>
 	(length: number) =>
 		match('Hello')
 			.with(pattern(length), () => 'Success')

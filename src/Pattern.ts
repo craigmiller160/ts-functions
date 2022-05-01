@@ -1,26 +1,27 @@
 import * as Regex from './Regex';
-import { when } from 'ts-pattern';
-import { GuardPattern } from 'ts-pattern/lib/types/Pattern';
+import { P } from 'ts-pattern';
+import { GuardP } from 'ts-pattern/dist/types/Pattern';
 
-export const regex = (reg: RegExp | string): GuardPattern<string> =>
-	when(Regex.test(reg));
+export const regex = (reg: RegExp | string): GuardP<string, boolean> =>
+	P.when(Regex.test(reg));
 
 export const lengthGT = (
 	value: number
-): GuardPattern<string | Array<unknown>> => when((_) => _.length > value);
+): GuardP<string | Array<unknown>, boolean> => P.when((_) => _.length > value);
 
 export const lengthGTE = (
 	value: number
-): GuardPattern<string | Array<unknown>> => when((_) => _.length >= value);
+): GuardP<string | Array<unknown>, boolean> => P.when((_) => _.length >= value);
 
 export const lengthEQ = (
 	value: number
-): GuardPattern<string | Array<unknown>> => when((_) => _.length === value);
+): GuardP<string | Array<unknown>, boolean> =>
+	P.when((_) => _.length === value);
 
 export const lengthLT = (
 	value: number
-): GuardPattern<string | Array<unknown>> => when((_) => _.length < value);
+): GuardP<string | Array<unknown>, boolean> => P.when((_) => _.length < value);
 
 export const lengthLTE = (
 	value: number
-): GuardPattern<string | Array<unknown>> => when((_) => _.length <= value);
+): GuardP<string | Array<unknown>, boolean> => P.when((_) => _.length <= value);
