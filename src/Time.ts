@@ -18,6 +18,7 @@ import {
 	set as baseSet
 } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
+import { Ordering } from 'fp-ts/Ordering';
 
 export interface SetTimeOptions {
 	readonly year?: number;
@@ -124,5 +125,5 @@ export const parse =
 
 export const compare =
 	(dateLeft: Date) =>
-	(dateRight: Date): number =>
-		baseCompareAsc(dateLeft, dateRight);
+	(dateRight: Date): Ordering =>
+		baseCompareAsc(dateLeft, dateRight) as Ordering;
