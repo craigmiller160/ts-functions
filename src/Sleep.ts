@@ -5,5 +5,6 @@ export const sleep =
 	() =>
 		new Promise((resolve) => setTimeout(resolve, millis));
 
+// setImmediate is not as portable as setTimeout so this is a better solution
 export const immediate = (): Task.Task<void> => () =>
-	new Promise((resolve) => setImmediate(resolve));
+	new Promise((resolve) => setTimeout(resolve, 1));
