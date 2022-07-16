@@ -22,3 +22,5 @@ export type { ReadonlyNonEmptyArray as ReadonlyNonEmptyArrayT } from 'fp-ts/Read
 export type { Monoid as MonoidT } from 'fp-ts/Monoid';
 export type { Validation as ValidationT } from 'io-ts';
 export type { TypeDecoder } from './TypeValidation';
+export type { Ord as OrdT } from 'fp-ts/Ord';
+export type { Eq as EqT } from 'fp-ts/Eq';
