@@ -15,7 +15,8 @@ import {
 	subYears as baseSubYears,
 	subDays as baseSubDays,
 	differenceInDays as baseDifferenceInDays,
-	set as baseSet
+	set as baseSet,
+	isValid as baseIsValid
 } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { Ordering } from 'fp-ts/Ordering';
@@ -36,6 +37,8 @@ export const differenceInDays =
 		baseDifferenceInDays(start, end);
 
 export const fromMillis = (millis: number): Date => new Date(millis);
+
+export const isValid = (date: Date): boolean => baseIsValid(date);
 
 export const set =
 	(options: SetTimeOptions) =>
