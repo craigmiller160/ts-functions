@@ -4,7 +4,7 @@
   "author": "craigmiller160",
   "sideEffects": false,
   "publishConfig": {
-    "registry": "https://craigmiller160.ddns.net:30003/repository/npm-private/"
+    "registry": "https://nexus-craigmiller160.ddns.net/repository/npm-private/"
   },
   "publishDirectory": "./lib",
   "main": "index.js",
