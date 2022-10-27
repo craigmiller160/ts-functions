@@ -1,10 +1,10 @@
 {
   "name": "@craigmiller160/ts-functions",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": "craigmiller160",
   "sideEffects": false,
   "publishConfig": {
-    "registry": "https://craigmiller160.ddns.net:30003/repository/npm-private/"
+    "registry": "https://nexus-craigmiller160.ddns.net/repository/npm-private/"
   },
   "publishDirectory": "./lib",
   "main": "index.js",
@@ -29,14 +29,14 @@
     "ts-pattern": ">=4.0.2"
   },
   "devDependencies": {
-    "@craigmiller160/config-merge": "^1.0.0",
-    "@craigmiller160/eslint-config-jest": "1.0.0",
-    "@craigmiller160/eslint-config-js": "1.0.0",
-    "@craigmiller160/eslint-config-prettier": "1.0.0",
-    "@craigmiller160/eslint-config-ts": "1.0.0",
-    "@craigmiller160/jest-config": "1.0.0",
-    "@craigmiller160/jest-config-ts": "1.0.0",
-    "@craigmiller160/prettier-config": "1.0.0",
+    "@craigmiller160/config-merge": "^1.0.1",
+    "@craigmiller160/eslint-config-jest": "1.0.1",
+    "@craigmiller160/eslint-config-js": "1.0.1",
+    "@craigmiller160/eslint-config-prettier": "1.0.1",
+    "@craigmiller160/eslint-config-ts": "1.0.2",
+    "@craigmiller160/jest-config": "1.0.4",
+    "@craigmiller160/jest-config-ts": "1.0.2",
+    "@craigmiller160/prettier-config": "1.0.1",
     "@relmify/jest-fp-ts": "^1.1.1",
     "@types/cross-spawn": "^6.0.2",
     "cross-spawn": "^7.0.3",
