@@ -14,7 +14,7 @@
     ".yalc"
   ],
   "scripts": {
-    "build": "npm run lint && npm run test && npm run forceBuild",
+    "build": "npm run lint && npm run test && tsc --noEmit && npm run forceBuild",
     "lint:project": "craig-lint",
     "lint": "npn run lint:project && npm run lint:scripts",
     "test": "craig-test",
