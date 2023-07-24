@@ -15,8 +15,7 @@
   ],
   "scripts": {
     "build": "npm run lint && npm run test && tsc --noEmit && npm run forceBuild",
-    "lint:project": "craig-lint",
-    "lint": "npn run lint:project && npm run lint:scripts",
+    "lint": "craig-lint",
     "test": "craig-test",
     "forceBuild": "rm -rf lib && craig-multi-module && tsc --declaration --emitDeclarationOnly --outDir ./lib/types",
     "validate": "npm run lint && npm run test",
