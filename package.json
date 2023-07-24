@@ -3,20 +3,22 @@
   "version": "1.7.0-beta",
   "author": "craigmiller160",
   "sideEffects": false,
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
   "publishConfig": {
     "registry": "https://nexus-craigmiller160.ddns.net/repository/npm-private/"
   },
-  "publishDirectory": "./lib",
-  "main": "index.js",
-  "module": "es/index.js",
-  "typings": "index.d.ts",
+  "files": [
+    "lib",
+    ".yalc"
+  ],
   "scripts": {
     "build": "npm run lint && npm run test && npm run forceBuild",
     "lint:project": "craig-lint",
     "lint": "npn run lint:project && npm run lint:scripts",
-    "lint:scripts": "craig-lint scripts",
     "test": "craig-test",
-    "forceBuild": "ts-node scripts/build.ts",
+    "forceBuild": "rm -rf lib && craig-multi-module && tsc --declaration --emitDeclarationOnly --outDir ./lib/types",
     "validate": "npm run lint && npm run test",
     "prepare": "husky install"
   },
@@ -52,7 +54,6 @@
     "io-ts": "^2.2.16",
     "lint-staged": "^12.1.7",
     "prettier": "^2.5.1",
-    "ts-node": "^10.4.0",
     "ts-pattern": "^4.0.2",
     "typescript": "^5.1.3"
   }
