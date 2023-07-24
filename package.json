@@ -11,13 +11,13 @@
   "module": "es/index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "yarn lint && yarn test && yarn forceBuild",
+    "build": "npm run lint && npm run test && npm run forceBuild",
     "lint:project": "craig-lint",
-    "lint": "yarn lint:project && yarn lint:scripts",
+    "lint": "npn run lint:project && npm run lint:scripts",
     "lint:scripts": "craig-lint scripts",
     "test": "craig-test",
     "forceBuild": "ts-node scripts/build.ts",
-    "validate": "yarn lint && yarn test",
+    "validate": "npm run lint && npm run test",
     "prepare": "husky install"
   },
   "lint-staged": {
