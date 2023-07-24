@@ -71,6 +71,9 @@ devDependencies:
   io-ts:
     specifier: ^2.2.16
     version: 2.2.16(fp-ts@2.11.7)
+  jest:
+    specifier: ^29.6.1
+    version: 29.6.1
   lint-staged:
     specifier: ^12.1.7
     version: 12.1.7
