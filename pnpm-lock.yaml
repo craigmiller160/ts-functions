@@ -33,8 +33,8 @@ devDependencies:
     specifier: ^1.1.2
     version: 1.1.2(eslint@8.45.0)(typescript@5.1.3)
   '@craigmiller160/jest-config':
-    specifier: 2.2.0-beta.3
-    version: 2.2.0-beta.3(cross-env@7.0.3)(jest@29.6.1)
+    specifier: 2.2.0-beta.4
+    version: 2.2.0-beta.4(cross-env@7.0.3)(jest@29.6.1)
   '@craigmiller160/prettier-config':
     specifier: ^1.0.2
     version: 1.0.2
@@ -1625,8 +1625,8 @@ packages:
       - supports-color
     dev: true
 
-  /@craigmiller160/jest-config@2.2.0-beta.3(cross-env@7.0.3)(jest@29.6.1):
-    resolution: {integrity: sha512-bOIrEdq8E3ugjy9CMs9PuWDp9SVzy35FmUC16xLAImgUuAcyHgHZc7MsDK4s77R82S3k+f05/fEMVOOo9KVIGQ==}
+  /@craigmiller160/jest-config@2.2.0-beta.4(cross-env@7.0.3)(jest@29.6.1):
+    resolution: {integrity: sha512-qLr6oEBMx1BqMnDwdbDGDc0OIOiKKzqQGphaMdZvv4HrFErSmSE6/QHsvl/msfFNlIe8OPIKAJ7pvKzKxM8oJQ==}
     hasBin: true
     peerDependencies:
       cross-env: ^7.0.3
@@ -4806,7 +4806,7 @@ packages:
     resolution: {integrity: sha512-KoAW2zAmNSd3Gk88uJ56qXUWbFk787QKmjjJVOjtGFmmGSZgDBrlIL4AfQw1xyMYPNVD7dNInfIbur9B2rd/wQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/code-frame': 7.16.7
+      '@babel/code-frame': 7.22.5
       '@jest/types': 29.6.1
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
@@ -6384,7 +6384,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       psl: 1.8.0
-      punycode: 2.1.1
+      punycode: 2.3.0
       universalify: 0.2.0
       url-parse: 1.5.10
     dev: true
@@ -6393,7 +6393,7 @@ packages:
     resolution: {integrity: sha512-l7FvfAHlcmulp8kr+flpQZmVwtu7nfRV7NZujtN0OqES8EL4O4e0qqzL0DC5gAvx/ZC/9lk6rhcUwYvkBnBnYA==}
     engines: {node: '>=12'}
     dependencies:
-      punycode: 2.1.1
+      punycode: 2.3.0
     dev: true
 
   /tr46@4.1.1:
