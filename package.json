@@ -4,16 +4,10 @@
   "author": "craigmiller160",
   "sideEffects": false,
   "exports": {
-    "./*": {
-      "types": "./lib/types/*",
-      "import": {
-        "types": "./lib/types/*",
-        "default": "./lib/esm/*"
-      },
-      "require": {
-        "types": "./lib/types/*",
-        "default": "./lib/cjs/*"
-      }
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js"
     }
   },
   "publishConfig": {
