@@ -5,9 +5,14 @@
   "sideEffects": false,
   "exports": {
     "./*": {
-      "types": "./lib/types/*",
-      "import": "./lib/esm/*",
-      "require": "./lib/cjs/*"
+      "import": {
+        "types": "./lib/types/*",
+        "default": "./lib/esm/*"
+      },
+      "require": {
+        "types": "./lib/types/*",
+        "default": "./lib/cjs/*"
+      }
     }
   },
   "publishConfig": {
