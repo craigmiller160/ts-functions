@@ -5,7 +5,7 @@
   "sideEffects": false,
   "exports": {
     "./*": {
-      "types": "./lib/types/index.d.ts",
+      "types": "./lib/types/*",
       "import": "./lib/esm/*",
       "require": "./lib/cjs/*"
     }
