@@ -5,6 +5,7 @@
   "sideEffects": false,
   "exports": {
     "./*": {
+      "types": "./lib/types/*",
       "import": {
         "types": "./lib/types/*",
         "default": "./lib/esm/*"
