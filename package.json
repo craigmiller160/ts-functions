@@ -3,11 +3,9 @@
   "version": "1.7.0-beta",
   "author": "craigmiller160",
   "sideEffects": false,
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/types/index.d.ts",
   "exports": {
     "./*": {
+      "types": "./lib/types/index.d.ts",
       "import": "./lib/esm/*",
       "require": "./lib/cjs/*"
     }
