@@ -143,7 +143,7 @@ describe('DateFns', () => {
 		const date2 = parse(date2String, DATE_FORMAT, new Date());
 
 		const result = Time.compare(date1)(date2);
-		expect(result).toEqual(-1);
+		expect(result).toBe(-1);
 	});
 
 	it('set with all options', () => {

@@ -7,9 +7,9 @@ describe('OptionExt', () => {
 		const none = Option.none;
 
 		const someValue = OptionExt.getOrNull(some);
-		expect(someValue).toEqual('Hello');
+		expect(someValue).toBe('Hello');
 
 		const noneValue = OptionExt.getOrNull(none);
-		expect(noneValue).toEqual(null);
+		expect(noneValue).toBeNull();
 	});
 });

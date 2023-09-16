@@ -31,7 +31,7 @@ describe('TaskTry', () => {
 			(value) => Task.of(value)
 		)(successTry)();
 
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 	});
 
 	it('getOrThrow', async () => {
@@ -43,7 +43,7 @@ describe('TaskTry', () => {
 		});
 
 		const result = await TaskTry.getOrThrow(successTry)();
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 
 		try {
 			await TaskTry.getOrThrow(failTry)();

@@ -19,47 +19,47 @@ const lengthPattern =
 
 describe('Pattern', () => {
 	it('regex', () => {
-		expect(doMatchRegexPattern(URL)).toEqual('Success');
-		expect(doMatchRegexPattern('abc')).toEqual('Failure');
+		expect(doMatchRegexPattern(URL)).toBe('Success');
+		expect(doMatchRegexPattern('abc')).toBe('Failure');
 	});
 
 	it('lengthGT', () => {
 		const fn = lengthPattern(Pattern.lengthGT);
 
-		expect(fn(3)).toEqual('Success');
-		expect(fn(5)).toEqual('Failure');
-		expect(fn(6)).toEqual('Failure');
+		expect(fn(3)).toBe('Success');
+		expect(fn(5)).toBe('Failure');
+		expect(fn(6)).toBe('Failure');
 	});
 
 	it('lengthGTE', () => {
 		const fn = lengthPattern(Pattern.lengthGTE);
 
-		expect(fn(3)).toEqual('Success');
-		expect(fn(5)).toEqual('Success');
-		expect(fn(6)).toEqual('Failure');
+		expect(fn(3)).toBe('Success');
+		expect(fn(5)).toBe('Success');
+		expect(fn(6)).toBe('Failure');
 	});
 
 	it('lengthEQ', () => {
 		const fn = lengthPattern(Pattern.lengthEQ);
 
-		expect(fn(3)).toEqual('Failure');
-		expect(fn(5)).toEqual('Success');
-		expect(fn(6)).toEqual('Failure');
+		expect(fn(3)).toBe('Failure');
+		expect(fn(5)).toBe('Success');
+		expect(fn(6)).toBe('Failure');
 	});
 
 	it('lengthLT', () => {
 		const fn = lengthPattern(Pattern.lengthLT);
 
-		expect(fn(3)).toEqual('Failure');
-		expect(fn(5)).toEqual('Failure');
-		expect(fn(6)).toEqual('Success');
+		expect(fn(3)).toBe('Failure');
+		expect(fn(5)).toBe('Failure');
+		expect(fn(6)).toBe('Success');
 	});
 
 	it('lengthLTE', () => {
 		const fn = lengthPattern(Pattern.lengthLTE);
 
-		expect(fn(3)).toEqual('Failure');
-		expect(fn(5)).toEqual('Success');
-		expect(fn(6)).toEqual('Success');
+		expect(fn(3)).toBe('Failure');
+		expect(fn(5)).toBe('Success');
+		expect(fn(6)).toBe('Success');
 	});
 });

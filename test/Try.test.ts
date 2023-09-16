@@ -21,7 +21,7 @@ describe('Try', () => {
 	it('Try<T> is interchangeable with Either<Error,T>', () => {
 		const theTry = Try.tryCatch(() => 'Hello');
 		const result = Either.fold(() => 'Failed', identity)(theTry);
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 	});
 
 	it('getOrThrow', () => {
@@ -31,7 +31,7 @@ describe('Try', () => {
 		});
 
 		const result = getOrThrow(successTry);
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 
 		try {
 			getOrThrow(failTry);
