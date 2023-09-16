@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as ioType from 'io-ts';
 import * as TypeValidation from '../src/TypeValidation';
 import '@relmify/jest-fp-ts';

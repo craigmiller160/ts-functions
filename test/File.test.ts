@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as File from '../src/File';
 import path from 'path';
 import fs from 'fs';

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Json from '../src/Json';
 import '@relmify/jest-fp-ts';
 import { TryT, OptionT } from '../src/types';

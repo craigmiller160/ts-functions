@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Either from 'fp-ts/Either';
 import * as EitherExt from '../src/EitherExt';
 import { EitherT } from '../src/types';

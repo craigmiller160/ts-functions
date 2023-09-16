@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Text from '../src/Text';
 
 describe('Text', () => {

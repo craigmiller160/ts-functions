@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as RArrayExt from '../src/ReadonlyArrayExt';
 
 interface Person {

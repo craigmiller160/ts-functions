@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { match } from 'ts-pattern';
 import * as Pattern from '../src/Pattern';
 

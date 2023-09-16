@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { createLogger, Logger, ProvidedLogger } from '../src/Logger';
 
 interface TestProvidedLogger extends ProvidedLogger {

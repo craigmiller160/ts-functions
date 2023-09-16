@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Option from 'fp-ts/Option';
 import * as OptionExt from '../src/OptionExt';
 

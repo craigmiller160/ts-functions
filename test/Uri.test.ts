@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Uri from '../src/Uri';
 import '@relmify/jest-fp-ts';
 

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import '@relmify/jest-fp-ts';
 import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
