@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { createLogger, Logger, ProvidedLogger } from '../src/Logger';
 
 interface TestProvidedLogger extends ProvidedLogger {
