@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { match } from 'ts-pattern';
 import * as Pattern from '../src/Pattern';
-import { GuardP } from 'ts-pattern/dist/types/Pattern';
 
 const URL = 'https://www.google.com/foo/bar?abc=def&ghi=jkl';
 const URL_REGEX = /^https?:\/\/(?<hostname>.*?)\/.*\?(?<query>.*)$/;
