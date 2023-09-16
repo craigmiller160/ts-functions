@@ -1,0 +1,12 @@
+{
+  "extends": "@craigmiller160/js-config/configs/typescript/tsconfig.json",
+  "include": [
+    "src/**/*",
+    "vite.config.mts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "lib"
+  ]
+}
