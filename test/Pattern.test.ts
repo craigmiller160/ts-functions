@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { match } from 'ts-pattern';
 import * as Pattern from '../src/Pattern';
 import { GuardP } from 'ts-pattern/dist/types/Pattern';
