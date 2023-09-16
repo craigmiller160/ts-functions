@@ -23,6 +23,7 @@
     ".yalc"
   ],
   "scripts": {
+    "build": "c-validate && c-build-lib"
   },
   "peerDependencies": {
     "date-fns": "^2.28.0",
