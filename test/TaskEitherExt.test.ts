@@ -3,7 +3,6 @@ import * as TaskEitherExt from '../src/TaskEitherExt';
 import { TaskEitherT } from '../src/types';
 import * as TaskEither from 'fp-ts/TaskEither';
 import { unknownToError } from '../src/unknownToError';
-import '@relmify/jest-fp-ts';
 
 const te: TaskEitherT<Error, string> = TaskEither.right('Hello');
 

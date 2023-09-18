@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import * as TaskTry from '../src/TaskTry';
 import * as TaskEither from 'fp-ts/TaskEither';
 import * as Task from 'fp-ts/Task';
-import '@relmify/jest-fp-ts';
 import { TaskTryT, TryT } from '../src/types';
 
 const te: TaskTryT<string> = TaskEither.right('Hello');

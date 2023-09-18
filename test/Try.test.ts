@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import * as Try from '../src/Try';
 import * as Either from 'fp-ts/Either';
 import { identity } from 'fp-ts/function';
-import '@relmify/jest-fp-ts';
 import { getOrThrow } from '../src/Try';
 import { TryT } from '../src/types';
 

@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import * as File from '../src/File';
 import path from 'path';
 import fs from 'fs';
-import '@relmify/jest-fp-ts';
 import * as IOEither from 'fp-ts/IOEither';
 import * as Option from 'fp-ts/Option';
 import { pipe } from 'fp-ts/function';
