@@ -6790,7 +6790,6 @@ packages:
       - '@testing-library/dom'
       - '@types/eslint'
       - '@types/node'
-      - chokidar
       - enquirer
       - eslint-import-resolver-node
       - eslint-import-resolver-webpack
