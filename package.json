@@ -33,6 +33,7 @@
   "devDependencies": {
     "@craigmiller160/js-config": "file:.yalc/@craigmiller160/js-config",
     "@relmify/jest-fp-ts": "^2.1.1",
+    "@types/node": "^20.6.5",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.2.2",
     "fp-ts": "^2.16.1",
