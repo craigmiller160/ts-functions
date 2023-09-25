@@ -1,4 +1,4 @@
-import '@relmify/jest-fp-ts';
+import { describe, it, expect } from 'vitest';
 import * as Regex from '../src/Regex';
 import * as Option from 'fp-ts/Option';
 
@@ -15,8 +15,8 @@ const testUrl = Regex.test(URL_REGEX);
 
 describe('Regex', () => {
 	it('test', () => {
-		expect(testUrl(URL)).toEqual(true);
-		expect(testUrl('abc')).toEqual(false);
+		expect(testUrl(URL)).toBe(true);
+		expect(testUrl('abc')).toBe(false);
 	});
 
 	describe('capture', () => {

@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import * as Process from '../src/Process';
-import '@relmify/jest-fp-ts';
 import * as Option from 'fp-ts/Option';
 import * as Either from 'fp-ts/Either';
 

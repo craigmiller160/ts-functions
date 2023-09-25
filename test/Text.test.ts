@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import * as Text from '../src/Text';
 
 describe('Text', () => {
@@ -8,6 +9,6 @@ describe('Text', () => {
 
 	it('concat', () => {
 		const result = Text.concat(' ')('Hello', 'World');
-		expect(result).toEqual('Hello World');
+		expect(result).toBe('Hello World');
 	});
 });

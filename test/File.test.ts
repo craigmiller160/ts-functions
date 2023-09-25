@@ -1,7 +1,7 @@
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import * as File from '../src/File';
 import path from 'path';
 import fs from 'fs';
-import '@relmify/jest-fp-ts';
 import * as IOEither from 'fp-ts/IOEither';
 import * as Option from 'fp-ts/Option';
 import { pipe } from 'fp-ts/function';
@@ -47,7 +47,7 @@ describe('File', () => {
 		)();
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
-		expect(fileContent).toEqual(`${TEXT}${TEXT}`);
+		expect(fileContent).toBe(`${TEXT}${TEXT}`);
 	});
 
 	it('existsSync', () => {
@@ -73,7 +73,7 @@ describe('File', () => {
 		fs.writeFileSync(filePath, TEXT);
 
 		File.rmSync(filePath)();
-		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
 	});
 
 	it('rmSyncWithOptions file', () => {
@@ -81,7 +81,7 @@ describe('File', () => {
 		fs.writeFileSync(filePath, TEXT);
 
 		File.rmSyncWithOptions()(filePath)();
-		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
 	});
 
 	it('rmSyncWithOptions directory', () => {
@@ -95,8 +95,8 @@ describe('File', () => {
 			force: true
 		})(dirPath)();
 
-		expect(fs.existsSync(filePath)).toEqual(false);
-		expect(fs.existsSync(dirPath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
+		expect(fs.existsSync(dirPath)).toBe(false);
 	});
 
 	it('rmIfExistsSync file', () => {
@@ -105,7 +105,7 @@ describe('File', () => {
 
 		const result = File.rmIfExistsSync(filePath)();
 		expect(result).toBeRight();
-		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
 	});
 
 	it('rmIfExistsSyncWithOptions file', () => {
@@ -114,7 +114,7 @@ describe('File', () => {
 
 		const result = File.rmIfExistsSyncWithOptions()(filePath)();
 		expect(result).toBeRight();
-		expect(fs.existsSync(filePath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
 	});
 
 	it('rmIfExistsSyncWithOptions directory', () => {
@@ -128,8 +128,8 @@ describe('File', () => {
 			force: true
 		})(dirPath)();
 		expect(result).toBeRight();
-		expect(fs.existsSync(filePath)).toEqual(false);
-		expect(fs.existsSync(dirPath)).toEqual(false);
+		expect(fs.existsSync(filePath)).toBe(false);
+		expect(fs.existsSync(dirPath)).toBe(false);
 	});
 
 	it('mkdirSync', () => {
@@ -137,7 +137,7 @@ describe('File', () => {
 
 		const result = File.mkdirSync(dirPath)();
 		expect(result).toEqualRight(dirPath);
-		expect(fs.existsSync(dirPath)).toEqual(true);
+		expect(fs.existsSync(dirPath)).toBe(true);
 	});
 
 	it('listFilesSync', () => {

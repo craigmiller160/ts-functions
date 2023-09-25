@@ -5,9 +5,8 @@ import * as ioType from 'io-ts';
 import { Decoder, Type, ValidationError } from 'io-ts';
 import { Reporter } from 'io-ts/Reporter';
 import * as RArray from 'fp-ts/ReadonlyArray';
-import { match, P } from 'ts-pattern';
+import { match } from 'ts-pattern';
 import * as Monoid from 'fp-ts/Monoid';
-import { GuardP } from 'ts-pattern/dist/types/Pattern';
 
 export class TypeValidationError extends Error {
 	readonly name = 'TypeValidationError';
@@ -43,15 +42,15 @@ interface ReportPathContext {
 	readonly currentEntryType: CurrentEntryType;
 }
 
-const startsWith = (value: string): GuardP<string, boolean> =>
-	P.when((_) => _.startsWith(value));
+const startsWith = (startingString: string) => (value: string) =>
+	value.startsWith(startingString);
 
 const typeToCurrentEntryType = (
 	type: Decoder<unknown, unknown>
 ): CurrentEntryType =>
 	match(type.name)
-		.with(startsWith('Array'), () => CurrentEntryType.ARRAY)
-		.with(startsWith('ReadonlyArray'), () => CurrentEntryType.ARRAY)
+		.when(startsWith('Array'), () => CurrentEntryType.ARRAY)
+		.when(startsWith('ReadonlyArray'), () => CurrentEntryType.ARRAY)
 		.otherwise(() => CurrentEntryType.OBJECT);
 
 const reportPathContextMonoid: MonoidT<ReportPathContext> = {

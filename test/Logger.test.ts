@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { createLogger, Logger, ProvidedLogger } from '../src/Logger';
 
 interface TestProvidedLogger extends ProvidedLogger {
@@ -37,76 +38,76 @@ describe('Logger', () => {
 
 	it('debug', () => {
 		logger.debug('Hello World')();
-		expect(testLogger.value).toEqual('Debug: Hello World');
+		expect(testLogger.value).toBe('Debug: Hello World');
 	});
 
 	it('info', () => {
 		logger.info('Hello World')();
-		expect(testLogger.value).toEqual('Info: Hello World');
+		expect(testLogger.value).toBe('Info: Hello World');
 	});
 
 	it('warn', () => {
 		logger.warn('Hello World')();
-		expect(testLogger.value).toEqual('Warn: Hello World');
+		expect(testLogger.value).toBe('Warn: Hello World');
 	});
 
 	it('error', () => {
 		logger.error('Hello World')();
-		expect(testLogger.value).toEqual('Error: Hello World');
+		expect(testLogger.value).toBe('Error: Hello World');
 	});
 
 	it('verbose', () => {
 		logger.verbose('Hello World')();
-		expect(testLogger.value).toEqual('Verbose: Hello World');
+		expect(testLogger.value).toBe('Verbose: Hello World');
 	});
 
 	it('errorWithStack', () => {
 		logger.errorWithStack('Hello', error)();
-		expect(testLogger.value).toEqual(`Error: Hello ${error.stack ?? ''}`);
+		expect(testLogger.value).toBe(`Error: Hello ${error.stack ?? ''}`);
 	});
 
 	it('warnWithStack', () => {
 		logger.warnWithStack('Hello', error)();
-		expect(testLogger.value).toEqual(`Warn: Hello ${error.stack ?? ''}`);
+		expect(testLogger.value).toBe(`Warn: Hello ${error.stack ?? ''}`);
 	});
 
 	it('infoWithStack', () => {
 		logger.infoWithStack('Hello', error)();
-		expect(testLogger.value).toEqual(`Info: Hello ${error.stack ?? ''}`);
+		expect(testLogger.value).toBe(`Info: Hello ${error.stack ?? ''}`);
 	});
 
 	it('debugWithStack', () => {
 		logger.debugWithStack('Hello', error)();
-		expect(testLogger.value).toEqual(`Debug: Hello ${error.stack ?? ''}`);
+		expect(testLogger.value).toBe(`Debug: Hello ${error.stack ?? ''}`);
 	});
 
 	it('verboseWithStack', () => {
 		logger.verboseWithStack('Hello', error)();
-		expect(testLogger.value).toEqual(`Verbose: Hello ${error.stack ?? ''}`);
+		expect(testLogger.value).toBe(`Verbose: Hello ${error.stack ?? ''}`);
 	});
 
 	it('debugWithJson', () => {
 		logger.debugWithJson('Hello', obj)();
-		expect(testLogger.value).toEqual(`Debug: Hello ${objString}`);
+		expect(testLogger.value).toBe(`Debug: Hello ${objString}`);
 	});
 
 	it('infoWithJson', () => {
 		logger.infoWithJson('Hello', obj)();
-		expect(testLogger.value).toEqual(`Info: Hello ${objString}`);
+		expect(testLogger.value).toBe(`Info: Hello ${objString}`);
 	});
 
 	it('warnWithJson', () => {
 		logger.warnWithJson('Hello', obj)();
-		expect(testLogger.value).toEqual(`Warn: Hello ${objString}`);
+		expect(testLogger.value).toBe(`Warn: Hello ${objString}`);
 	});
 
 	it('errorWithJson', () => {
 		logger.errorWithJson('Hello', obj)();
-		expect(testLogger.value).toEqual(`Error: Hello ${objString}`);
+		expect(testLogger.value).toBe(`Error: Hello ${objString}`);
 	});
 
 	it('verboseWithJson', () => {
 		logger.verboseWithJson('Hello', obj)();
-		expect(testLogger.value).toEqual(`Verbose: Hello ${objString}`);
+		expect(testLogger.value).toBe(`Verbose: Hello ${objString}`);
 	});
 });

@@ -1,7 +1,7 @@
+import { describe, it, expect } from 'vitest';
 import * as TaskTry from '../src/TaskTry';
 import * as TaskEither from 'fp-ts/TaskEither';
 import * as Task from 'fp-ts/Task';
-import '@relmify/jest-fp-ts';
 import { TaskTryT, TryT } from '../src/types';
 
 const te: TaskTryT<string> = TaskEither.right('Hello');
@@ -31,7 +31,7 @@ describe('TaskTry', () => {
 			(value) => Task.of(value)
 		)(successTry)();
 
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 	});
 
 	it('getOrThrow', async () => {
@@ -43,7 +43,7 @@ describe('TaskTry', () => {
 		});
 
 		const result = await TaskTry.getOrThrow(successTry)();
-		expect(result).toEqual('Hello');
+		expect(result).toBe('Hello');
 
 		try {
 			await TaskTry.getOrThrow(failTry)();

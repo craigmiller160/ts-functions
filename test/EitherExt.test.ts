@@ -1,8 +1,8 @@
+import { describe, it, expect } from 'vitest';
 import * as Either from 'fp-ts/Either';
 import * as EitherExt from '../src/EitherExt';
 import { EitherT } from '../src/types';
 import { unknownToError } from '../src/unknownToError';
-import '@relmify/jest-fp-ts';
 
 const e: EitherT<Error, string> = Either.right('Hello');
 

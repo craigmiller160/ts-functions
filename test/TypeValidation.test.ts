@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import * as ioType from 'io-ts';
 import * as TypeValidation from '../src/TypeValidation';
-import '@relmify/jest-fp-ts';
 import { ReadableReporter, TypeValidationError } from '../src/TypeValidation';
 import * as File from '../src/File';
 import * as Json from '../src/Json';
