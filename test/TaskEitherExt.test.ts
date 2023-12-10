@@ -10,6 +10,7 @@ describe('TaskEitherExt', () => {
 	describe('chainTryCatch', () => {
 		it('successful promise', async () => {
 			const result = await TaskEitherExt.chainTryCatch(
+				// eslint-disable-next-line @typescript-eslint/require-await
 				async (value: string) => `${value} World`,
 				unknownToError
 			)(te)();
@@ -17,6 +18,7 @@ describe('TaskEitherExt', () => {
 		});
 
 		it('failed promise', async () => {
+			// eslint-disable-next-line @typescript-eslint/require-await
 			const result = await TaskEitherExt.chainTryCatch(async () => {
 				throw new Error('Dying');
 			}, unknownToError)(te)();
