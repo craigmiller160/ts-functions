@@ -92,7 +92,7 @@ const createErrorMessage = (error: ValidationError): string => {
 	);
 
 	const typeName = fullContext.currentEntryDecoder.name.replace(/<.*$/, '');
-	return `IO Type Error: Expected '${fullContext.path}' to be type '${typeName}', received '${error.value}'`;
+	return `IO Type Error: Expected '${fullContext.path}' to be type '${typeName}', received '${JSON.stringify(error.value)}'`;
 };
 
 const createReadableReport = (

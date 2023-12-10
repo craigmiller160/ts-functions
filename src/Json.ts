@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/function';
 import * as Option from 'fp-ts/Option';
 
 export const parseE = <T>(json: string): TryT<T> =>
-	Try.tryCatch(() => JSON.parse(json));
+	Try.tryCatch(() => JSON.parse(json) as T);
 
 export const stringifyE = (value: unknown): TryT<string> =>
 	stringifyIndentE(0)(value);
