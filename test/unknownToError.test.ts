@@ -15,6 +15,6 @@ describe('unknownToError', () => {
 	it('handles other value', () => {
 		const value = 'HelloWorld';
 		const result = unknownToError(value);
-		expect(result).toEqual(new Error(`Unknown Error: ${value}`));
+		expect(result).toEqual(new Error(`Unknown Error: "${value}"`));
 	});
 });
