@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "c-validate && c-build-lib",
-    "postinstall": "c-initg"
+    "postinstall": "c-init"
   },
   "peerDependencies": {
     "date-fns": "^2.28.0",
