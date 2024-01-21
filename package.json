@@ -1,6 +1,6 @@
 {
   "name": "@craigmiller160/ts-functions",
-  "version": "1.7.0-beta",
+  "version": "1.7.0",
   "author": "craigmiller160",
   "sideEffects": false,
   "exports": {
@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "c-validate && c-build-lib",
-    "postinstall": "c-init"
+    "postinstall": "c-initg"
   },
   "peerDependencies": {
     "date-fns": "^2.28.0",
