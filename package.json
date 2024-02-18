@@ -1,6 +1,6 @@
 {
   "name": "@craigmiller160/ts-functions",
-  "version": "1.7.0",
+  "version": "1.8.0-beta",
   "author": "craigmiller160",
   "sideEffects": false,
   "exports": {
@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "c-validate && c-build-lib",
-    "postinstall": "c-init"
+    "postinstall": "c-init lib"
   },
   "peerDependencies": {
     "date-fns": "^2.28.0",
@@ -32,7 +32,7 @@
     "ts-pattern": "^5.0.5"
   },
   "devDependencies": {
-    "@craigmiller160/js-config": "1.0.4",
+    "@craigmiller160/js-config": "1.0.7",
     "@relmify/jest-fp-ts": "^2.1.1",
     "@types/node": "^20.6.5",
     "cross-env": "^7.0.3",
